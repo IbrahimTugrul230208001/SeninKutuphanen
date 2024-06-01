@@ -1,0 +1,162 @@
+﻿@using LibraryManagement.DataAccess.Concrete.ADO.NET
+@using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
+@using LibraryManagement.Entities.Concrete
+@using Microsoft.Data.SqlClient
+@using System.Data
+@using learningASP.NET_CORE.Controllers
+@using LibraryManagement.Business.Concrete
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User's Profile</title>
+    <link href="/img/LibraryIcon.jpeg" rel="icon" type="jpeg">
+    <link rel="stylesheet" href="/css/UserProfile.css">
+</head>
+<body>
+    @{
+        LibraryManager _libraryManager = new LibraryManager(new EntityFrameworkCore());
+        string userName = Convert.ToString(ViewData["UserName"]);
+        string userProfilePicture = Convert.ToString(ViewData["UserProfilePicture"]);
+    }
+    <div class="title-main">
+        <div class="profile-container">
+            <a href="/UserProfile/ProfileIndex">
+                <img class="profilepicture" src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" />
+                <h3 class="profilename">@userName</h3>
+            </a>
+            <a href="/EditLibrary/EditLibrary">
+                <h3 class="user-library">Kullanıcı Kitaplığı</h3>
+            </a>
+        </div>
+        <div class="titleofsite">
+            <h2>Senin Kütüphanen</h2>
+        </div>
+        <div class="logout-section">
+            <a href="/RegisterLogIn/LogInPage" class="logout-button">
+                Çıkış Yap
+                <img class="gobackimage" src="/img/goback.png"/>
+            </a>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="Profile-Container">
+            <img class="UserProfilePicture" src="@userProfilePicture"/>
+                <a href="/UserProfile/Settings"><button class="profile-settings">Profil Ayarları</button></a>
+                <h3 class="profile-text">Kullanıcı ID: @_libraryManager.UserID(userName)</h3>
+                <h3 class="profile-text">Kullanıcı adı: @userName</h3>
+                <h3 class="profile-text">Bulunduğu yer: @_libraryManager.ResidementPlaceCity(userName)/@_libraryManager.ResidementPlaceCountry(userName)</h3>
+                <h3 class="profile-text">Toplam Kitap sayısı: @_libraryManager.GetTotalOfBooks(userName)</h3>
+                <h3 class="profile-text">En çok bulunan tür: @_libraryManager.MostExistingCategoryInLibrary(userName)</h3>
+                <div class="LibraryGenreData-container">
+                    <div class="LibraryGenreData">
+                    </div>
+                </div>
+
+                <div class="color-squares">
+                    <div class="dot-history">Tarih: <span id="historyBookCount">@_libraryManager.CountGenresOfBooks("Tarih", userName)</span></div>
+                    <div class="dot-literature">Edebiyat: <span id="literatureBookCount">@_libraryManager.CountGenresOfBooks("Edebiyat", userName)</span></div>
+                    <div class="dot-Science">Fen-Bilim: <span id="scienceBookCount">@_libraryManager.CountGenresOfBooks("Fen-Bilim", userName)</span></div>
+                    <div class="dot-Religion">Din-Felsefe: <span id="philosophyReligionBookCount">@_libraryManager.CountGenresOfBooks("Din-Felsefe", userName)</span></div>
+                    <div class="dot-Psychology">Psikoloji-Şahsi Gelişim: <span id="psychologySelfImprovementBookCount">@_libraryManager.CountGenresOfBooks("Psikoloji", userName)</span></div>
+                </div>
+
+
+        </div>
+
+        <div class="statistics">
+            <h2 style="text-align: center; text-decoration: underline;position: relative; bottom:10px;">İstastikler-Mevcut Olarak Okunanlar</h2>
+          <div class="userstats-tablecontainer">
+                <div class="user-stats">
+                    <h3 class="dot-currentlyreading"> Mevcut olarak okuyor: @_libraryManager.BookStatusCounter("Okuyor", userName)</h3>
+                    <h3 class="dot-planning">Okumayı planlıyor: @_libraryManager.BookStatusCounter("Planliyor", userName)</h3>
+                    <h3 class="dot-completed">Tamamlandı: @_libraryManager.BookStatusCounter("Bitirdi", userName)</h3>
+                    <h3 class="dot-dropped">Okumayı bıraktı: @_libraryManager.BookStatusCounter("Birakti", userName)</h3>
+                    <h3 class="dot-notplanningtoread">Henüz okumuyor: @_libraryManager.BookStatusCounter("Beklemede", userName)</h3>
+                    <h3 class="dot-totalofreadpages">Okunan toplam sayfa sayısı: @_libraryManager.GetTotalOfReadPages(userName)</h3>
+                    <h3 class="dot-totalOfReadBooks">Okunan toplam kitap sayısı: @_libraryManager.CountCompletedBooks(userName)</h3>
+            <a href="/PersonalLibraryData/PersonalLibraryData">
+                <button class="displaylibrary">Kütüphaneye Git</button>
+            </a>
+              </div>
+            <div class="table-container">
+                <table class="Table1">
+                    <thead class="Table1Columns">
+                        <tr>
+                            <th>ID</th>
+                            <th>İsim</th>
+                            <th>Yazar</th>
+                            <th>Kategori</th>
+                            <th>Tamamlanan sayfalar</th>
+                            <th>Toplam sayfa</th>
+                        </tr>
+                    </thead>
+                    <tbody class="Table1Rows" id="tableBody" style="max-height: 100px; overflow-y: auto;">
+                        @{
+                            using (var context = new LibraryContext())
+                            {
+                                var libraries = context.Libraries
+                                    .Where(lib => lib.UserName == userName && lib.Status == "Okuyor")
+                                .Select(lib => new Library
+                {
+                    Id = lib.Id,
+                    Name = lib.Name,
+                    Author = lib.Author,
+                    Category = lib.Category,
+                    CompletedPages = lib.CompletedPages,
+                    TotalOfPages = lib.TotalOfPages
+                })
+                                .ToList();
+
+                                foreach (var library in libraries)
+                                {
+                                    <tr>
+                                        <td>@library.Id</td>
+                                        <td>@library.Name</td>
+                                        <td>@library.Author</td>
+                                        <td>@library.Category</td>
+                                        <td>@library.CompletedPages</td>
+                                        <td>@library.TotalOfPages</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                </table>
+            </div>
+            </div>
+            <div class="favorites-container">
+                <h2 class="favtitle">Kullanıcı Vitrini</h2>
+                <div class="favorites">
+                    @{
+                        var listShowcase = _libraryManager.ListBookShowcase(userName);
+                        foreach(var book in listShowcase)
+                        {
+                            <div class="fav">
+                            <div class="label-container"><label>@book.Name</label></div>
+                                <div class="imgBox"><img class="favbookimg" src="@_libraryManager.BookImage(userName,book.Name)" /></div>
+                            </div>
+                        }   
+                        for(int i = 0; i < 10 - listShowcase.Count; i++)
+                        {
+                            <div class="fav">
+                                <div class="label-container"><label>-</label></div>
+                                <div class="imgBox"><img class="question-mark" src="~/img/R-removebg-preview.png" /></div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            </div>
+
+
+    </div>
+
+
+
+
+    <script src="/js/ProfileIndex.js"></script>
+</body>
+</html>
+

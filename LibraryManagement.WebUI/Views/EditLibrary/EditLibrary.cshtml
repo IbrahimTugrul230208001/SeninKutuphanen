@@ -1,0 +1,276 @@
+﻿@using LibraryManagement.Business.Concrete
+@using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
+@using LibraryManagement.Entities.Concrete
+@using Microsoft.Data.SqlClient
+@using System.Data
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeninKütüphanen</title>
+    <link rel="icon" href="/img/LibraryIcon" type="jpeg">
+    <link rel="stylesheet" href="/css/EditLibrary.css">
+</head>
+<body>
+    @{
+        LibraryManager _libraryManager = new LibraryManager(new EntityFrameworkCore());
+        string userName = ViewData["UserName"].ToString();
+        string userProfilePicture = ViewData["UserProfilePicture"].ToString();
+    }
+  <div class="title-main">
+      <div class= "profile-container">
+       <a href="/UserProfile/ProfileIndex">
+                <img class="profilepicture" src="@userProfilePicture" />
+                <h3 class="profilename">@userName</h3>
+       </a>
+                <a href="/EditLibrary/EditLibrary">
+                    <h3 class="user-library">Kullanıcı Kitaplığı</h3>
+                </a>
+      </div>
+      <div class="titleofsite">
+                <h2>Senin Kütüphanen</h2>
+      </div>
+      <div class="logout-section">
+            <a href="/RegisterLogIn/LogInPage" class="logout-button">Çıkış Yap
+                <img class="gobackimage"src="/img/goback.png"/>
+                </a>
+      </div>
+  </div>
+
+    <h2 class="yourbookshelf">Kitaplık</h2>
+
+    <div class="progressbar-container">
+        <h3 class="completion-rate">Completion Rate:</h3>
+        <div class="circular-progress">
+            <span id="progressValue" class="progress-value">%</span>
+        </div>
+    </div>
+    <div class="table-container">
+        <table class="Table1">
+            <thead class="Table1Columns">
+                <tr>
+                    <th></th>
+                    <th>İsim</th>
+                    <th>Yazar</th>
+                    <th>Kategori</th>
+                    <th>Tamamlanan sayfalar</th>
+                    <th>Toplam sayfa</th>
+                    <th>Durum</th>
+                </tr>
+            </thead>
+            <tbody class="Table1Rows" id="tableBody" style="max-height: 100px; overflow-y: auto;">
+                @{                   
+                    using(var context = new LibraryContext())
+                    {
+                        var libraries = context.Libraries.Where(l => l.UserName == userName).
+                        Select(lib => new Library
+                    {
+                    Id = lib.Id,
+                    Name = lib.Name,
+                    Author = lib.Author,
+                    Category = lib.Category,
+                    CompletedPages = lib.CompletedPages,
+                    TotalOfPages = lib.TotalOfPages,
+                    Status = lib.Status,
+
+                    });
+                        foreach(var lib in libraries)
+                        {
+                            <tr>
+                            <td class="invisible">@lib.Id</td>
+                            <td>@lib.Name</td>
+                            <td>@lib.Author</td>
+                            <td>@lib.Category</td>                            
+                            <td>@lib.CompletedPages</td>
+                            <td>@lib.TotalOfPages</td>
+                            <td>@lib.Status</td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="filters-container">
+        <div class="filters">
+            <label class="filterlabels">Kitap İsmiyle Ara:</label>
+            <input id="txtSearchByName" class="filterbox" type="text" placeholder="Kitap İsmiyle Ara">
+            <label class="filterlabels">Yazar ismiyle Ara:</label>
+            <input id="txtSearchByAuthor" class="filterbox" type="text" placeholder="Yazar İsmiyle Ara">
+            <label class="filterlabels">Kategori İsmiyle Ara:</label>
+            <select id="txtSearchByCategory" class="filter-combobox">
+                <option value="" disabled selected>Kategori Seçin...</option>
+                <option value=""></option>
+                <option>Tarih</option>
+                <option>Edebiyat</option>
+                <option>Din-Felsefe</option>
+                <option>Psikoloji</option>
+                <option>Fen-Bilim</option>
+            </select>
+            <form style="display:inline-block;" action="Delete" method="post">
+                <button type="submit" class="deletebutton">Seçili Kitabı Kaldır<input id="IdTextBoxDel" type="hidden" name="IdTextboxDEL" readonly /></button>
+            </form>
+            <form style="display:inline-block;" action="AddToFavorites" method="post">
+                <button type="submit" class="AddToFavoritesButton">Vitrine Ekle<input id="IdTextBoxFav" type="hidden" name="IdTextboxFAV" readonly/></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="sections">
+        <form action="Update" method="post">
+            <div class="update-section">
+                <h2 style="text-decoration: underline;">Kitap Bilgilerini Güncelle</h2>
+                <div class="sectiontextboxes">
+                    <div class="input-group">
+                        <input name="TbxID" type="hidden" id="UpdatetextBox0" readonly/>
+                    </div>
+                    <div class="input-group">
+                        <label for="name">İsim:</label>
+                        <input name="TbxUpdateName" type="text" id="UpdatetextBox1">
+                    </div>
+                    <div class="input-group">
+                        <label for="author">Yazar:</label>
+                        <input name="TbxUpdateAuthor" type="text" id="UpdatetextBox2">
+                    </div>
+                    <div class="input-group">
+                        <label for="category">Kategori:</label>
+                        <select class="comboBox" name="CbxUpdateCategory" type="text" id="UpdatetextBox3">
+                            <option value="" disabled selected>Kategori Seçin...</option>
+                            <option value="Tarih">Tarih</option>
+                            <option value="Edebiyat">Edebiyat</option>
+                            <option value="Din-Felsefe">Din-Felsefe</option>
+                            <option value="Psikoloji">Psikoloji</option>
+                            <option value="Fen-Bilim">Fen-Bilim</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="completedPages">Tamamlanan sayfalar:</label>
+                        <input name="TbxUpdateCompletedPages" type="text" id="UpdatetextBox4">
+                    </div>
+                    <div class="input-group">
+                        <label for="totalPages">Toplam sayfa:</label>
+                        <input name="TbxUpdateTotalOfPages" type="text" id="UpdatetextBox5">
+                    </div>
+                    <div class="input-group">
+                        <label for="status">Okuma durumu:</label>
+                        <select class="comboBox" name="CbxUpdateStatus" type="text" id="UpdatetextBox6">
+                            <option value="" disabled selected>Okuma Durumunu Seçin...</option>
+                            <option value="Okuyor">Okuyor</option>
+                            <option value="Bitirdi">Bitirdi</option>
+                            <option value="Planlıyor">Planlıyor</option>
+                            <option value="Bıraktı">Bıraktı</option>
+                            <option value="Beklemede">Beklemede</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="UpdateButton" class="updatebutton">Güncelle</button>
+                </div>
+            </div>
+        </form>
+        <form action="Add" method="post">
+            <div class="add-section">
+                <h2 class="AddNewBook">Yeni Kitap Ekle</h2>
+                <div class="sectiontextboxes">
+                    <div class="input-group">
+                        <label for="name">İsim:</label>
+                        <input name="TbxAddName"type="text" id="AddtextBox1">
+                    </div>
+                    <div class="input-group">
+                        <label for="author">Yazar:</label>
+                        <input name="TbxAddAuthor" type="text" id="AddtextBox2">
+                    </div>
+                    <div class="input-group">
+                        <label for="category">Kategori:</label>
+                        <select class="comboBox" name="CbxAddCategory" type="text" id="AddtextBox3">
+                            <option value="" disabled selected>Kategori Seçin...</option>
+                            <option value="Tarih">Tarih</option>
+                            <option value="Edebiyat">Edebiyat</option>
+                            <option value="Din-Felsefe">Din-Felsefe</option>
+                            <option value="Psikoloji">Psikoloji</option>
+                            <option value="Fen-Bilim">Fen-Bilim</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="completedPages">Tamamlanan sayfalar:</label>
+                        <input name="TbxAddCompletedPages" type="text" id="AddtextBox4">
+                    </div>
+                    <div class="input-group">
+                        <label for="totalPages">Toplam sayfa:</label>
+                        <input name="TbxAddTotalOfPages" type="text" id="AddtextBox5">
+                    </div>
+                    <div class="input-group">
+                        <label for="status">Okuma durumu:</label>
+                        <select class="comboBox" name="CbxAddStatus" type="text" id="AddtextBox6">
+                            <option value="" disabled selected>Okuma Durumunu Seçin...</option>
+                            <option value="Okuyor">Okuyor</option>
+                            <option value="Bitirdi">Bitirdi</option>
+                            <option value="Planlıyor">Planlıyor</option>
+                            <option value="Bıraktı">Bıraktı</option>
+                            <option value="Beklemede">Beklemede</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="addbutton">Ekle</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="favorites-container">
+        <h2 class="fav-title">Kullanıcı Vitrini [Ekle/Değiştir/Çıkar]</h2>
+        <div class="favorites">
+            @{
+                int filledSpacesInShowcase = _libraryManager.CountFavorites(userName);
+                var showcaseList = _libraryManager.ListBookShowcase(userName);
+                foreach(var book in showcaseList)
+                {
+                    <div class="fav">
+                        <div class="booktitle-container"><label class="book-title" name="booktitle">@book.Name</label></div>
+                        @if (_libraryManager.CheckImageStatus(userName, book.Name) == false && showcaseList.Count>0)
+                        {
+                            <form action="UploadImage" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="booktitle" value="@book.Name" />
+                                <div class="imgBox">
+                                    <input type="file" id="imageInput" name="imageFile" accept="image/*">
+                                    <label class="upload-label" for="imageInput">Resim Yüklemek İçin Tıkla</label>
+                                </div>
+                                <button type="submit" class="upload-button">Yükle</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form action="RemoveBookShowcase" method="post">
+                                <div class="imgBox">
+                                    <input type="hidden" name="booktitle" value="@book.Name"/>
+                                    <img class="bookimg" src="@_libraryManager.BookImage(userName,book.Name)">
+                                </div>
+                                <div class="favbuttons">
+                                    <button type="submit" class="favbutton">Kaldır</button>
+                                </div>
+                            </form>       
+                        }
+                    </div>
+                }
+         
+                for(int i = 0; i < 10-showcaseList.Count; i++)
+                {
+                    <div class="fav">
+                       <div class="booktitle-container"><label class="book-title" name="booktitle">-</label></div>
+                        <form action="UploadImage" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="booktitle"/>
+                            <div class="imgBox">
+                                <input type="file" id="imageInput" name="imageFile" accept="image/*">
+                                <label class="upload-label" for="imageInput">Resim Yüklemek İçin Tıkla</label>
+                            </div>
+                            <button type="submit" class="upload-button">Yükle</button>
+                        </form>
+                    </div>
+                }
+             }       
+        </div>
+    </div>
+
+
+    <script src="/js/EditLibrary.js"></script>
+</body>
+</html>

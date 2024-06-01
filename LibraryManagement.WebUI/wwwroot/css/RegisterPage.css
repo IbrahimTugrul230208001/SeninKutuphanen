@@ -1,0 +1,104 @@
+﻿html, body {
+    width: 100%; /* Ensure the body and html elements fill the viewport width */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    background-color: #e8e8e8;
+}
+
+.title {
+    position: sticky; /* Add sticky positioning */
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 85px;
+    align-items: center;
+    border-bottom: 1.5px solid black;
+    background-color: rgb(75, 1, 1);
+    z-index: 2; /* Set a high z-index value */
+}
+
+.titleofsite {
+    color: rgb(245, 245, 220);
+    text-align: center;
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute; /* Change position to absolute */
+    left: 50%; /* Move to the middle horizontally */
+    transform: translateX(-50%); /* Center the element */
+    width: max-content; /* Ensure the width fits the content */
+}
+
+.RegisterPage {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.Register-content {
+    display: inline-block;
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 20px;
+    width: 350px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.Register-title {
+    display: flex;
+    justify-content: center;
+    color: #490000;
+    text-decoration: underline;
+}
+
+.Name {
+    margin-left: 37px;
+}
+
+.Password {
+    margin-left: 105px;
+}
+
+.PasswordAgain {
+    margin-left: 45px;
+}
+
+.Register-button {
+    color: rgb(75, 1, 1);
+    border: 2px solid rgb(75, 1, 1);
+    font-weight: 700;
+    width: 170px;
+    border-radius: 5px;
+    margin-left: 155px;
+    transition: 0.4s;
+    margin-top: 10px;
+    height: 30px;
+
+}
+
+.Register-button:hover {
+        color: white;
+        background-color: #490000;
+        cursor: pointer;
+        box-shadow: 4px 4px 4px gray;
+}
+
+    .Register-button:active {
+        opacity: 0.7;
+    }
+
+.alreadyhaveaccount {
+    font-size: small;
+    margin-left: 140px;
+}
+
+    .alreadyhaveaccount:hover, .Noaccount:hover {
+        text-decoration: underline;
+        color: #490000;
+        cursor: pointer;
+    }
+
+.Noaccount {
+    margin-left: 160px;
+    font-size: small;
+}

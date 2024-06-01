@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeninKütüphanen</title>
+    <link rel="icon" href="icons&images/LibraryIcon.jpeg" type="jpeg">
+    <link rel="stylesheet" href="~/css/RegisterPage.css"/>
+</head>
+<body>
+    <div class="title">
+        <h2 class="titleofsite">Senin Kütüphanen</h2>
+    </div>
+   <form asp-controller = "RegisterLogIn" asp-action="LogInPage" method="post">
+        <div class="RegisterPage">
+            <div class="Register-content">
+                <h1 class="Register-title">Giriş Yap</h1>
+                <h3 class="Name">Kullanıcı adı: <input name="TbxUserName" type="text"></h3>
+                <h3 class="Password">Şifre: <input name="TbxPassword" type="password"></h3>
+                <a class="Noaccount" href="/RegisterLogIn/RegisterPage">
+                    Hesabın yok mu? Kayıt Ol!
+                </a>
+                <button type="submit" class="Register-button">Giriş Yap</button>
+            </div>
+        </div>
+   </form>
+
+
+
+</body>
+</html>

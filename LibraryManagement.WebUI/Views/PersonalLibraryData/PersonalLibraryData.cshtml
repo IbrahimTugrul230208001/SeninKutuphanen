@@ -1,0 +1,116 @@
+﻿@using LibraryManagement.Business.Concrete
+@using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
+@using LibraryManagement.Entities.Concrete
+@using Microsoft.Data.SqlClient
+@using System.Data
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PersonalLibrary</title>
+    <link rel="stylesheet" href="~/css/PersonalLibraryData.css">
+</head>
+<body>
+    @{
+        string userName = ViewData["UserName"].ToString();
+        string userProfilePicture = ViewData["UserProfilePicture"].ToString();
+    }
+    <div class="title-main">
+        <div class="profile-container">
+            <a href="/UserProfile/ProfileIndex">
+                <img class="profilepicture" src="@userProfilePicture" />
+                <h3 class="profilename">@userName</h3>
+            </a>
+            <a href="/EditLibrary/EditLibrary">
+                <h3 class="user-library">Kullanıcı Kitaplığı</h3>
+            </a>
+        </div>
+        <div class="titleofsite">
+            <h2>Senin Kütüphanen</h2>
+        </div>
+        <div class="logout-section">
+            <a href="/RegisterLogIn/LogInPage" class="logout-button">
+                Çıkış Yap
+                <img class="gobackimage" src="/img/goback.png" />
+            </a>
+        </div>
+    </div>
+
+    <div class="statistics">
+        <h2 style="text-align: center; text-decoration:underline;">İstastikler</h2>
+        <div class= "categories">
+            <label class="category dot-currentlyreading">Okuyor</label>
+            <label class="category dot-planning">Planlıyor</label>
+            <label class="category dot-completed">Tamamlandı</label>
+            <label class="category dot-dropped">Bıraktı</label>
+            <label class="category dot-notplanningtoread">Beklemede</label>
+        </div>
+    </div>
+        <div class="page-container">
+            <div class="table-container">
+                <table class="Table1">
+                    <thead class="Table1Columns">
+                        <tr>
+                            <th>ID</th>
+                            <th>İsim</th>
+                            <th>Yazar</th>
+                            <th>Kategori</th>
+                            <th>Tamamlanan sayfalar</th>
+                            <th>Toplam sayfa</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody class="Table1Rows" id="tableBody" style="max-height: 100px; overflow-y: auto;">
+                        @{
+                            LibraryManager libraryManager = new(new EntityFrameworkCore());
+                            using (var context = new LibraryContext())
+                            {
+                            var libraries = context.Libraries.Where(l => l.UserName == userName).
+                                Select(l => new Library
+                {
+                    Id = l.Id,
+                    Name = l.Name,
+                    Author = l.Author,
+                    Category = l.Category,
+                    CompletedPages = l.CompletedPages,
+                    TotalOfPages = l.TotalOfPages,
+                    Status = l.Status,
+                });
+                                foreach (var l in libraries)
+                                {
+                                    <tr>
+                                        <td>@l.Id</td>
+                                        <td>@l.Name</td>
+                                        <td>@l.Author</td>
+                                        <td>@l.Category</td>
+                                        <td>@l.CompletedPages</td>
+                                        <td>@l.TotalOfPages</td>
+                                        <td>@l.Status</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+          </div>
+     </div>
+    
+        <div class="LibraryGenreData-container">
+            <div class="LibraryGenreData">
+            </div>
+            <div class="stats">
+            @{
+                    <ul>
+                    <li class="article">Okuyor: <span id="reading">@libraryManager.BookStatusCounter("Okuyor", userName)</span></li>
+                    <li class="article">Planlıyor: <span id="planning">@libraryManager.BookStatusCounter("Planliyor", userName)</span></li>
+                    <li class="article">Tamamlandı: <span id="completed">@libraryManager.BookStatusCounter("Bitirdi", userName)</span></li>
+                    <li class="article">Bıraktı: <span id="dropped">@libraryManager.BookStatusCounter("Birakti", userName)</span></li>
+                    <li class="article">Beklemede: <span id="onHold">@libraryManager.BookStatusCounter("Beklemede", userName)</span></li>
+                    </ul>
+            }               
+            </div>
+        </div>
+ <script src="/js/PersonalLibraryData.js"></script> 
+</body>
+</html>

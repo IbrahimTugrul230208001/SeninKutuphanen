@@ -1,0 +1,372 @@
+﻿.html, body {
+    width: 100%; 
+    margin: 0; 
+    padding: 0; 
+    background-color: #e8e8e8;
+    height: 1000px;
+    
+}
+
+.title {
+    position: sticky;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 85px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1.5px solid black;
+    background-color: rgb(75, 1, 1);
+    z-index: 2; 
+}
+
+.profilepicture {
+    position: relative;
+    left: 20px;
+    top: 12.5px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: inline-block; 
+    width:50px;
+    border:1px solid black;
+}
+
+    .profilepicture:hover {
+        opacity: 0.9;
+    }
+
+
+        .profilepicture:hover + .profilename,
+        .profilename:hover + .profilepicture {
+            text-decoration: underline;
+        }
+
+    .profilepicture:active {
+        opacity: 0.8;
+    }
+
+.profilename {
+    position: relative;
+    left: 30px;
+    bottom: 2.5px;
+    color: #f5f5dc;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.5s;
+    display: inline-block; /* Ensure it appears inline */
+}
+
+a:hover .profilepicture,
+a:hover .profilename {
+    text-decoration: underline;
+}
+
+.titleofsite {
+    color: rgb(245, 245, 220);
+    text-align: center;
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute; /* Change position to absolute */
+    left: 50%; /* Move to the middle horizontally */
+    transform: translateX(-50%); /* Center the element */
+    width: max-content; /* Ensure the width fits the content */
+}
+
+.table-container {
+    position: relative;
+    top: 50px;
+    left: 20px;
+    width: 60%; /* Adjust the width as needed */
+    overflow: auto;
+    background-color: #f5f5dc;
+    height: 450px;
+    border: 5px solid #8b4513;
+}
+
+.statistics {
+    display:inline-block;
+    position: relative;
+    top: 10px;
+    left: 20%;
+    border: 2px solid black;
+    padding: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.dot-planning::before, .dot-completed::before,
+.dot-notplanningtoread::before, .dot-currentlyreading::before,
+.dot-dropped::before,
+.dot-planningtobuy::before, .dot-totalofreadpages::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px; /* Adjust the margin as needed */
+}
+
+.dot-planning::before {
+    background-color: blue; /* Change the color as needed */
+}
+
+.dot-dropped::before {
+    background-color: red;
+}
+
+.dot-completed::before {
+    background-color: green;
+}
+
+.dot-notplanningtoread::before {
+    background-color: orange;
+}
+
+.dot-currentlyreading::before {
+    background-color: deeppink;
+}
+
+.Table1 th, .Table1 td {
+    border: 1px solid #8b4513; /* Dark brown border */
+    padding: 8px;
+    text-align: center;
+}
+
+.Table1Columns {
+    font-style: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+    font-weight: 500;
+    background-color: #8b4513; /* Dark brown for table header, resembling wood */
+    color: white;
+    padding: 8px;
+    text-align: center;
+}
+
+.Table1Rows {
+    background-color: #f5f5dc; /* Light beige for table rows, resembling book pages */
+    color: #2e2e2e; /* Dark gray text color */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.Table1 {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.Table1Columns th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #8b4513;
+    color: white;
+    padding:8px;
+}
+
+.titlebuttons {
+    margin-left: 20px;
+}
+
+.Table1 td:nth-child(1),
+.Table1 th:nth-child(1) {
+    width: 5%; /* Adjust the width as needed */
+}
+
+/* Set width for the Name column */
+.Table1 td:nth-child(2),
+.Table1 th:nth-child(2) {
+    width: 20%; /* Adjust the width as needed */
+}
+
+/* Set width for the Author column */
+.Table1 td:nth-child(3),
+.Table1 th:nth-child(3) {
+    width: 20%; /* Adjust the width as needed */
+}
+
+/* Set width for the Category column */
+.Table1 td:nth-child(4),
+.Table1 th:nth-child(4) {
+    width: 20%; /* Adjust the width as needed */
+}
+
+/* Set width for the Completed Pages column */
+.Table1 td:nth-child(5),
+.Table1 th:nth-child(5) {
+    width: 10%; /* Adjust the width as needed */
+}
+
+/* Set width for the Total Pages column */
+.Table1 td:nth-child(6),
+.Table1 th:nth-child(6) {
+    width: 10%; /* Adjust the width as needed */
+}
+
+.Table1 td:nth-child(7),
+.Table1 th:nth-child(7) {
+    width: 15%; /* Adjust the width as needed */
+}
+
+.category{
+    display: inline-block;
+    width:155px;
+    height:30px;
+    transition:0.1s;
+}
+
+.category:hover{
+        cursor: pointer;
+}
+
+.selected-category{
+    border-bottom: 2px solid; /* Add border bottom for selected category */
+}
+
+.LibraryGenreData{
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: conic-gradient(blue 0, blue 10%, red 10%, red 40%, green 40%, green 60%, deeppink 60%, deeppink 70%, purple 70%, purple 90%, orange 90%, orange 100% );
+    display: flex;
+    flex-shrink:0;
+    justify-content: center;
+    align-items: center;
+}
+
+.LibraryGenreData::before {
+        content: "";
+        position: absolute;
+        height: 300px;
+        width: 300px;
+        background-color: #e8e8e8;
+        border-radius: 50%;
+}
+.LibraryGenreData-container {
+    position: relative;
+    left:70%;
+    bottom:40%;
+    width:350px;
+}
+
+.page-container {
+  display:flex;
+  justify-content:space-between;
+}
+.Display-library {
+    margin-right: 10px;
+    color: #f5f5dc;
+    background-color: darkred;
+    border: 2px solid darkred;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    height: 30px;
+    padding: 5px;
+    transition: 0.4s;
+}
+
+.Display-library:hover {
+     color: darkred;
+     cursor: pointer;
+     background-color: #f5f5dc;
+}
+
+.categories {
+   display:flex;
+   text-align:center;
+}
+
+.stats{
+    margin-top:20px;
+    padding-top:10px;
+    height:180px;
+    width:350px;
+    border: 2px solid black;
+    border-radius:3px;
+}
+
+.article {
+    font-family: Arial;
+    margin-top:12px;
+    font-weight:bold;
+}
+.profile-container {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+    align-items: center;
+    font-family: Arial;
+    position: relative;
+    left: 20px;
+}
+
+a {
+    transition: 0.3s;
+    color: #f5f5dc;
+    text-decoration: none;
+}
+
+    a:hover {
+        opacity: 0.85;
+        color: #f5f5dc;
+    }
+
+.profilename {
+    display: inline-block;
+    position: relative;
+    bottom: 6.5px;
+}
+
+.profilepicture {
+    position: relative;
+    top: 10px;
+    right: 5px;
+    width: 50px;
+    border: 1px solid black;
+}
+
+.profilename:hover {
+    text-decoration: underline;
+}
+
+.titleofsite {
+    position: relative;
+    right: 9.25%;
+    color: #f5f5dc;
+    font-weight: bold;
+    font-family: Arial;
+}
+
+.logout-button {
+    font-size: large;
+    color: #f5f5dc;
+    font-family: Arial;
+}
+
+    .logout-button:hover {
+        text-decoration: underline;
+    }
+
+.title-main {
+    position: sticky;
+    top: 0;
+    display: flex;
+    width: 100%;
+    height: 85px;
+    align-items: center;
+    border-bottom: 1.5px solid #490000;
+    background-color: #490000;
+    z-index: 2;
+    justify-content: space-between;
+}
+
+.gobackimage {
+    width: 25px;
+    position: relative;
+    right: 115px;
+    top: 8px;
+}
+
+.user-library:hover {
+    text-decoration: underline;
+}
