@@ -29,7 +29,7 @@ namespace learningASP.NET_CORE.Controllers
                 return RedirectToAction("EditLibrary");           
         }
 
-        [HttpPut("Update")]
+        [HttpPut]
         public async Task<IActionResult> Update([FromBody] Book book)
         {   
                 await _libraryService.UpdateAsync(book);

@@ -32,7 +32,7 @@ namespace LibraryManagementWeb.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpPut("Update")]
+        [HttpPut]
         public IActionResult Update([FromBody] Book b)
         {
             if (b == null)
@@ -43,7 +43,7 @@ namespace LibraryManagementWeb.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("Delete/{id}")]
+        [HttpDelete]
         public IActionResult Delete([FromBody] Book b)
         {
             if (b == null)

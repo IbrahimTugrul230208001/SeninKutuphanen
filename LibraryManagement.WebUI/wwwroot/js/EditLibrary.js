@@ -132,7 +132,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "PUT",
-            url: "/Update", 
+            url: "/EditLibrary/Update", 
             data: JSON.stringify(formData),   
             dataType: "json", 
             contentType: "application/json",
