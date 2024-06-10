@@ -132,9 +132,9 @@ $(document).ready(function () {
 
         $.ajax({
             type: "PUT",
-            url: "EditLibrary/Update", // Your server-side script (Update.php, etc.)
+            url: "/Update", 
             data: JSON.stringify(formData),   
-            dataType: "json", // Expect JSON response from the server
+            dataType: "json", 
             contentType: "application/json",
             success: function (response) {
                 if (response.success) {
@@ -143,7 +143,8 @@ $(document).ready(function () {
                     alert("Güncelleme sırasında bir hata oluştu: " + response.error);
                 }
             },
-            error: function () {
+            error: function (xhr, status, error) {
+                console.log("Error details:", xhr, status, error);
                 alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
             }
         });

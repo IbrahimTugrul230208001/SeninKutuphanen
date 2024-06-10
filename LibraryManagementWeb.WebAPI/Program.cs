@@ -11,7 +11,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 
 // Register IUserService implementation
-builder.Services.AddScoped<IUserService, UserService>(); // Replace UserService with your actual implementation
+builder.Services.AddSingleton<IUserService, UserService>(); // Replace UserService with your actual implementation
+
 
 var app = builder.Build();
 

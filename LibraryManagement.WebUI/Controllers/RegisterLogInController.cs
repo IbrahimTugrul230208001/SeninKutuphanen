@@ -5,14 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 
 public class RegisterLogInController : Controller
 {
-    private readonly IUserService _userProfileService;
-    private readonly UserManager _userManager;
-    public RegisterLogInController(UserManager userManager,UserService userService)
+    UserManager _userManager = new UserManager(new EfUserRepository());
+    private readonly IUserService _userService;
+    private readonly ILibraryService _libraryService;
+   
+    public RegisterLogInController(IUserService userService,ILibraryService libraryService)
     {
-        _userProfileService = userService;
-        _userManager = userManager;
+        _userService = userService;
+        _libraryService = libraryService;
     }
-
     public IActionResult RegisterPage()
     {
         return View();
@@ -40,6 +41,7 @@ public class RegisterLogInController : Controller
     {
             return View();
     }
+
     [HttpPost]
     public IActionResult LogInPage(IFormCollection receivedUserInput)
     {
@@ -48,8 +50,8 @@ public class RegisterLogInController : Controller
 
         if (_userManager.ValidateUser(userName, password))
         {
-            _userProfileService.UserName = userName;
-            _userProfileService.ProfilePicture = _userManager.ProfilePictureImage(userName);
+            _userService.UserName = userName;
+            _userService.ProfilePicture = _userManager.ProfilePictureImage(userName);
             return RedirectToAction("ProfileIndex", "UserProfile");
         }
         else

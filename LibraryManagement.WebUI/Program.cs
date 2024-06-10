@@ -10,7 +10,8 @@ builder.Services.AddHttpClient<ILibraryService, LibraryService>();
 builder.Services.AddControllersWithViews();
 
 // Register UserService as a singleton
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<ILibraryService, LibraryService>();
 
 var app = builder.Build();
 

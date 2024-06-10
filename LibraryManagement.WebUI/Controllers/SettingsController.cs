@@ -9,7 +9,7 @@ namespace learningASP.NET_CORE.Controllers
     {
         private readonly IUserService _userService;
         private readonly ILibraryService _libraryService;
-        private readonly UserManager _userManager = new(new EfUserRepository());
+        UserManager _userManager = new(new EfUserRepository());
         public SettingsController(ILibraryService libraryService,IUserService userService)
         {
             _libraryService = libraryService;
