@@ -35,6 +35,7 @@ public class RegisterLogInController : Controller
         {
             return View();
         }
+        return View();
     }
 
     public IActionResult LogInPage()
