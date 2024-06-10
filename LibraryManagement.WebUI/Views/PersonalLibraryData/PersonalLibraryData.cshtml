@@ -1,4 +1,5 @@
 ﻿@using LibraryManagement.Business.Concrete
+@using LibraryManagement.DataAccess.Concrete
 @using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 @using LibraryManagement.Entities.Concrete
 @using Microsoft.Data.SqlClient
@@ -63,7 +64,7 @@
                     </thead>
                     <tbody class="Table1Rows" id="tableBody" style="max-height: 100px; overflow-y: auto;">
                         @{
-                            LibraryManager libraryManager = new(new EntityFrameworkCore());
+                            LibraryManager libraryManager = new(new EfLibraryRepository());
                             using (var context = new LibraryContext())
                             {
                             var libraries = context.Libraries.Where(l => l.UserName == userName).

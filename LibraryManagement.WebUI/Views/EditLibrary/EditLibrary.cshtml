@@ -1,4 +1,5 @@
 ﻿@using LibraryManagement.Business.Concrete
+@using LibraryManagement.DataAccess.Concrete
 @using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 @using LibraryManagement.Entities.Concrete
 @using Microsoft.Data.SqlClient
@@ -14,7 +15,7 @@
 </head>
 <body>
     @{
-        LibraryManager _libraryManager = new LibraryManager(new EntityFrameworkCore());
+        LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
         string userName = ViewData["UserName"].ToString();
         string userProfilePicture = ViewData["UserProfilePicture"].ToString();
     }
@@ -22,7 +23,7 @@
       <div class= "profile-container">
        <a href="/UserProfile/ProfileIndex">
                 <img class="profilepicture" src="@userProfilePicture" />
-                <h3 class="profilename">@userName</h3>
+                <h3 id="userName" class="profilename">@userName</h3>
        </a>
                 <a href="/EditLibrary/EditLibrary">
                     <h3 class="user-library">Kullanıcı Kitaplığı</h3>
@@ -113,7 +114,7 @@
             <form style="display:inline-block;" action="Delete" method="post">
                 <button type="submit" class="deletebutton">Seçili Kitabı Kaldır<input id="IdTextBoxDel" type="hidden" name="IdTextboxDEL" readonly /></button>
             </form>
-            <form style="display:inline-block;" action="AddToFavorites" method="post">
+            <form style="display:inline-block;" action="AddToShowcase" method="post">
                 <button type="submit" class="AddToFavoritesButton">Vitrine Ekle<input id="IdTextBoxFav" type="hidden" name="IdTextboxFAV" readonly/></button>
             </form>
         </div>
@@ -270,7 +271,7 @@
         </div>
     </div>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/EditLibrary.js"></script>
 </body>
 </html>

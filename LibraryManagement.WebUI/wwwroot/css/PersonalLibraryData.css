@@ -47,7 +47,7 @@
 
 .profilename {
     position: relative;
-    left: 30px;
+    left: 25px;
     bottom: 2.5px;
     color: #f5f5dc;
     font-family: Arial, Helvetica, sans-serif;
@@ -58,17 +58,6 @@
 a:hover .profilepicture,
 a:hover .profilename {
     text-decoration: underline;
-}
-
-.titleofsite {
-    color: rgb(245, 245, 220);
-    text-align: center;
-    margin: auto;
-    font-family: Arial, Helvetica, sans-serif;
-    position: absolute; /* Change position to absolute */
-    left: 50%; /* Move to the middle horizontally */
-    transform: translateX(-50%); /* Center the element */
-    width: max-content; /* Ensure the width fits the content */
 }
 
 .table-container {
@@ -293,11 +282,10 @@ a:hover .profilename {
 .profile-container {
     display: flex;
     justify-content: space-between;
-    width: 400px;
+    width: 320px;
     align-items: center;
     font-family: Arial;
     position: relative;
-    left: 20px;
 }
 
 a {
@@ -318,10 +306,6 @@ a {
 }
 
 .profilepicture {
-    position: relative;
-    top: 10px;
-    right: 5px;
-    width: 50px;
     border: 1px solid black;
 }
 

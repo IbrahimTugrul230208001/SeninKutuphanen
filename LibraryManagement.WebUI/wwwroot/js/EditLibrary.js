@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+﻿document.addEventListener("DOMContentLoaded", function() {
   // Get all cells in the table
   var cells = document.querySelectorAll(".Table1Rows td");
 
@@ -57,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function() {
 const circularProgressBar = document.querySelector('.circular-progress');
 const rows = document.querySelectorAll(".Table1Rows tr");
 
-// Assuming you have an event listener or some mechanism to handle row selection
 rows.forEach(row => {
     row.addEventListener('click', function() {
         // Remove the "selected" class from all rows
@@ -96,14 +95,12 @@ function filterTable() {
 
     var rows = tbody.getElementsByTagName('tr');
 
-    // Loop through each row and check if it matches the filter criteria
     for (var i = 0; i < rows.length; i++) {
         var row = rows[i];
         var name = row.cells[1].textContent.toLowerCase();
         var author = row.cells[2].textContent.toLowerCase();
         var category = row.cells[3].textContent.toLowerCase();
 
-        // Hide or show the row based on the filter criteria
         if (name.indexOf(inputName) > -1 && author.indexOf(inputAuthor) > -1 && category.indexOf(inputCategory) > -1) {
             row.style.display = '';
         } else {
@@ -112,9 +109,44 @@ function filterTable() {
     }
 }
 
-// Attach event listeners to filter inputs
 document.getElementById('txtSearchByName').addEventListener('input', filterTable);
 document.getElementById('txtSearchByAuthor').addEventListener('input', filterTable);
 document.getElementById('txtSearchByCategory').addEventListener('input', filterTable);
 
+
+$(document).ready(function () {
+    $("#UpdateButton").click(function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Gather form data
+        var formData = {
+            UserName: $("#userName").val(),
+            Id: $("#UpdatetextBox0").val(),
+            Name: $("#UpdatetextBox1").val(),
+            Author: $("#UpdatetextBox2").val(),
+            Category: $("#UpdatetextBox3").val(),
+            CompletedPages: $("#UpdatetextBox4").val(),
+            TotalOfPages: $("#UpdatetextBox5").val(),
+            Status: $("#UpdatetextBox6").val(),
+        };
+
+        $.ajax({
+            type: "PUT",
+            url: "EditLibrary/Update", // Your server-side script (Update.php, etc.)
+            data: JSON.stringify(formData),   
+            dataType: "json", // Expect JSON response from the server
+            contentType: "application/json",
+            success: function (response) {
+                if (response.success) {
+                    alert("Kitap bilgileri başarıyla güncellendi!");
+                } else {
+                    alert("Güncelleme sırasında bir hata oluştu: " + response.error);
+                }
+            },
+            error: function () {
+                alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
+            }
+        });
+    });
+});
 

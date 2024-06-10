@@ -1,4 +1,5 @@
-﻿@using LibraryManagement.DataAccess.Concrete.ADO.NET
+﻿@using LibraryManagement.DataAccess.Concrete
+@using LibraryManagement.DataAccess.Concrete.ADO.NET
 @using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 @using LibraryManagement.Entities.Concrete
 @using Microsoft.Data.SqlClient
@@ -16,7 +17,8 @@
 </head>
 <body>
     @{
-        LibraryManager _libraryManager = new LibraryManager(new EntityFrameworkCore());
+        LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
+        UserManager _userManager = new UserManager(new EfUserRepository());
         string userName = Convert.ToString(ViewData["UserName"]);
         string userProfilePicture = Convert.ToString(ViewData["UserProfilePicture"]);
     }
@@ -44,9 +46,8 @@
         <div class="Profile-Container">
             <img class="UserProfilePicture" src="@userProfilePicture"/>
                 <a href="/UserProfile/Settings"><button class="profile-settings">Profil Ayarları</button></a>
-                <h3 class="profile-text">Kullanıcı ID: @_libraryManager.UserID(userName)</h3>
                 <h3 class="profile-text">Kullanıcı adı: @userName</h3>
-                <h3 class="profile-text">Bulunduğu yer: @_libraryManager.ResidementPlaceCity(userName)/@_libraryManager.ResidementPlaceCountry(userName)</h3>
+            <h3 class="profile-text">Bulunduğu yer: @_userManager.ResidementPlaceCity(userName)/@_userManager.ResidementPlaceCountry(userName)</h3>
                 <h3 class="profile-text">Toplam Kitap sayısı: @_libraryManager.GetTotalOfBooks(userName)</h3>
                 <h3 class="profile-text">En çok bulunan tür: @_libraryManager.MostExistingCategoryInLibrary(userName)</h3>
                 <div class="LibraryGenreData-container">

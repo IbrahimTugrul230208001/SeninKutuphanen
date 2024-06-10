@@ -6,12 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 public class RegisterLogInController : Controller
 {
     private readonly IUserService _userProfileService;
-    private readonly LibraryManager _libraryManager;
-
-    public RegisterLogInController(IUserService userProfileService)
+    private readonly UserManager _userManager;
+    public RegisterLogInController(UserManager userManager,UserService userService)
     {
-        _userProfileService = userProfileService;
-        _libraryManager = new LibraryManager(new EntityFrameworkCore());
+        _userProfileService = userService;
+        _userManager = userManager;
     }
 
     public IActionResult RegisterPage()
@@ -28,31 +27,29 @@ public class RegisterLogInController : Controller
 
         if (password == confirmPassword)
         {
-            _libraryManager.AddNewUser(userName, password);
+            _userManager.AddNewUser(userName, password);
             return RedirectToAction("LogInPage", "RegisterLogIn");
         }
         else
         {
             return View();
         }
-        return View();
     }
 
     public IActionResult LogInPage()
     {
-        return View();
+            return View();
     }
-
     [HttpPost]
     public IActionResult LogInPage(IFormCollection receivedUserInput)
     {
         string userName = Convert.ToString(receivedUserInput["TbxUserName"]);
         string password = Convert.ToString(receivedUserInput["TbxPassword"]);
 
-        if (_libraryManager.ValidateUser(userName, password))
+        if (_userManager.ValidateUser(userName, password))
         {
             _userProfileService.UserName = userName;
-            _userProfileService.ProfilePicture = _libraryManager.ProfilePictureImage(userName);
+            _userProfileService.ProfilePicture = _userManager.ProfilePictureImage(userName);
             return RedirectToAction("ProfileIndex", "UserProfile");
         }
         else

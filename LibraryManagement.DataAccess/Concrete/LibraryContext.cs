@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
+namespace LibraryManagement.DataAccess.Concrete
 {
-    public class LibraryContext:DbContext
+    public class LibraryContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

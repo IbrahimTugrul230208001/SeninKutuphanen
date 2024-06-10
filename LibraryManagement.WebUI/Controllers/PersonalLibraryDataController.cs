@@ -12,7 +12,7 @@ namespace learningASP.NET_CORE.Controllers
         public PersonalLibraryDataController(IUserService userService)
         {
             _userService = userService;
-            _libraryManager = new LibraryManager(new EntityFrameworkCore());
+            _libraryManager = new LibraryManager(new EfLibraryRepository());
         }
         public IActionResult PersonalLibraryData()
         {

@@ -1,11 +1,17 @@
+using LibraryManagementWeb.WebAPI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Register HttpClient
+builder.Services.AddHttpClient();
+
+// Register IUserService implementation
+builder.Services.AddScoped<IUserService, UserService>(); // Replace UserService with your actual implementation
 
 var app = builder.Build();
 
@@ -17,9 +23,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
