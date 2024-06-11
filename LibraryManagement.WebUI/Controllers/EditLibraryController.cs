@@ -1,61 +1,86 @@
 ﻿using learningASP.NET_CORE.Models;
 using learningASP.NET_CORE.Services;
+using LibraryManagement.Business.Concrete;
+using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore;
+using LibraryManagement.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace learningASP.NET_CORE.Controllers
 {
     public class EditLibraryController : Controller
     {
-        private readonly ILibraryService _libraryService;
         private readonly IUserService _userService;
+        private readonly string _userName;
+        LibraryManager _libraryManager = new(new EfLibraryRepository());
 
-        public EditLibraryController(ILibraryService libraryService, IUserService userService)
+        public EditLibraryController(IUserService userService)
         {
-            _libraryService = libraryService;
             _userService = userService;
+            _userName = _userService.UserName;
         }
 
         public IActionResult EditLibrary()
         {
-                ViewData["UserName"] = _userService.UserName;
+                ViewData["UserName"] = _userName;
                 ViewData["UserProfilePicture"] = _userService.ProfilePicture;
                 return View();
         }
 
-        [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] Book book)
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] Book b)
         {
-                book.UserName = _userService.UserName;
-                await _libraryService.AddAsync(book);
+            if (b != null)
+            {
+                _libraryManager.AddToLibrary(new Library
+                {
+                    UserName = _userName,
+                    Id = b.Id,
+                    Name = b.Name,
+                    Author = b.Author,
+                    Category = b.Category,
+                    CompletedPages = b.CompletedPages,
+                    TotalOfPages = b.TotalOfPages,
+                    Status = b.Status,
+                });
+            }           
                 return RedirectToAction("EditLibrary");           
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Book book)
+        public async Task<IActionResult> Update([FromBody] Book b)
         {
-                book.UserName = _userService.UserName;
-                await _libraryService.UpdateAsync(book);
-                return RedirectToAction("EditLibrary");     
+            if (b != null)
+            {
+                _libraryManager.UpdateLibrary(b.Id, _userName, b.Name, b.Author, b.Category, b.CompletedPages, b.TotalOfPages, b.Status);
+            }
+            return RedirectToAction("EditLibrary");     
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int bookId)
-        {          
-                await _libraryService.DeleteAsync(bookId);
-                return RedirectToAction("EditLibrary");        
-        }
-
-        [HttpPost("AddToShowcase/{bookId}")]
-        public async Task<IActionResult> AddToShowcase(int bookId)
+        public async Task<IActionResult> Delete([FromBody]int bookId)
         {
-                await _libraryService.AddToFavoritesAsync(bookId, _userService.UserName);
-                return RedirectToAction("EditLibrary"); 
+            if (bookId != 0)
+            {
+                _libraryManager.DeleteFromLibrary(new Library { Id = bookId});
+            }
+            return RedirectToAction("EditLibrary");        
         }
 
-        [HttpPost("RemoveBookShowcase/{bookId}")]
-        public async Task<IActionResult> RemoveBookShowcase(int bookId)
+        [HttpPost]
+        public async Task<IActionResult> AddToShowcase([FromBody] int bookId)
+        {
+            if (bookId != 0)
+            {
+                _libraryManager.AddToShowcase(_userName, bookId);
+            }
+            return RedirectToAction("EditLibrary"); 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveBookShowcase([FromBody] string bookName)
         {          
-                await _libraryService.RemoveBookShowcaseAsync(bookId, _userService.UserName);
+                _libraryManager.RemoveBookShowcase(_userName, bookName);
                 return RedirectToAction("EditLibrary");            
         }
     }

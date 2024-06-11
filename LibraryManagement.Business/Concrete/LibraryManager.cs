@@ -18,9 +18,9 @@ namespace LibraryManagement.Business.Concrete
             _libraryRepository = libraryDal;
         }
      
-        public void AddToFavorites(string userName, int ID)
+        public void AddToShowcase(string userName, int ID)
         {
-            _libraryRepository.AddToFavorites(userName, ID);
+            _libraryRepository.AddToShowcase(userName, ID);
         }
 
         public void AddToLibrary(Library library)

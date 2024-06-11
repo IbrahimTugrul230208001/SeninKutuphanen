@@ -12,7 +12,7 @@ namespace LibraryManagement.DataAccess.Abstract
             void AddToLibrary(Library library);
             void UpdateLibrary(int ID, string userName, string bookName, string author, string category, int completedPages, int totalOfPages, string status);
             void DeleteFromLibrary(Library library);
-            void AddToFavorites(string userName, int ID);
+            void AddToShowcase(string userName, int ID);
             void AddBookImage(byte[] imageFile, string userName, string bookName);
             void RemoveBookShowcase(string userName, string bookName);
             int GetTotalOfReadPages(string userName);

@@ -196,7 +196,7 @@ namespace LibraryManagement.DataAccess.Concrete.ADO.NET
             return mostExistingCategory;
         }
 
-        public void AddToFavorites(string username, int ID)
+        public void AddToShowcase(string username, int ID)
         {
             throw new NotImplementedException();
         }

@@ -106,7 +106,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
-        public async void AddToFavorites(string userName, int ID)
+        public async void AddToShowcase(string userName, int ID)
         {
             using (var context = new LibraryContext())
             {
