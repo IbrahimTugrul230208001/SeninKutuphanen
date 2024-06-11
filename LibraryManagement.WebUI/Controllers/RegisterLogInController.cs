@@ -7,12 +7,10 @@ public class RegisterLogInController : Controller
 {
     UserManager _userManager = new UserManager(new EfUserRepository());
     private readonly IUserService _userService;
-    private readonly ILibraryService _libraryService;
    
-    public RegisterLogInController(IUserService userService,ILibraryService libraryService)
+    public RegisterLogInController(IUserService userService)
     {
         _userService = userService;
-        _libraryService = libraryService;
     }
     public IActionResult RegisterPage()
     {

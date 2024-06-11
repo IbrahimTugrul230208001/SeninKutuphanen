@@ -10,12 +10,10 @@ namespace learningASP.NET_CORE.Controllers
     public class UserProfileController : Controller
     {
         private readonly IUserService _userService;
-        private readonly ILibraryService _libraryService;
 
-        public UserProfileController(IUserService userService,ILibraryService libraryService)
+        public UserProfileController(IUserService userService)
         {
             _userService = userService;
-            _libraryService = libraryService;
         }
 
         public IActionResult ProfileIndex()

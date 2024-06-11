@@ -28,7 +28,7 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Book b)
+        public IActionResult Add([FromBody] Book b)
         {
             if (b != null)
             {
@@ -48,7 +48,7 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Book b)
+        public IActionResult Update([FromBody] Book b)
         {
             if (b != null)
             {
@@ -58,7 +58,7 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody]int bookId)
+        public IActionResult Delete([FromBody]int bookId)
         {
             if (bookId != 0)
             {
@@ -68,7 +68,7 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToShowcase([FromBody] int bookId)
+        public IActionResult AddToShowcase([FromBody] int bookId)
         {
             if (bookId != 0)
             {
@@ -78,7 +78,7 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveBookShowcase([FromBody] string bookName)
+        public IActionResult RemoveBookShowcase([FromBody] string bookName)
         {          
                 _libraryManager.RemoveBookShowcase(_userName, bookName);
                 return RedirectToAction("EditLibrary");            
