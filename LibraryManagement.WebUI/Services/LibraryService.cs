@@ -6,7 +6,7 @@ namespace learningASP.NET_CORE.Services
     public class LibraryService : ILibraryService
     {
             private readonly HttpClient _httpClient;
-            private readonly string _apiBaseUrl = "https://localhost:7012/LibraryManagement.WebAPI/EditLibraryAPI";
+            private readonly string _apiBaseUrl = "https://localhost:7012/api/EditLibraryAPI";
 
             public LibraryService(HttpClient httpClient)
             {
@@ -33,15 +33,15 @@ namespace learningASP.NET_CORE.Services
                 response.EnsureSuccessStatusCode(); // Ensure the deletion was successful
             }
 
-            public async Task AddToFavoritesAsync(int bookId, string userId)
+            public async Task AddToFavoritesAsync(int bookId, string userName)
             {
-                var response = await _httpClient.PostAsJsonAsync($"{_apiBaseUrl}/AddToFavorites", new { BookId = bookId, UserId = userId }); // Assuming you have an AddToFavorites action in your API
+                var response = await _httpClient.PostAsJsonAsync($"{_apiBaseUrl}/AddToFavorites", new { BookId = bookId, UserId = userName }); // Assuming you have an AddToFavorites action in your API
                 response.EnsureSuccessStatusCode();
             }
 
-            public async Task RemoveBookShowcaseAsync(int bookId, string userId)
+            public async Task RemoveBookShowcaseAsync(int bookId, string userName)
             {
-                var response = await _httpClient.PostAsJsonAsync($"{_apiBaseUrl}/RemoveBookShowcase", new { BookId = bookId, UserId = userId }); // Assuming you have a RemoveBookShowcase action
+                var response = await _httpClient.PostAsJsonAsync($"{_apiBaseUrl}/RemoveBookShowcase", new { BookId = bookId, UserName = userName }); // Assuming you have a RemoveBookShowcase action
                 response.EnsureSuccessStatusCode();
             }
         }

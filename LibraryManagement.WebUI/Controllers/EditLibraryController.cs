@@ -24,19 +24,21 @@ namespace learningASP.NET_CORE.Controllers
 
         [HttpPost("Add")]
         public async Task<IActionResult> Add([FromBody] Book book)
-        {           
+        {
+                book.UserName = _userService.UserName;
                 await _libraryService.AddAsync(book);
                 return RedirectToAction("EditLibrary");           
         }
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Book book)
-        {   
+        {
+                book.UserName = _userService.UserName;
                 await _libraryService.UpdateAsync(book);
                 return RedirectToAction("EditLibrary");     
         }
 
-        [HttpDelete("Delete/{bookId}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(int bookId)
         {          
                 await _libraryService.DeleteAsync(bookId);

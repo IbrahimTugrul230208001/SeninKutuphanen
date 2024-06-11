@@ -11,10 +11,13 @@ builder.Services.AddControllersWithViews();
 
 // Register UserService as a singleton
 builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<ILibraryService, LibraryService>();
+builder.Services.AddScoped<ILibraryService, LibraryService>();
 
 var app = builder.Build();
-
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
 app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -120,7 +120,6 @@ $(document).ready(function () {
 
         // Gather form data
         var formData = {
-            UserName: $("#userName").val(),
             Id: $("#UpdatetextBox0").val(),
             Name: $("#UpdatetextBox1").val(),
             Author: $("#UpdatetextBox2").val(),
