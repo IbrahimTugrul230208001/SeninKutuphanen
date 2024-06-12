@@ -201,5 +201,14 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 return books;
             }
         }
+        public int BookID(string userName, string bookName)
+        {
+            using(var context = new LibraryContext())
+            {
+                var book = context.Libraries.SingleOrDefault(l=>l.UserName == userName && l.Name == bookName);
+                return book.Id;
+            }
+        }
+
     }
 }

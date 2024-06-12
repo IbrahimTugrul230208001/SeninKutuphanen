@@ -98,5 +98,9 @@ namespace LibraryManagement.Business.Concrete
             _libraryRepository .RemoveBookShowcase(userName, bookName);
         }
 
+        public int BookID(string userName, string bookName)
+        {
+            return _libraryRepository.BookID(userName,bookName);
+        }
     }
 }

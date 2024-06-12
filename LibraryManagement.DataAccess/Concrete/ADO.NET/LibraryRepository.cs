@@ -236,6 +236,9 @@ namespace LibraryManagement.DataAccess.Concrete.ADO.NET
             throw new NotImplementedException();
         }
 
-       
+        public int BookID(string userName, string bookName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

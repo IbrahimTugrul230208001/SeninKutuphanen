@@ -35,6 +35,9 @@
     z-index: 1;
     background-color: #8b4513;
     color: white; 
+    border: 3px solid #8b4513;
+    top:-2px;
+    
 }
 
 .Table1 th, .Table1 td {
@@ -75,7 +78,7 @@
 
 .Table1 td:nth-child(2),
 .Table1 th:nth-child(2) {
-    width: 20%; /* Adjust the width as needed */
+    width: 20%; 
 }
 
 /* Set width for the Author column */
@@ -93,7 +96,7 @@
 /* Set width for the Completed Pages column */
 .Table1 td:nth-child(5),
 .Table1 th:nth-child(5) {
-    width: 10%; /* Adjust the width as needed */
+    width: 12.5%; /* Adjust the width as needed */
 }
 
 /* Set width for the Total Pages column */

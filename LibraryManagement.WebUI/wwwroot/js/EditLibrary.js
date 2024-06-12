@@ -114,39 +114,3 @@ document.getElementById('txtSearchByAuthor').addEventListener('input', filterTab
 document.getElementById('txtSearchByCategory').addEventListener('input', filterTable);
 
 
-$(document).ready(function () {
-    $("#UpdateButton").click(function (event) {
-        event.preventDefault(); // Prevent default form submission
-
-        // Gather form data
-        var formData = {
-            Id: $("#UpdatetextBox0").val(),
-            Name: $("#UpdatetextBox1").val(),
-            Author: $("#UpdatetextBox2").val(),
-            Category: $("#UpdatetextBox3").val(),
-            CompletedPages: $("#UpdatetextBox4").val(),
-            TotalOfPages: $("#UpdatetextBox5").val(),
-            Status: $("#UpdatetextBox6").val(),
-        };
-
-        $.ajax({
-            type: "PUT",
-            url: "/EditLibrary/Update", 
-            data: JSON.stringify(formData),   
-            dataType: "json", 
-            contentType: "application/json",
-            success: function (response) {
-                if (response.success) {
-                    alert("Kitap bilgileri başarıyla güncellendi!");
-                } else {
-                    alert("Güncelleme sırasında bir hata oluştu: " + response.error);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.log("Error details:", xhr, status, error);
-                alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
-            }
-        });
-    });
-});
-

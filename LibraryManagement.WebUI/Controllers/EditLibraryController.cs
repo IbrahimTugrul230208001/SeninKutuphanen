@@ -31,11 +31,10 @@ namespace learningASP.NET_CORE.Controllers
         public IActionResult Add([FromBody] Book b)
         {
             if (b != null)
-            {
+            {          
                 _libraryManager.AddToLibrary(new Library
                 {
                     UserName = _userName,
-                    Id = b.Id,
                     Name = b.Name,
                     Author = b.Author,
                     Category = b.Category,
@@ -43,8 +42,13 @@ namespace learningASP.NET_CORE.Controllers
                     TotalOfPages = b.TotalOfPages,
                     Status = b.Status,
                 });
-            }           
-                return RedirectToAction("EditLibrary");           
+                int bookId = _libraryManager.BookID(_userName, b.Name);
+                return Json(new { success = true, message = "Book updated successfully", redirectUrl = Url.Action("EditLibrary"), newBookId = bookId });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Book could not be added", redirectUrl = Url.Action("EditLibrary") });
+            }
         }
 
         [HttpPut]
@@ -53,8 +57,12 @@ namespace learningASP.NET_CORE.Controllers
             if (b != null)
             {
                 _libraryManager.UpdateLibrary(b.Id, _userName, b.Name, b.Author, b.Category, b.CompletedPages, b.TotalOfPages, b.Status);
+                return Json(new { success = true, message = "Book updated successfully", redirectUrl = Url.Action("EditLibrary") });
             }
-            return RedirectToAction("EditLibrary");     
+            else
+            {
+                return Json(new { success = false, message = "Book could not be updated" , redirectUrl = Url.Action("EditLibrary")});
+            }
         }
 
         [HttpDelete]
@@ -62,9 +70,13 @@ namespace learningASP.NET_CORE.Controllers
         {
             if (bookId != 0)
             {
-                _libraryManager.DeleteFromLibrary(new Library { Id = bookId});
+                _libraryManager.DeleteFromLibrary(new Library { Id = bookId });
+                return Json(new { success = true, message = "Book deleted successfully", redirectUrl = Url.Action("EditLibrary") });
             }
-            return RedirectToAction("EditLibrary");        
+            else
+            {
+                return Json(new { success = false, message = "Book could not be deleted", redirectUrl = Url.Action("EditLibrary") });
+            }
         }
 
         [HttpPost]
@@ -73,15 +85,27 @@ namespace learningASP.NET_CORE.Controllers
             if (bookId != 0)
             {
                 _libraryManager.AddToShowcase(_userName, bookId);
+                return Json(new { success = true, message = "Book is added to the Showcase successfully", redirectUrl = Url.Action("EditLibrary") });
             }
-            return RedirectToAction("EditLibrary"); 
+            else
+            {
+                return Json(new { success = false, message = "Book could not be added to the Showcase", redirectUrl = Url.Action("EditLibrary") });
+            }
         }
 
         [HttpPost]
         public IActionResult RemoveBookShowcase([FromBody] string bookName)
         {          
+            if(bookName != null)
+            {
                 _libraryManager.RemoveBookShowcase(_userName, bookName);
-                return RedirectToAction("EditLibrary");            
+                return Json(new { success = true, message = "Book is removed from the Showcase successfully", redirectUrl = Url.Action("EditLibrary") });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Book could not be removed from Showcase", redirectUrl = Url.Action("EditLibrary") });
+            }
+                    
         }
     }
 }

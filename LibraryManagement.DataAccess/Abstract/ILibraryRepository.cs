@@ -25,5 +25,7 @@ namespace LibraryManagement.DataAccess.Abstract
             bool CheckImageStatus(string userName, string bookName);
             string BookImage(string userName, string bookName);
             List<Library> ListBookShowcase(string userName);
+            int BookID(string userName,string bookName);
+
     }
 }
