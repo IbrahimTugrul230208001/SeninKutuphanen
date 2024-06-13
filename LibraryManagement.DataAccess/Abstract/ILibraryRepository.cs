@@ -26,6 +26,7 @@ namespace LibraryManagement.DataAccess.Abstract
             string BookImage(string userName, string bookName);
             List<Library> ListBookShowcase(string userName);
             int BookID(string userName,string bookName);
+            string BookName(int id);
 
     }
 }

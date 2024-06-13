@@ -240,5 +240,10 @@ namespace LibraryManagement.DataAccess.Concrete.ADO.NET
         {
             throw new NotImplementedException();
         }
+
+        public string BookName(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -112,7 +112,7 @@
                 <option>Fen-Bilim</option>
             </select>
             <form style="display:inline-block;" action="Delete" method="post">
-                <button type="submit" class="deletebutton">Seçili Kitabı Kaldır<input id="IdTextBoxDel" type="hidden" name="IdTextboxDEL" readonly /></button>
+                <button type="submit" class="deletebutton" id="DeleteBook">Seçili Kitabı Kaldır<input id="IdTextBoxDel" type="hidden" name="IdTextboxDEL" readonly /></button>
             </form>
             <form style="display:inline-block;" action="AddToShowcase" method="post">
                 <button type="submit" class="AddToFavoritesButton">Vitrine Ekle<input id="IdTextBoxFav" type="hidden" name="IdTextboxFAV" readonly/></button>
@@ -219,7 +219,7 @@
     </div>
     <div class="favorites-container">
         <h2 class="fav-title">Kullanıcı Vitrini [Ekle/Değiştir/Çıkar]</h2>
-        <div class="favorites">
+        <div class="favorites" id="showcaseContainer">
             @{
                 int filledSpacesInShowcase = _libraryManager.CountFavorites(userName);
                 var showcaseList = _libraryManager.ListBookShowcase(userName);

@@ -102,5 +102,9 @@ namespace LibraryManagement.Business.Concrete
         {
             return _libraryRepository.BookID(userName,bookName);
         }
+        public string BookName(int id)
+        {
+            return _libraryRepository.BookName(id);
+        }
     }
 }

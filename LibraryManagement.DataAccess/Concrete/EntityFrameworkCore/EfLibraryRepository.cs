@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 {
@@ -207,6 +208,14 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             {
                 var book = context.Libraries.SingleOrDefault(l=>l.UserName == userName && l.Name == bookName);
                 return book.Id;
+            }
+        }
+        public string BookName(int id)
+        {
+            using(var context = new LibraryContext())
+            {
+                var book = context.Libraries.SingleOrDefault(l => l.Id == id);
+                return book.Name;
             }
         }
 

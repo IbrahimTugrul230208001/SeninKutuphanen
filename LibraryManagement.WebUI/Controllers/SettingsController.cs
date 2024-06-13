@@ -1,7 +1,9 @@
-﻿using learningASP.NET_CORE.Services;
+﻿using learningASP.NET_CORE.Models;
+using learningASP.NET_CORE.Services;
 using LibraryManagement.Business.Concrete;
 using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace learningASP.NET_CORE.Controllers
 {
@@ -19,6 +21,7 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
+        [HttpPost]
         public IActionResult SetNewUserName(IFormCollection receivedUserInput)
         {
             return RedirectToAction("Settings");
@@ -31,20 +34,17 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public IActionResult SetNewPassword(IFormCollection receivedUserInput)
+        public IActionResult SetNewPassword([FromBody]User user)
         {
-            string newPassword = receivedUserInput["TbxNewPassword"].ToString();
-            string currentPassword = receivedUserInput["TbxCurrentPassword"].ToString();
-            string newPasswordAgain = receivedUserInput["TbxNewPasswordAgain"].ToString();
-
-            if (newPassword == newPasswordAgain && _userManager.VerifyPassword(_userService.UserName, currentPassword))
+            if (user.NewPasswordAgain == user.NewPassword && _userManager.VerifyPassword(_userService.UserName, user.CurrentPassword))
             {
-                _userManager.UpdateUserPassword(newPassword, _userService.UserName);
-                return View("Settings");
+                _userManager.UpdateUserPassword(user.NewPassword, _userService.UserName);
+                return Json(new { success = true, message = "Password is updated successfully", redirectUrl = Url.Action("Settings")});
             }
-
-            ViewData["ErrorMessage"] = "Invalid current password or passwords don't match";
-            return View("Settings");
+            else
+            {
+                return Json(new { success = false, message = "An error occured during update." , redirectUrl = Url.Action("Settings")});
+            }
         }
 
         [HttpPost]
@@ -53,7 +53,7 @@ namespace learningASP.NET_CORE.Controllers
             if (imageFile != null && imageFile.Length > 0)
             {
                 byte[] imageData;
-                using (MemoryStream stream = new MemoryStream())
+                using (MemoryStream stream = new())
                 {
                     imageFile.CopyTo(stream);
                     imageData = stream.ToArray();

@@ -5,6 +5,7 @@ using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore;
 using LibraryManagement.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace learningASP.NET_CORE.Controllers
 {
@@ -80,12 +81,13 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToShowcase([FromBody] int bookId)
+        public IActionResult AddToShowcase([FromBody]int bookId)
         {
             if (bookId != 0)
             {
                 _libraryManager.AddToShowcase(_userName, bookId);
-                return Json(new { success = true, message = "Book is added to the Showcase successfully", redirectUrl = Url.Action("EditLibrary") });
+                string name = _libraryManager.BookName(bookId);
+                return Json(new { success = true, message = "Book is added to the Showcase successfully", redirectUrl = Url.Action("EditLibrary"), bookName = name});
             }
             else
             {
@@ -93,8 +95,8 @@ namespace learningASP.NET_CORE.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult RemoveBookShowcase([FromBody] string bookName)
+        [HttpDelete]
+        public IActionResult RemoveBookShowcase([FromBody]string bookName)
         {          
             if(bookName != null)
             {
@@ -105,7 +107,6 @@ namespace learningASP.NET_CORE.Controllers
             {
                 return Json(new { success = false, message = "Book could not be removed from Showcase", redirectUrl = Url.Action("EditLibrary") });
             }
-                    
         }
     }
 }

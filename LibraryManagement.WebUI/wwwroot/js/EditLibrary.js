@@ -203,7 +203,7 @@ $(document).ready(function () {
                     var newRow = document.createElement("tr");
 
                     newRow.innerHTML = `
-                        <td>${response.newBookId}</td>
+                        <td style="visibility:hidden;">${response.newBookId}</td>
                         <td>${formData.Name}</td>
                         <td>${formData.Author}</td>
                         <td>${formData.Category}</td>
@@ -233,11 +233,10 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
-    $(".deletebutton").click(function (event) {
+    $("#DeleteBook").click(function (event) {
         event.preventDefault();
-        var bookId = {
-            Id: $("#IdTextBoxDel").val(),
-        };
+        var bookId = $("#IdTextBoxDel").val();
+        
 
         $.ajax({
             type: "DELETE",
@@ -245,7 +244,7 @@ $(document).ready(function () {
             data: JSON.stringify(bookId),
             dataType: "json",
             contentType: "application/json",
-            successs: function (response) {
+            success: function (response) {
                 if (response.success) {
                     alert("Kitap kütüphaneden kaldırıldı.");
                     $("#tableBody tr").filter(function () {
@@ -255,10 +254,94 @@ $(document).ready(function () {
                 else {
                     alert("Kaldırma işlemi esnasında bir hata oluştu: " + response.error);
                 }
-            }
+            },
             error: function (xhr, status, error) {
                 console.log("Error details:", xhr, status, error);
                 alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
+            }
             });
+    });
+});
+
+$(document).ready(function () {
+    $(".AddToFavoritesButton").click(function (event) {
+        event.preventDefault();
+        var bookID = $("#IdTextBoxFav").val();
+       
+        $.ajax({
+            type: "POST",
+            url: "/EditLibrary/AddToShowcase",
+            data: JSON.stringify(bookID),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (response) {
+                if (response.success) {
+                    alert("Kitap kullanıcı vitrinine eklendi!");
+                    // Construct new book HTML
+                    var newBookHtml = `
+                        <div class="fav">
+                            <div class="booktitle-container"><label class="book-title" name="booktitle">${response.bookName}</label></div>
+                            <form action="UploadImage" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="booktitle" value="${response.bookName}" />
+                                <div class="imgBox">
+                                    <input type="file" id="imageInput" name="imageFile" accept="image/*">
+                                    <label class="upload-label" for="imageInput">Resim Yüklemek İçin Tıkla</label>
+                                </div>
+                                <button type="submit" class="upload-button">Yükle</button>
+                            </form>
+                        </div>`;
+                    // Append the new book HTML to the showcase container
+                    $("#showcaseContainer").append(newBookHtml);
+
+                    // Optionally remove one of the empty placeholders if needed
+                    $("#showcaseContainer .fav").last().remove();
+                } else {
+                    alert("İşlem esnasında bir hata oluştu.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("Error details:", xhr, status, error);
+                alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
+            }
+        });
+    });
+});
+
+$(document).on('submit', '.RemoveFromFavorites', function (event) {
+    event.preventDefault();
+    var bookName = $(this).find('input[name="booktitle"]').val();
+    $.ajax({
+        type: "DELETE",
+        url: "/EditLibrary/RemoveBookShowcase",
+        data: JSON.stringify({ bookName: bookName }),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (response) {
+            if (response.success) {
+                alert("Kitap kullanıcı vitrininden kaldırıldı!");
+                // Remove the corresponding .fav element from the DOM
+                $(event.target).closest('.fav').remove();
+                // Optionally, you can append a placeholder if needed
+                var emptyPlaceholder = `
+                        <div class="fav">
+                            <div class="booktitle-container"><label class="book-title" name="booktitle">-</label></div>
+                            <form class="AddToFavorites" action="AddToShowcase" method="post">
+                                <input type="hidden" name="booktitle" />
+                                <div class="imgBox">
+                                    <input type="file" id="imageInput" name="imageFile" accept="image/*">
+                                    <label class="upload-label" for="imageInput">Resim Yüklemek İçin Tıkla</label>
+                                </div>
+                                <button type="submit" class="upload-button">Yükle</button>
+                            </form>
+                        </div>`;
+                $("#showcaseContainer").append(emptyPlaceholder);
+            } else {
+                alert("İşlem esnasında bir hata oluştu.");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Error details:", xhr, status, error);
+            alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
+        }
     });
 });
