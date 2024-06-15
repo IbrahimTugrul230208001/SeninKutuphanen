@@ -4,12 +4,12 @@ using LibraryManagement.Business.Concrete;
 using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
-public class RegisterLogInController : Controller
+public class RegisterController : Controller
 {
     UserManager _userManager = new UserManager(new EfUserRepository());
     private readonly IUserService _userService;
    
-    public RegisterLogInController(IUserService userService)
+    public RegisterController(IUserService userService)
     {
         _userService = userService;
     }
@@ -19,7 +19,7 @@ public class RegisterLogInController : Controller
     }
 
     [HttpPost]
-    public IActionResult RegisterPage(IFormCollection receivedUserInput)
+    public IActionResult RegisterUser(IFormCollection receivedUserInput)
     {
         string userName = Convert.ToString(receivedUserInput["TbxUserName"]);
         string password = Convert.ToString(receivedUserInput["TbxPassword"]);
@@ -33,26 +33,6 @@ public class RegisterLogInController : Controller
         else
         {
             return View();
-        }
-    }
-
-    public IActionResult LogInPage()
-    {
-            return View();
-    }
-
-    [HttpPost]
-    public IActionResult LogIn([FromBody]User user)
-    {
-        if (_userManager.ValidateUser(user.UserName, user.Password))
-        {
-            _userService.UserName = user.UserName;
-            _userService.ProfilePicture = _userManager.ProfilePictureImage(user.UserName);
-            return Json(new { success = true, redirectUrl = Url.Action("LogInPage") });
-        }
-        else
-        {
-            return Json(new { success = false, redirectUrl = Url.Action("LogInPage")});
         }
     }
 }

@@ -7,7 +7,7 @@
         };
         $.ajax({
             type: "POST",
-            url: "/EditLibrary/LogIn",
+            url: "/LogIn/UserLogIn",
             data: JSON.stringify(user),
             dataType: "json",
             contentType: "application/json",
@@ -38,7 +38,7 @@ $(document).ready(function () {
         };
         $.ajax({
             type: "POST",
-            url: "/RegisterLogIn/Register",
+            url: "/Register/RegisterUser",
             data: JSON.stringify(newUser),
             contentType: "json",
             dataType: "application/json",
