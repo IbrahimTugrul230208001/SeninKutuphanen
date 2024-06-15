@@ -11,21 +11,21 @@
     <div class="title">
         <h2 class="titleofsite">Senin Kütüphanen</h2>
     </div>
-   <form asp-controller = "RegisterLogIn" asp-action="LogInPage" method="post">
+   <form action="LogIn" method="post">
         <div class="RegisterPage">
             <div class="Register-content">
                 <h1 class="Register-title">Giriş Yap</h1>
-                <h3 class="Name">Kullanıcı adı: <input name="TbxUserName" type="text"></h3>
-                <h3 class="Password">Şifre: <input name="TbxPassword" type="password"></h3>
+                <h3 class="Name">Kullanıcı adı: <input name="TbxUserName" type="text" id="tbxUserName"></h3>
+                <h3 class="Password">Şifre: <input name="TbxPassword" type="password" id="tbxPassword"></h3>
                 <a class="Noaccount" href="/RegisterLogIn/RegisterPage">
                     Hesabın yok mu? Kayıt Ol!
                 </a>
-                <button type="submit" class="Register-button">Giriş Yap</button>
+                <button type="submit" class="Register-button" id="loginButton">Giriş Yap</button>
             </div>
         </div>
    </form>
 
 
-
+<script src="/js/LogInRegister.js"></script>
 </body>
 </html>

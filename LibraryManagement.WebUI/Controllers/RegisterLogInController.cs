@@ -1,4 +1,5 @@
-﻿using learningASP.NET_CORE.Services;
+﻿using learningASP.NET_CORE.Models;
+using learningASP.NET_CORE.Services;
 using LibraryManagement.Business.Concrete;
 using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -41,20 +42,17 @@ public class RegisterLogInController : Controller
     }
 
     [HttpPost]
-    public IActionResult LogInPage(IFormCollection receivedUserInput)
+    public IActionResult LogIn([FromBody]User user)
     {
-        string userName = Convert.ToString(receivedUserInput["TbxUserName"]);
-        string password = Convert.ToString(receivedUserInput["TbxPassword"]);
-
-        if (_userManager.ValidateUser(userName, password))
+        if (_userManager.ValidateUser(user.UserName, user.Password))
         {
-            _userService.UserName = userName;
-            _userService.ProfilePicture = _userManager.ProfilePictureImage(userName);
-            return RedirectToAction("ProfileIndex", "UserProfile");
+            _userService.UserName = user.UserName;
+            _userService.ProfilePicture = _userManager.ProfilePictureImage(user.UserName);
+            return Json(new { success = true, redirectUrl = Url.Action("LogInPage") });
         }
         else
         {
-            return View();
+            return Json(new { success = false, redirectUrl = Url.Action("LogInPage")});
         }
     }
 }

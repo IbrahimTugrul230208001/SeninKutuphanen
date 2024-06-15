@@ -276,7 +276,6 @@ $(document).ready(function () {
             contentType: "application/json",
             success: function (response) {
                 if (response.success) {
-                    alert("Kitap kullanıcı vitrinine eklendi!");
                     // Construct new book HTML
                     var newBookHtml = `
                         <div class="fav">
@@ -295,6 +294,8 @@ $(document).ready(function () {
 
                     // Optionally remove one of the empty placeholders if needed
                     $("#showcaseContainer .fav").last().remove();
+                    alert("Kitap kullanıcı vitrinine eklendi!");
+
                 } else {
                     alert("İşlem esnasında bir hata oluştu.");
                 }
@@ -307,22 +308,22 @@ $(document).ready(function () {
     });
 });
 
-$(document).on('submit', '.RemoveFromFavorites', function (event) {
-    event.preventDefault();
-    var bookName = $(this).find('input[name="booktitle"]').val();
-    $.ajax({
-        type: "DELETE",
-        url: "/EditLibrary/RemoveBookShowcase",
-        data: JSON.stringify({ bookName: bookName }),
-        dataType: "json",
-        contentType: "application/json",
-        success: function (response) {
-            if (response.success) {
-                alert("Kitap kullanıcı vitrininden kaldırıldı!");
-                // Remove the corresponding .fav element from the DOM
-                $(event.target).closest('.fav').remove();
-                // Optionally, you can append a placeholder if needed
-                var emptyPlaceholder = `
+$(document).ready(function () {
+    $(".favbutton").click(function (event) {
+        event.preventDefault();
+        var bookName = $(this).closest(".fav").find(".booktitle").text();
+            $.ajax({
+                type: "DELETE",
+                url: "/EditLibrary/RemoveBookShowcase",
+                data: JSON.stringify(bookName),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.success) {
+
+                        $(event.target).closest('.fav').remove(); 
+
+                        var emptyPlaceholder = `
                         <div class="fav">
                             <div class="booktitle-container"><label class="book-title" name="booktitle">-</label></div>
                             <form class="AddToFavorites" action="AddToShowcase" method="post">
@@ -334,14 +335,17 @@ $(document).on('submit', '.RemoveFromFavorites', function (event) {
                                 <button type="submit" class="upload-button">Yükle</button>
                             </form>
                         </div>`;
-                $("#showcaseContainer").append(emptyPlaceholder);
-            } else {
-                alert("İşlem esnasında bir hata oluştu.");
-            }
-        },
-        error: function (xhr, status, error) {
-            console.log("Error details:", xhr, status, error);
-            alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
-        }
+                        $("#showcaseContainer").append(emptyPlaceholder);
+                        alert("Kitap kullanıcı vitrininden kaldırıldı!");
+
+                    } else {
+                        alert("İşlem esnasında bir hata oluştu.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error details:", xhr, status, error);
+                    alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
+                }
+            });
     });
 });

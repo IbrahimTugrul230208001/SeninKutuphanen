@@ -58,11 +58,11 @@ namespace learningASP.NET_CORE.Controllers
             if (b != null)
             {
                 _libraryManager.UpdateLibrary(b.Id, _userName, b.Name, b.Author, b.Category, b.CompletedPages, b.TotalOfPages, b.Status);
-                return Json(new { success = true, message = "Book updated successfully", redirectUrl = Url.Action("EditLibrary") });
+                return Json(new { success = true, redirectUrl = Url.Action("EditLibrary") });
             }
             else
             {
-                return Json(new { success = false, message = "Book could not be updated" , redirectUrl = Url.Action("EditLibrary")});
+                return Json(new { success = false, redirectUrl = Url.Action("EditLibrary")});
             }
         }
 
@@ -72,11 +72,11 @@ namespace learningASP.NET_CORE.Controllers
             if (bookId != 0)
             {
                 _libraryManager.DeleteFromLibrary(new Library { Id = bookId });
-                return Json(new { success = true, message = "Book deleted successfully", redirectUrl = Url.Action("EditLibrary") });
+                return Json(new { success = true, redirectUrl = Url.Action("EditLibrary") });
             }
             else
             {
-                return Json(new { success = false, message = "Book could not be deleted", redirectUrl = Url.Action("EditLibrary") });
+                return Json(new { success = false, redirectUrl = Url.Action("EditLibrary") });
             }
         }
 
@@ -87,11 +87,11 @@ namespace learningASP.NET_CORE.Controllers
             {
                 _libraryManager.AddToShowcase(_userName, bookId);
                 string name = _libraryManager.BookName(bookId);
-                return Json(new { success = true, message = "Book is added to the Showcase successfully", redirectUrl = Url.Action("EditLibrary"), bookName = name});
+                return Json(new { success = true, bookName = name , redirectUrl = Url.Action("EditLibrary")});
             }
             else
             {
-                return Json(new { success = false, message = "Book could not be added to the Showcase", redirectUrl = Url.Action("EditLibrary") });
+                return Json(new { success = false, redirectUrl = Url.Action("EditLibrary") });
             }
         }
 
@@ -101,11 +101,11 @@ namespace learningASP.NET_CORE.Controllers
             if(bookName != null)
             {
                 _libraryManager.RemoveBookShowcase(_userName, bookName);
-                return Json(new { success = true, message = "Book is removed from the Showcase successfully", redirectUrl = Url.Action("EditLibrary") });
+                return Json(new { success = true, redirectUrl = Url.Action("EditLibrary") });
             }
             else
             {
-                return Json(new { success = false, message = "Book could not be removed from Showcase", redirectUrl = Url.Action("EditLibrary") });
+                return Json(new { success = false, redirectUrl = Url.Action("EditLibrary") });
             }
         }
     }
