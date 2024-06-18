@@ -23,7 +23,7 @@ app.UseRouting();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=RegisterLogIn}/{action=LogInPage}"
+    pattern: "{controller=LogIn}/{action=LogIn}"
 );
 
 app.Run();
