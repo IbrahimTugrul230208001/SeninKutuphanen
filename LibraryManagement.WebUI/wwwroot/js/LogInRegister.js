@@ -1,10 +1,11 @@
 ﻿$(document).ready(function () {
     $("#loginButton").click(function (event) {
-        event.PreventDefault();
+        event.preventDefault();
         var user = {
             UserName: $("#tbxUserName").val(),
             Password: $("#tbxPassword").val(),
         };
+
         $.ajax({
             type: "POST",
             url: "/LogIn/UserLogIn",
@@ -20,13 +21,14 @@
                     alert("Şifre veya kullanıcı adı yanlış.");
                 }
             },
-            error: function(xhr, status, error) {
-                    console.log("Error details:", xhr, status, error);
-                    alert("Sunucu ile irtibat kurulurken bir hata oluştu.");
-            }          
+            error: function (xhr, status, error) {
+                console.log("Error details:", xhr, status, error);
+                alert("Sunucu ile irtibat kurulurken bir hata oluştu.");
+            }
         });
     });
 });
+
 
 $(document).ready(function () {
     $(".Register-button").click(function (event) {
