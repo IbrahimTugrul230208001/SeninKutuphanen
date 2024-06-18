@@ -22,7 +22,7 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public IActionResult UserLogIn([FromBody] User user)
+        public IActionResult UserLogIn([FromBody]User user)
         {
             if (_userManager.ValidateUser(user.UserName, user.Password) == true)
             {
