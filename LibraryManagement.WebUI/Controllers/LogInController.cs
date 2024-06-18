@@ -22,12 +22,14 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public IActionResult UserLogIn([FromBody]User user)
+        public IActionResult LogIn(IFormCollection userData)
         {
-            if (_userManager.ValidateUser(user.UserName, user.Password) == true)
+            string userName = userData["TbxUserName"].ToString();
+            string password = userData["TbxPassword"].ToString();
+            if (_userManager.ValidateUser(userName, password) == true)
             {
-                _userService.UserName = user.UserName;
-                _userService.ProfilePicture = _userManager.ProfilePictureImage(user.UserName);
+                _userService.UserName = userName;
+                _userService.ProfilePicture = _userManager.ProfilePictureImage(userName);
                 return Json(new { success = true, redirectUrl = Url.Action("LogInPage") });
             }
             else
