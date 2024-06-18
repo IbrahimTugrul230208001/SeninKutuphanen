@@ -23,7 +23,13 @@ app.UseRouting();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=LogIn}/{action=LogIn}"
+    pattern: "{controller=Home}/{action=Index}"
 );
+
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/LogIn/LogIn");
+    return Task.CompletedTask;
+});
 
 app.Run();
