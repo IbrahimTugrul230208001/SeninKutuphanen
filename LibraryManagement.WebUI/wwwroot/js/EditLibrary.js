@@ -277,23 +277,14 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     // Construct new book HTML
-                    var newBookHtml = `
-                        <div class="fav">
-                            <div class="booktitle-container"><label class="book-title" name="booktitle">${response.bookName}</label></div>
-                            <form action="UploadImage" method="post" enctype="multipart/form-data">
-                                <input type="hidden" name="booktitle" value="${response.bookName}" />
-                                <div class="imgBox">
-                                    <input type="file" id="imageInput" name="imageFile" accept="image/*">
-                                    <label class="upload-label" for="imageInput">Resim Yüklemek İçin Tıkla</label>
-                                </div>
-                                <button type="submit" class="upload-button">Yükle</button>
-                            </form>
-                        </div>`;
-                    // Append the new book HTML to the showcase container
-                    $("#showcaseContainer").append(newBookHtml);
+                    var emptyShowcase = $("#showcaseContainer .fav:has(label[name='booktitle']:contains('-'))").first();
 
-                    // Optionally remove one of the empty placeholders if needed
-                    $("#showcaseContainer .fav").last().remove();
+                    if (emptyShowcase.length > 0) { // Check if an empty box was found
+                        // Update the empty showcase with the new book details
+                        emptyShowcase.find("label[name='booktitle']").text(response.bookName);
+                        emptyShowcase.find("input[name='booktitle']").val(response.bookName);
+                        // Remove any default placeholder elements
+                        emptyShowcase.find(".upload-label").remove();
                     alert("Kitap kullanıcı vitrinine eklendi!");
 
                 } else {
@@ -311,7 +302,8 @@ $(document).ready(function () {
 $(document).ready(function () {
     $(".favbutton").click(function (event) {
         event.preventDefault();
-        var bookName = $(this).closest(".fav").find(".booktitle").text();
+        var titleId = $(this).closest('form').find("input[id^='bookTitleId']").val();
+        var bookName = $("#bookTitle"+titleId).text();
             $.ajax({
                 type: "DELETE",
                 url: "/EditLibrary/RemoveBookShowcase",

@@ -225,11 +225,14 @@
                 var showcaseList = _libraryManager.ListBookShowcase(userName);
                 foreach(var book in showcaseList)
                 {
+                    int a = 0;
+                    ++a;
                     <div class="fav">
-                        <div class="booktitle-container"><label class="book-title" name="booktitle">@book.Name</label></div>
                         @if (_libraryManager.CheckImageStatus(userName, book.Name) == false && showcaseList.Count>0)
                         {
+                            
                             <form action="UploadImage" method="post" enctype="multipart/form-data">
+                                <div class="booktitle-container"><label class="book-title" name="booktitle">@book.Name</label></div>
                                 <input type="hidden" name="booktitle" value="@book.Name" />
                                 <div class="imgBox">
                                     <input type="file" id="imageInput" name="imageFile" accept="image/*">
@@ -241,6 +244,8 @@
                         else
                         {
                             <form action="RemoveBookShowcase" method="post">
+                                <div class="booktitle-container"><label class="book-title" id="bookTitle@(a)">@book.Name</label></div>
+                                <input type="hidden" value="@a" id="bookTitleId"/>
                                 <div class="imgBox">
                                     <input type="hidden" name="booktitle" value="@book.Name"/>
                                     <img class="bookimg" src="@_libraryManager.BookImage(userName,book.Name)">

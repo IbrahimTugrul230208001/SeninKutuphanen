@@ -13,26 +13,26 @@ public class RegisterController : Controller
     {
         _userService = userService;
     }
-    public IActionResult RegisterPage()
+    public IActionResult Register()
     {
         return View();
     }
 
     [HttpPost]
-    public IActionResult RegisterUser(IFormCollection receivedUserInput)
+    public IActionResult RegisterUser(IFormCollection userData)
     {
-        string userName = Convert.ToString(receivedUserInput["TbxUserName"]);
-        string password = Convert.ToString(receivedUserInput["TbxPassword"]);
-        string confirmPassword = Convert.ToString(receivedUserInput["TbxPasswordAgain"]);
+        string userName = userData["TbxUserName"].ToString();
+        string password = userData["TbxPassword"].ToString();
+        string confirmPassword = userData["TbxPasswordAgain"].ToString();
 
         if (password == confirmPassword)
         {
             _userManager.AddNewUser(userName, password);
-            return RedirectToAction("LogInPage", "RegisterLogIn");
+            return RedirectToAction("LogIn", "LogIn");
         }
         else
         {
-            return View();
+            return View("Register");
         }
     }
 }
