@@ -14,70 +14,60 @@ namespace LibraryManagement.Business.Concrete
         {
               _userRepository = userRepository;
         }
-        public void AddNewUser(string userName, string password)
+
+        public async Task AddNewUserAsync(string userName, string password)
         {
-            _userRepository.AddNewUser(userName, password);
-        }
-        public void CheckUserLogInStatus(string stayLoggedIn, string userName)
-        {
-            _userRepository.CheckUserLogInStatus(stayLoggedIn, userName);
+            await _userRepository.AddNewUserAsync(userName, password);
         }
 
-        public string HashPassword(string password)
+        public async Task SetNewUserNameAsync(int ID, string userName)
         {
-            return _userRepository.HashPassword(password);
-        }
-        public string ResidementPlaceCity(string userName)
-        {
-            return _userRepository.ResidementPlaceCity(userName);
+            await _userRepository.SetNewUserNameAsync(ID, userName);
         }
 
-        public string ResidementPlaceCountry(string userName)
+        public async Task SetNewUserProfileAsync(string userName, byte[] imageFile)
         {
-            return _userRepository.ResidementPlaceCountry(userName);
-        }
-        public void SetNewResidementPlaces(string city, string country, string userName)
-        {
-            _userRepository.SetNewResidementPlaces(city, country, userName);
+            await _userRepository.SetNewUserProfileAsync(userName, imageFile);
         }
 
-        public void SetNewUserName(int ID, string userName)
+        public async Task SetNewResidementPlacesAsync(string city, string country, string userName)
         {
-            _userRepository.SetNewUserName(ID, userName);
+            await _userRepository.SetNewResidementPlacesAsync(city, country, userName);
         }
 
-        public void UpdateUserPassword(string password, string userName)
+        public async Task UpdateUserPasswordAsync(string password, string userName)
         {
-            _userRepository.UpdateUserPassword(password, userName);
+            await _userRepository.UpdateUserPasswordAsync(password, userName);
         }
 
-        public int UserID(string userName)
+        public async Task<int> UserIDAsync(string userName)
         {
-            return _userRepository.UserID(userName);
+            return await _userRepository.UserIDAsync(userName);
         }
 
-        public bool ValidateUser(string userName, string password)
+        public async Task<string> ResidementPlaceCityAsync(string userName)
         {
-            return _userRepository.ValidateUser(userName, password);
+            return await _userRepository.ResidementPlaceCityAsync(userName);
         }
 
-        public bool VerifyHashedPassword(string password, string hashedPassword)
+        public async Task<string> ResidementPlaceCountryAsync(string userName)
         {
-            return _userRepository.VerifyHashedPassword(password, hashedPassword);
+            return await _userRepository.ResidementPlaceCountryAsync(userName);
         }
 
-        public bool VerifyPassword(string userName, string password)
+        public async Task<string> ProfilePictureImageAsync(string userName)
         {
-            return _userRepository.VerifyPassword(userName, password);
-        }
-        public string ProfilePictureImage(string userName)
-        {
-            return _userRepository.ProfilePictureImage(userName);
+            return await _userRepository.ProfilePictureImageAsync(userName);
         }
 
-        public void SetNewUserProfile(string userName, byte[] imageFile)
+        public async Task<bool> ValidateUserAsync(string userName, string password)
         {
-            _userRepository.SetNewUserProfile(userName, imageFile);
+            return await _userRepository.ValidateUserAsync(userName, password);
+        }
+
+        public async Task<bool> VerifyPasswordAsync(string userName, string password)
+        {
+            return await _userRepository.VerifyPasswordAsync(userName, password);
         }
     }
 }

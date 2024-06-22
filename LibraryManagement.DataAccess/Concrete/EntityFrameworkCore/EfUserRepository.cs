@@ -12,7 +12,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 {
     public class EfUserRepository:IUserRepository
     {
-        public async void AddNewUser(string userName, string password)
+        public async Task AddNewUserAsync(string userName, string password)
         {
             UserAccount userAccount = new();
             userAccount.UserName = userName;
@@ -25,7 +25,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 await context.SaveChangesAsync();
             }
         }
-        public async void CheckUserLogInStatus(string stayLoggedIn, string userName)
+        public async Task CheckUserLogInStatusAsync(string stayLoggedIn, string userName)
         {
             using (var context = new LibraryContext())
             {
@@ -46,34 +46,34 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 return Convert.ToBase64String(hashBytes);
             }
         }
-        public string ResidementPlaceCity(string userName)
+        public async Task<string> ResidementPlaceCityAsync(string userName)
         {
             using (var context = new LibraryContext())
             {
-                var userAccount = context.UserAccounts.FirstOrDefault(l => l.UserName == userName);
-                return userAccount.ResidementPlaceCity.ToString();
+                var userAccount = await context.UserAccounts.FirstOrDefaultAsync(l => l.UserName == userName) ?? throw new ArgumentException("Null here");
+                return  userAccount.ResidementPlaceCity.ToString();
             }
         }
 
-        public string ResidementPlaceCountry(string userName)
+        public async Task<string> ResidementPlaceCountryAsync(string userName)
         {
             using (var context = new LibraryContext())
             {
-                var userAccount = context.UserAccounts.FirstOrDefault(l => l.UserName == userName);
+                var userAccount = await context.UserAccounts.FirstOrDefaultAsync(l => l.UserName == userName) ?? throw new ArgumentException("Null here");
                 return userAccount.ResidementPlaceCountry.ToString();
             }
         }
-        public async void SetNewUserName(int ID, string userName)
+        public async Task SetNewUserNameAsync(int ID, string userName)
         {
             using (var context = new LibraryContext())
             {
-                var userAccount = await context.UserAccounts.FirstOrDefaultAsync(l => l.Id == ID);
+                var userAccount = await context.UserAccounts.FirstOrDefaultAsync(l => l.Id == ID) ?? throw new ArgumentException("Null here");
                 userAccount.UserName = userName;
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
 
-        public async void UpdateUserPassword(string password, string userName)
+        public async Task UpdateUserPasswordAsync(string password, string userName)
         {
             using (var context = new LibraryContext())
             {
@@ -87,20 +87,20 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
-        public int UserID(string userName)
+        public async Task<int> UserIDAsync(string userName)
         {
             using (var context = new LibraryContext())
             {
-                var user = context.UserAccounts.FirstOrDefault(u => u.UserName == userName);
+                var user = await context.UserAccounts.FirstOrDefaultAsync(u => u.UserName == userName) ?? throw new ArgumentException("Null here");
                 return user.Id;
             }
         }
 
-        public bool ValidateUser(string userName, string password)
+        public async Task<bool> ValidateUserAsync(string userName, string password)
         {
             using (var context = new LibraryContext())
             {
-                var user = context.UserAccounts.FirstOrDefault(u => u.UserName == userName);
+                var user = await context.UserAccounts.FirstOrDefaultAsync(u => u.UserName == userName);
 
                 if (user != null)
                 {
@@ -123,11 +123,11 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
-        public bool VerifyPassword(string userName, string password)
+        public async Task<bool> VerifyPasswordAsync(string userName, string password)
         {
             using (var context = new LibraryContext())
             {
-                var user = context.UserAccounts.FirstOrDefault(u => u.UserName == userName);
+                var user = await context.UserAccounts.FirstOrDefaultAsync(u => u.UserName == userName) ?? throw new ArgumentException("Null here");
 
                 if (user != null)
                 {
@@ -143,26 +143,28 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             }
             return false;
         }
-        public async void SetNewUserProfile(string userName, byte[] imageFile)
+        public async Task SetNewUserProfileAsync(string userName, byte[] imageFile)
         {
             using (var context = new LibraryContext())
             {
                 var user = await context.UserAccounts.FirstOrDefaultAsync(u => u.UserName == userName);
-                user.UserProfilePicture = imageFile;
-                await context.SaveChangesAsync();
+                if (user != null)
+                {
+                    user.UserProfilePicture = imageFile;
+                    await context.SaveChangesAsync();
+                }
             }
         }
-        public string ProfilePictureImage(string userName)
+
+        public async Task<string> ProfilePictureImageAsync(string userName)
         {
             using (var context = new LibraryContext())
             {
-                var user = context.UserAccounts.FirstOrDefault(u => u.UserName == userName);
-
+                var user = await context.UserAccounts.FirstOrDefaultAsync(u => u.UserName == userName);
                 if (user != null && user.UserProfilePicture != null)
                 {
                     string base64String = Convert.ToBase64String(user.UserProfilePicture);
-                    string dataUri = $"data:image/jpeg;base64,{base64String}";
-                    return dataUri;
+                    return $"data:image/jpeg;base64,{base64String}";
                 }
                 else
                 {
@@ -171,12 +173,11 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
-        public async void SetNewResidementPlaces(string city, string country, string userName)
+        public async Task SetNewResidementPlacesAsync(string city, string country, string userName)
         {
             using (var context = new LibraryContext())
             {
                 var userAccount = await context.UserAccounts.FirstOrDefaultAsync(u => u.UserName == userName);
-
                 if (userAccount != null)
                 {
                     userAccount.ResidementPlaceCity = city;

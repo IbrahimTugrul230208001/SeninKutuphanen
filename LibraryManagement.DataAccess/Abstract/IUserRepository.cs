@@ -5,23 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LibraryManagement.DataAccess.Abstract
-{
-    public interface IUserRepository
     {
-        bool ValidateUser(string userName, string password);
-        bool VerifyHashedPassword(string password, string hashedPassword);
-        bool VerifyPassword(string userName, string password);
-        void SetNewResidementPlaces(string city, string country, string userName);
-        void AddNewUser(string userName, string password);
-        string HashPassword(string password);
-        void UpdateUserPassword(string password, string userName);
-        int UserID(string userName);
-        void SetNewUserName(int ID, string userName);
-        string ResidementPlaceCity(string userName);
-        string ResidementPlaceCountry(string userName);
-        string ProfilePictureImage(string userName);
-        void SetNewUserProfile(string userName, byte[] imageFile);
-        void CheckUserLogInStatus(string stayLoggedIn, string userName);
-
+        public interface IUserRepository
+        {
+            Task AddNewUserAsync(string userName, string password);
+            Task SetNewUserNameAsync(int ID, string userName);
+            Task SetNewUserProfileAsync(string userName, byte[] imageFile);
+            Task SetNewResidementPlacesAsync(string city, string country, string userName);
+            Task UpdateUserPasswordAsync(string password, string userName);
+            Task<int> UserIDAsync(string userName);
+            Task<string> ResidementPlaceCityAsync(string userName);
+            Task<string> ResidementPlaceCountryAsync(string userName);
+            Task<string> ProfilePictureImageAsync(string userName);
+            Task<bool> ValidateUserAsync(string userName, string password);
+            Task<bool> VerifyPasswordAsync(string userName, string password);
+        }
     }
-}
+
