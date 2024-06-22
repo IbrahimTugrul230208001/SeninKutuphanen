@@ -14,30 +14,28 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
     {
         public async Task AddNewUserAsync(string userName, string password)
         {
-            UserAccount userAccount = new();
-            userAccount.UserName = userName;
-            userAccount.PasswordHash = HashPassword(password);
-            userAccount.ResidementPlaceCity = "-";
-            userAccount.ResidementPlaceCountry = "-";
-            using (var context = new LibraryContext())
+            try
             {
-                await context.UserAccounts.AddAsync(userAccount);
-                await context.SaveChangesAsync();
-            }
-        }
-        public async Task CheckUserLogInStatusAsync(string stayLoggedIn, string userName)
-        {
-            using (var context = new LibraryContext())
-            {
-                var user = await context.UserAccounts.FirstOrDefaultAsync(u => u.UserName == userName);
-
-                if (user != null)
+                UserAccount userAccount = new();
+                userAccount.UserName = userName;
+                userAccount.PasswordHash = HashPassword(password);
+                userAccount.ResidementPlaceCity = "-";
+                userAccount.ResidementPlaceCountry = "-";
+                using (var context = new LibraryContext())
                 {
-                    user.StayLoggedIn = stayLoggedIn;
+                    await context.UserAccounts.AddAsync(userAccount);
                     await context.SaveChangesAsync();
                 }
             }
+            catch (Exception ex)
+            {
+                // Log the exception (use a logger in a real application)
+                Console.WriteLine($"Error: {ex.Message}");
+                throw;
+            }
         }
+
+
         public string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())

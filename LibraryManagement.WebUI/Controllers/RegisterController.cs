@@ -19,20 +19,30 @@ public class RegisterController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> RegisterUser([FromBody]User user)
+    public async Task<IActionResult> RegisterUser([FromBody] User user)
     {
-        string userName = user.UserName;
-        string password = user.NewPassword;
-        string confirmPassword = user.NewPasswordAgain;
+        try
+        {
+            string userName = user.UserName;
+            string password = user.NewPassword;
+            string confirmPassword = user.NewPasswordAgain;
 
-        if (password == confirmPassword)
-        {
-            await _userManager.AddNewUserAsync(userName, password);
-            return Json(new { success = true, redirectUrl = Url.Action("LogIn")});
+            if (password == confirmPassword)
+            {
+                await _userManager.AddNewUserAsync(userName, password);
+                return Json(new { success = true, redirectUrl = Url.Action("LogIn") });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Passwords do not match" });
+            }
         }
-        else
+        catch (Exception ex)
         {
-            return View("Register");
+            // Log the exception (use a logger in a real application)
+            Console.WriteLine($"Error: {ex.Message}");
+            return Json(new { success = false, message = "An error occurred while registering the user" });
         }
     }
+
 }
