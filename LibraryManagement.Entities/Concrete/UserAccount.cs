@@ -13,7 +13,6 @@ namespace LibraryManagement.Entities.Concrete
         public int Id { get; set; }
         public string? UserName { get; set; }
         public string? PasswordHash { get; set; }
-        public string? StayLoggedIn { get; set; }
         public string? ResidementPlaceCity { get; set; }
         public string? ResidementPlaceCountry { get; set; }
         public byte[]? UserProfilePicture { get; set; } 

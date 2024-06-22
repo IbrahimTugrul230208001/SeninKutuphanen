@@ -120,7 +120,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
         {
             using (var context = new LibraryContext())
             {
-                return context.Libraries.Count(l => l.UserName == userName && l.IsAddedToShowcase == true);
+                return await context.Libraries.CountAsync(l => l.UserName == userName && l.IsAddedToShowcase == true);
             }
         }
         public async Task AddBookImageAsync(byte[] imageFile, string userName, string bookName)

@@ -16,13 +16,27 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
         {
             try
             {
-                UserAccount userAccount = new();
-                userAccount.UserName = userName;
-                userAccount.PasswordHash = HashPassword(password);
-                userAccount.ResidementPlaceCity = "-";
-                userAccount.ResidementPlaceCountry = "-";
+                UserAccount userAccount = new()
+                {
+                    UserName = userName,
+                    PasswordHash = HashPassword(password),
+                    ResidementPlaceCity = "-",
+                    ResidementPlaceCountry = "-"
+                };
                 using (var context = new LibraryContext())
                 {
+                    try
+                    {
+                        // Attempt to query the database to check the connection
+                        var test = context.Database.CanConnect();
+                        Console.WriteLine($"Database connection test result: {test}");
+                    }
+                    catch (Exception dbEx)
+                    {
+                        Console.WriteLine($"Database connection error: {dbEx.Message}");
+                        throw; // Re-throw to catch in the main catch block
+                    }
+
                     await context.UserAccounts.AddAsync(userAccount);
                     await context.SaveChangesAsync();
                 }
