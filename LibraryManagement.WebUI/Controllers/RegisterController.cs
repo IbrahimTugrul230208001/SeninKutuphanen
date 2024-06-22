@@ -19,7 +19,7 @@ public class RegisterController : Controller
     }
 
     [HttpPost]
-    public IActionResult RegisterUser(IFormCollection userData)
+    public async Task<IActionResult> RegisterUser(IFormCollection userData)
     {
         string userName = userData["TbxUserName"].ToString();
         string password = userData["TbxPassword"].ToString();
@@ -27,7 +27,7 @@ public class RegisterController : Controller
 
         if (password == confirmPassword)
         {
-            _userManager.AddNewUser(userName, password);
+            await _userManager.AddNewUserAsync(userName, password);
             return RedirectToAction("LogIn", "LogIn");
         }
         else

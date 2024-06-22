@@ -22,14 +22,14 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public IActionResult UserLogIn(IFormCollection userData)
+        public async Task<IActionResult> UserLogIn(IFormCollection userData)
         {
             string userName = userData["TbxUserName"].ToString();
             string password = userData["TbxPassword"].ToString();
-            if (_userManager.ValidateUser(userName, password))
+            if (await _userManager.ValidateUserAsync(userName, password) == true)
             {
                 _userService.UserName = userName;
-                _userService.ProfilePicture = _userManager.ProfilePictureImage(userName);
+                _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(userName);
                 return RedirectToAction("ProfileIndex", "UserProfile");
             }
             else

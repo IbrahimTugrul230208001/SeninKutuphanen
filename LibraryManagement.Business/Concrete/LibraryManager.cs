@@ -1,5 +1,4 @@
 ﻿using LibraryManagement.DataAccess.Abstract;
-using LibraryManagement.DataAccess.Concrete.ADO.NET;
 using LibraryManagement.Entities.Concrete;
 using System;
 using System.Collections.Generic;
