@@ -1,6 +1,5 @@
 ﻿using learningASP.NET_CORE.Services;
 using LibraryManagement.Business.Concrete;
-using LibraryManagement.DataAccess.Concrete.ADO.NET;
 using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;

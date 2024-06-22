@@ -285,10 +285,11 @@ $(document).ready(function () {
                         emptyShowcase.find("input[name='booktitle']").val(response.bookName);
                         // Remove any default placeholder elements
                         emptyShowcase.find(".upload-label").remove();
-                    alert("Kitap kullanıcı vitrinine eklendi!");
+                        alert("Kitap kullanıcı vitrinine eklendi!");
 
-                } else {
-                    alert("İşlem esnasında bir hata oluştu.");
+                    } else {
+                        alert("İşlem esnasında bir hata oluştu.");
+                    }
                 }
             },
             error: function (xhr, status, error) {

@@ -19,11 +19,11 @@ public class RegisterController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> RegisterUser(IFormCollection userData)
+    public async Task<IActionResult> RegisterUser([FromBody]User user)
     {
-        string userName = userData["TbxUserName"].ToString();
-        string password = userData["TbxPassword"].ToString();
-        string confirmPassword = userData["TbxPasswordAgain"].ToString();
+        string userName = user.UserName;
+        string password = user.NewPassword;
+        string confirmPassword = user.NewPasswordAgain;
 
         if (password == confirmPassword)
         {
