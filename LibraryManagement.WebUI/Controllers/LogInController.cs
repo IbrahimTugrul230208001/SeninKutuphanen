@@ -34,7 +34,7 @@ namespace learningASP.NET_CORE.Controllers
             }
             else
             {
-                return View("LogIn");
+                return Json(new { success = false, redirectUrl = Url.Action("LogIn") });
             }
         }
     }
