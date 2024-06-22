@@ -37,12 +37,19 @@ public class RegisterController : Controller
                 return Json(new { success = false, message = "Passwords do not match" });
             }
         }
+        catch (ApplicationException ex)
+        {
+            // Log the exception and return the error message
+            Console.WriteLine($"Application Error: {ex.Message}");
+            return Json(new { success = false, message = ex.Message });
+        }
         catch (Exception ex)
         {
-            // Log the exception (use a logger in a real application)
-            Console.WriteLine($"Error: {ex.Message}");
-            return Json(new { success = false, message = "An error occurred while registering the user" });
+            // Log the exception and return a generic error message
+            Console.WriteLine($"Unexpected Error: {ex.Message}");
+            return Json(new { success = false, message = "An unexpected error occurred while registering the user." });
         }
     }
+
 
 }

@@ -15,16 +15,15 @@
             success: function (response) {
                 if (response.success) {
                     alert("Kullanıcı kayıt edildi!");
-                }
-                else {
-                    alert("Kayıt esnasında bir hata oluştu.");
+                    window.location.href = response.redirectUrl;
+                } else {
+                    alert("Kayıt esnasında bir hata oluştu: " + response.message);
                 }
             },
-             error: function (xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.log("Error details:", xhr, status, error);
                 alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
             }
         });
     });
 });
-   
