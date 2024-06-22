@@ -64,7 +64,7 @@
                     </thead>
                     <tbody class="Table1Rows" id="tableBody" style="max-height: 100px; overflow-y: auto;">
                         @{
-                            LibraryManager libraryManager = new(new EfLibraryRepository());
+                            LibraryManager _libraryManager = new(new EfLibraryRepository());
                             using (var context = new LibraryContext())
                             {
                             var libraries = context.Libraries.Where(l => l.UserName == userName).
@@ -103,11 +103,11 @@
             <div class="stats">
             @{
                     <ul>
-                    <li class="article">Okuyor: <span id="reading">@libraryManager.BookStatusCounter("Okuyor", userName)</span></li>
-                    <li class="article">Planlıyor: <span id="planning">@libraryManager.BookStatusCounter("Planliyor", userName)</span></li>
-                    <li class="article">Tamamlandı: <span id="completed">@libraryManager.BookStatusCounter("Bitirdi", userName)</span></li>
-                    <li class="article">Bıraktı: <span id="dropped">@libraryManager.BookStatusCounter("Birakti", userName)</span></li>
-                    <li class="article">Beklemede: <span id="onHold">@libraryManager.BookStatusCounter("Beklemede", userName)</span></li>
+                    <li class="article">Okuyor: <span id="reading">@await _libraryManager.BookStatusCounterAsync("Okuyor", userName)</span></li>
+                    <li class="article">Planlıyor: <span id="planning">@await _libraryManager.BookStatusCounterAsync("Planliyor", userName)</span></li>
+                    <li class="article">Tamamlandı: <span id="completed">@await _libraryManager.BookStatusCounterAsync("Bitirdi", userName)</span></li>
+                    <li class="article">Bıraktı: <span id="dropped">@await _libraryManager.BookStatusCounterAsync("Birakti", userName)</span></li>
+                    <li class="article">Beklemede: <span id="onHold">@await _libraryManager.BookStatusCounterAsync("Beklemede", userName)</span></li>
                     </ul>
             }               
             </div>

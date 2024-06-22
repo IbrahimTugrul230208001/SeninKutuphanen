@@ -34,11 +34,11 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public IActionResult SetNewPassword([FromBody]User user)
+        public async Task<IActionResult> SetNewPassword([FromBody]User user)
         {
-            if (user.NewPasswordAgain == user.NewPassword && _userManager.VerifyPassword(_userService.UserName, user.Password))
+            if (user.NewPasswordAgain == user.NewPassword && await _userManager.VerifyPasswordAsync(_userService.UserName, user.Password))
             {
-                _userManager.UpdateUserPassword(user.NewPassword, _userService.UserName);
+                await _userManager.UpdateUserPasswordAsync(user.NewPassword, _userService.UserName);
                 return Json(new { success = true, message = "Password is updated successfully", redirectUrl = Url.Action("Settings")});
             }
             else
@@ -48,7 +48,7 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public IActionResult SetNewUserProfilePicture(IFormFile imageFile)
+        public async Task<IActionResult> SetNewUserProfilePicture(IFormFile imageFile)
         {
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -58,8 +58,8 @@ namespace learningASP.NET_CORE.Controllers
                     imageFile.CopyTo(stream);
                     imageData = stream.ToArray();
                 }
-                _userManager.SetNewUserProfile(_userService.UserName, imageData);
-                _userService.ProfilePicture = _userManager.ProfilePictureImage(_userService.UserName);
+                await _userManager.SetNewUserProfileAsync(_userService.UserName, imageData);
+                _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(_userService.UserName);
             }
             return RedirectToAction("Settings");
         }
