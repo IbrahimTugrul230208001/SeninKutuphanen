@@ -30,7 +30,7 @@ namespace learningASP.NET_CORE.Controllers
             {
                 _userService.UserName = userName;
                 _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(userName);
-                return Json(new { success = true, redirectUrl = Url.Action("ProfileIndex")});
+                return Json(new { success = true, redirectUrl = Url.Action("ProfileIndex","UserProfile")});
             }
             else
             {
