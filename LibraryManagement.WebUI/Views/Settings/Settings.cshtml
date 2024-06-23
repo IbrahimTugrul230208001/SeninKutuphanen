@@ -17,7 +17,7 @@
         <div class="profile-container">
             <a href="/UserProfile/ProfileIndex">
                 <img class="profilepicture" src="@userProfilePicture" />
-                <h3 class="profilename">@userName</h3>
+                <h3 id="userName" class="profilename">@userName</h3>
             </a>
             <a href="/EditLibrary/EditLibrary">
                 <h3 class="user-library">Kullanıcı Kitaplığı</h3>
@@ -27,7 +27,7 @@
             <h2>Senin Kütüphanen</h2>
         </div>
         <div class="logout-section">
-            <a href="/RegisterLogIn/LogInPage" class="logout-button">
+            <a href="/LogIn/LogIn" class="logout-button">
                 Çıkış Yap
                 <img class="gobackimage" src="/img/goback.png" />
             </a>
@@ -40,14 +40,10 @@
         <h1 class="settings">Ayarlar</h1>
         <div class="userprofile-container">
             <h2 style="text-decoration: underline; color:#490000;">PROFİL</h2>
-            <form action="SetNewUserName" method="post">
-                    <h3>Yeni Kullanıcı Adı: <input name="TbxNewUserName" type="text">
-                        <button type="submit" class="change-button">Değiştir</button></h3>
-            </form>   
-            <form action="SetNewResidementPlace" method="post">
-                    <h3>Bulunulan Yer (Şehir/Ülke): <input name="TbxSetNewCity" type="text">|<input name="TbxSetNewCountry" type="text">
-                        <button type="submit" class="change-button">Değiştir</button></h3>
-            </form>
+                    <h3>Yeni Kullanıcı Adı: <input id="TbxNewUserName" type="text">
+                        <button id="changeUserName" type="submit" class="change-button">Değiştir</button></h3>
+                    <h3>Bulunulan Yer (Şehir/Ülke): <input id="TbxSetNewCity" type="text">|<input id="TbxSetNewCountry" type="text">
+                        <button id="changeLocation" type="submit" class="change-button">Değiştir</button></h3>
             <form action="SetNewUserProfilePicture" method="post" enctype="multipart/form-data" style="display:inline-block;">
                     <h3 style="display:inline-block;">
                         Profil Resmini Değiştir: <input type="file" id="imageInput" name="imageFile" accept="image/*">
