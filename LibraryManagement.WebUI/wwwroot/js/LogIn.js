@@ -15,6 +15,7 @@
             contentType: "application/json",
             success: function (response) {
                 if (response.success) {
+                    alert("Giriş Yapılıyor...");
                     window.location.href = response.redirectUrl;
                 } else {
                     alert("Giriş yapılamadı.");
