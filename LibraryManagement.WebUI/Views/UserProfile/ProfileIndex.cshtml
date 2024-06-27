@@ -44,7 +44,7 @@
     <div class="page-container">
         <div class="Profile-Container">
             <img class="UserProfilePicture" src="@userProfilePicture"/>
-                <a href="/UserProfile/Settings"><button class="profile-settings">Profil Ayarları</button></a>
+                <a href="/Settings/Settings"><button class="profile-settings">Profil Ayarları</button></a>
                 <h3 class="profile-text">Kullanıcı adı: @userName</h3>
             <h3 class="profile-text">Bulunduğu yer: @await _userManager.ResidementPlaceCityAsync(userName)/@await _userManager.ResidementPlaceCountryAsync(userName)</h3>
                 <h3 class="profile-text">Toplam Kitap sayısı: @await _libraryManager.GetTotalOfBooksAsync(userName)</h3>

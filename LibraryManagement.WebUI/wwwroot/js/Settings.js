@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
-    $("#changeUserName").click(function (event) {
-        event.preventDefault();
+    $("#changeUserName").click(function () {
         var userName = $("#TbxNewUserName").val();
         $.ajax({
             type: "PUT",
@@ -11,7 +10,7 @@
 
             success: function(response) {
                 if (response.success) {
-                    $("#userName").text() = userName;
+                    $("#userName").text(userName);
                     alert("Kullanıcı adı değiştirildi!");
                 }
                 else {
@@ -27,8 +26,7 @@
 });
 
 $(document).ready(function () {
-    $("#changeLocation").click(function (event) {
-        event.preventDefault();
+    $("#changeLocation").click(function () {
         var user = {
             city: $("#TbxNewCity").val(),
             country: $("#TbxNewCountry").val()
@@ -58,8 +56,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $("#removeProfilePicButton").click(function (event) {
-        event.preventDefault();
+    $("#removeProfilePicButton").click(function () {
 
         var userName = $("#userName").val();
         $.ajax({
@@ -86,8 +83,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $("#changePassword").click(function (event) {
-        event.preventDefault();
+    $("#changePassword").click(function () {
         var user = {
             Password: $("#TbxCurrentPassword").val(),
             NewPassword: $("#TbxNewPassword").val(),
