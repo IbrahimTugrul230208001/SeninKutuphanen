@@ -50,9 +50,9 @@
                         <button type="submit" class="change-button">Değiştir</button>
                     </h3>
             </form>
-            <form action="RemoveProfilePicture" method="post" style="display:inline-block;">
-                <button type="submit" class="change-button">Kaldır</button>
-            </form>
+            <div style="display:inline-block;">
+                <button id="removeProfilePicButton" class="change-button">Kaldır</button>
+            </div>
         </div>
        <form action="SetNewPassword" method="post">
                 <div class="password-container">
@@ -64,6 +64,7 @@
                 </div>
        </form>   
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/ProfileIndex.js"></script>
  </div>     
 </body>

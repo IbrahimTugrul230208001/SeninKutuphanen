@@ -19,6 +19,7 @@ namespace LibraryManagement.DataAccess.Abstract
             Task<string> ProfilePictureImageAsync(string userName);
             Task<bool> ValidateUserAsync(string userName, string password);
             Task<bool> VerifyPasswordAsync(string userName, string password);
+            Task RemoveProfilePictureAsync(string userName);
         }
     }
 

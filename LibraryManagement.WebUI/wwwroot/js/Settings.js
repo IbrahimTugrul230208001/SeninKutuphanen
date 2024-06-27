@@ -1,17 +1,17 @@
 ﻿$(document).ready(function () {
     $("#changeUserName").click(function (event) {
         event.preventDefault();
-        var UserName = $("#TbxNewUserName").val();
+        var userName = $("#TbxNewUserName").val();
         $.ajax({
             type: "PUT",
             url: "/Settings/SetNewUserName",
-            data: JSON.stringify(UserName),
+            data: JSON.stringify(userName),
             dataType: "json",
             contentType: "application/json",
 
             success: function(response) {
                 if (response.success) {
-                    $("#userName").text() = UserName;
+                    $("#userName").text() = userName;
                     alert("Kullanıcı adı değiştirildi!");
                 }
                 else {

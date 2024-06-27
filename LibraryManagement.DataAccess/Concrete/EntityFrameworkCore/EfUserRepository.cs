@@ -198,5 +198,15 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 }
             }
         }
+
+        public async Task RemoveProfilePictureAsync(string userName)
+        {
+            using(var context  = new LibraryContext())
+            {
+                var user = await context.UserAccounts.SingleOrDefaultAsync(u=>u.UserName == userName) ?? throw new ArgumentException("Null object");
+                user.UserProfilePicture = null;
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

@@ -22,15 +22,29 @@ namespace learningASP.NET_CORE.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SetNewUserName(IFormCollection receivedUserInput)
+        public async Task<IActionResult> SetNewUserName([FromBody]string userName)
         {
+            if (userName != null)
+            {
+                int userId = await _userManager.UserIDAsync(_userService.UserName);
+                await _userManager.SetNewUserNameAsync(userId,userName);
+                return Json(new { success = true, redirectUrl = Url.Action("Settings")});
+            }
             return RedirectToAction("Settings");
         }
 
         [HttpPost]
-        public IActionResult SetNewResidementPlace(IFormCollection receivedUserInput)
+        public async Task<IActionResult> SetNewResidementPlace([FromBody]User user)
         {
-            return RedirectToAction("Settings");
+            if(user.city != null && user.country != null)
+            {
+                await _userManager.SetNewResidementPlacesAsync(user.city, user.country, _userService.UserName);
+                return Json(new {success = true, redirectUrl = Url.Action("Settings")});
+            }
+            else
+            {
+                return Json(new { success = false, redirectUrl = Url.Action("Settings") });
+            }
         }
 
         [HttpPost]
@@ -62,6 +76,19 @@ namespace learningASP.NET_CORE.Controllers
                 _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(_userService.UserName);
             }
             return RedirectToAction("Settings");
+        }
+        [HttpPut]
+        public async Task<IActionResult> RemoveProfilePicture([FromBody]string userName)
+        {
+            if(User == null)
+            {
+                return Json(new { success = false, redirectUrl = Url.Action("Settings")});
+            }
+            else
+            {
+                await _userManager.RemoveProfilePictureAsync(userName);
+                return Json(new { success = true, redirectUrl = Url.Action("Settings") });
+            }
         }
     }
 }

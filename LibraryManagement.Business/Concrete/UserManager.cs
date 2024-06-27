@@ -69,5 +69,10 @@ namespace LibraryManagement.Business.Concrete
         {
             return await _userRepository.VerifyPasswordAsync(userName, password);
         }
+
+        public async Task RemoveProfilePictureAsync(string userName)
+        {
+            await _userRepository.RemoveProfilePictureAsync(userName);
+        }
     }
 }
