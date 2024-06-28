@@ -21,7 +21,7 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> SetNewUserName([FromBody]string userName)
         {
             if (userName != null)
@@ -30,10 +30,13 @@ namespace learningASP.NET_CORE.Controllers
                 await _userManager.SetNewUserNameAsync(userId,userName);
                 return Json(new { success = true, redirectUrl = Url.Action("Settings")});
             }
-            return RedirectToAction("Settings");
+            else
+            {
+                return Json(new { success = false, redirectUrl = Url.Action("Settings") });
+            }
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> SetNewResidementPlace([FromBody]User user)
         {
             if(user.city != null && user.country != null)
@@ -47,17 +50,17 @@ namespace learningASP.NET_CORE.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> SetNewPassword([FromBody]User user)
         {
             if (user.NewPasswordAgain == user.NewPassword && await _userManager.VerifyPasswordAsync(_userService.UserName, user.Password))
             {
                 await _userManager.UpdateUserPasswordAsync(user.NewPassword, _userService.UserName);
-                return Json(new { success = true, message = "Password is updated successfully", redirectUrl = Url.Action("Settings")});
+                return Json(new { success = true, redirectUrl = Url.Action("Settings")});
             }
             else
             {
-                return Json(new { success = false, message = "An error occured during update." , redirectUrl = Url.Action("Settings")});
+                return Json(new { success = false, redirectUrl = Url.Action("Settings")});
             }
         }
 
@@ -74,8 +77,12 @@ namespace learningASP.NET_CORE.Controllers
                 }
                 await _userManager.SetNewUserProfileAsync(_userService.UserName, imageData);
                 _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(_userService.UserName);
+                return Json(new { success = true, redirectUrl = Url.Action("Settings") });
             }
-            return RedirectToAction("Settings");
+            else
+            {
+                return Json(new { success = false, redirectUrl = Url.Action("Settings") });
+            }
         }
         [HttpPut]
         public async Task<IActionResult> RemoveProfilePicture([FromBody]string userName)
