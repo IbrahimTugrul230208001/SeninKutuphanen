@@ -1,27 +1,32 @@
 ﻿$(document).ready(function () {
     // Change User Name
-    $("#changeUserName").click(function () {
-        var userName = $("#TbxNewUserName").val();
-        $.ajax({
-            type: "PUT",
-            url: "/Settings/SetNewUserName",
-            data: JSON.stringify(userName),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (response) {
-                if (response.success) {
-                    $("#userName").text(userName);
-                    alert("Kullanıcı adı değiştirildi!");
-                } else {
-                    alert("Kullanıcı adı değiştirilme esnasında bir hata oluştu.");
+
+        $("#changeUserName").click(function () {
+            console.log("Button clicked");  // Check if this line prints in the console
+            var userName = $("#TbxNewUserName").val();
+            console.log("New User Name: " + userName);  // Check if the value is being retrieved
+
+            $.ajax({
+                type: "PUT",
+                url: "/Settings/SetNewUserName",
+                data: JSON.stringify(userName),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.success) {
+                        $("#userName").text(userName);
+                        alert("Kullanıcı adı değiştirildi!");
+                    } else {
+                        alert("Kullanıcı adı değiştirilme esnasında bir hata oluştu.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error details:", xhr, status, error);
+                    alert("Sunucu ile irtibat kurulurken bir hata oluştu.");
                 }
-            },
-            error: function (xhr, status, error) {
-                console.log("Error details:", xhr, status, error);
-                alert("Sunucu ile irtibat kurulurken bir hata oluştu.");
-            }
+            });
         });
-    });
+
 
     // Change Location
     $("#changeLocation").click(function () {
