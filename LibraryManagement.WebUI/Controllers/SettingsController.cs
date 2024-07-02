@@ -38,7 +38,7 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> SetNewResidementPlace([FromBody]User user)
+        public async Task<IActionResult> SetNewResidementPlaces([FromBody]User user)
         {
             if(user.city != null && user.country != null)
             {
