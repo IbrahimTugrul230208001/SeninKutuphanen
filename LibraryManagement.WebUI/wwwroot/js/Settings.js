@@ -31,8 +31,8 @@
     // Change Location
     $("#changeLocation").click(function () {
         var user = {
-            city: $("#TbxSetNewCity").val(),
-            country: $("#TbxSetNewCountry").val()
+            City: $("#TbxSetNewCity").val(),
+            Country: $("#TbxSetNewCountry").val()
         };
 
         $.ajax({

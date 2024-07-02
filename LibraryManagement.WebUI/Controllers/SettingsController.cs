@@ -40,7 +40,7 @@ namespace learningASP.NET_CORE.Controllers
         [HttpPut]
         public async Task<IActionResult> SetNewResidementPlaces([FromBody]User user)
         {
-            if(user.city != null && user.country != null)
+            if(user.City != null && user.Country != null)
             {
                 await _userManager.SetNewResidementPlacesAsync(user.city, user.country, _userService.UserName);
                 return Json(new {success = true, redirectUrl = Url.Action("Settings")});
