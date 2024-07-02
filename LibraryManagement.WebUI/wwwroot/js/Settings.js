@@ -34,7 +34,8 @@
             City: $("#TbxSetNewCity").val(),
             Country: $("#TbxSetNewCountry").val()
         };
-
+        console.log("şehir: "+$("#TbxSetNewCity").val())
+        console.log("ülke: "$("#TbxSetNewCountry").val())
         $.ajax({
             type: "PUT",
             url: "/Settings/SetNewResidementPlaces",

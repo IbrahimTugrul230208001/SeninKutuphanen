@@ -42,7 +42,7 @@ namespace learningASP.NET_CORE.Controllers
         {
             if(user.City != null && user.Country != null)
             {
-                await _userManager.SetNewResidementPlacesAsync(user.city, user.country, _userService.UserName);
+                await _userManager.SetNewResidementPlacesAsync(user.City, user.Country, _userService.UserName);
                 return Json(new {success = true, redirectUrl = Url.Action("Settings")});
             }
             else
