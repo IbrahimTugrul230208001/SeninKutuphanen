@@ -444,11 +444,10 @@ filter-combobox:active{
 .profile-container{
     display: flex;
     justify-content: space-between;
-    width:300px;
     align-items:center;
     font-family:Arial;
     position:relative;
-    left:12.5px;
+    gap: 30px;
 }
 a {
     transition: 0.3s;
@@ -463,12 +462,13 @@ a {
     display:inline-block;
     position:relative;
     bottom:6.5px;
+    left:15px;
 }
 .profilepicture {
     position: relative;
     top:10px;
-    right:5px;
     width:50px;
+    left:10px;
     border:1px solid black;
 }
 .profilename:hover{

@@ -69,11 +69,11 @@ a{
 
 .profilepicture {
     position: relative;
-    left: 20px;
+    left: 10px;
     top:12.5px;
     cursor: pointer;
     transition: 0.3s;
-    display: inline-block; /* Ensure it appears inline */
+    display: inline-block;
     width:50px;
     border:1px solid black;
 }
@@ -92,7 +92,7 @@ a{
 
 .profilename {
     position: relative;
-    left: 30px;
+    left: 15px;
     bottom:2.5px;
     color: #f5f5dc;
     font-family: Arial, Helvetica, sans-serif;
@@ -101,9 +101,9 @@ a{
 }
 
 .UserProfilePicture{
-    width:300px;
     border-bottom: 2px solid black;
     transition:0.3s;
+    width:50px;
 }
 
 .UserProfilePicture:hover{
@@ -113,10 +113,10 @@ a{
 
 .profile-container {
     display: flex;
-    width: 320px;
     align-items: center;
     font-family: Arial;
     justify-content: space-between;
+    gap:30px;
 }
 
 .profile-text{

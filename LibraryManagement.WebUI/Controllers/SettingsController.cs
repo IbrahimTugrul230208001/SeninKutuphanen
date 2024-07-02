@@ -28,6 +28,7 @@ namespace learningASP.NET_CORE.Controllers
             {
                 int userId = await _userManager.UserIDAsync(_userService.UserName);
                 await _userManager.SetNewUserNameAsync(userId,userName);
+                _userService.UserName = userName;
                 return Json(new { success = true, redirectUrl = Url.Action("Settings")});
             }
             else

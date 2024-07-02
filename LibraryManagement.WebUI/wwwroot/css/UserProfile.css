@@ -422,9 +422,9 @@ a {
 .profile-container {
     display: flex;
     justify-content: space-between;
-    width: 310px;
     align-items: center;
     font-family: Arial;
+    gap:30px;
 }
 
 a{
@@ -443,7 +443,7 @@ a:hover{
     display: inline-block;
     position: relative;
     bottom: 6.5px;
-    left: 15px;
+    left:15px;
 }
 
 .profilepicture {
