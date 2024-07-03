@@ -109,7 +109,7 @@ namespace learningASP.NET_CORE.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> UploadImage(IFormFile imageFile,IFormCollection receivedUserInput)
+        public IActionResult UploadImage(IFormFile imageFile, IFormCollection receivedUserInput)
         {
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -120,7 +120,7 @@ namespace learningASP.NET_CORE.Controllers
                     imageData = stream.ToArray();
                 }
                 string? bookName = receivedUserInput["booktitle"].ToString();
-                await _libraryManager.AddBookImageAsync(imageData, _userName, bookName);
+                _libraryManager.AddBookImageAsync(imageData, _userName, bookName);
                 return RedirectToAction("EditLibrary");
             }
             else
