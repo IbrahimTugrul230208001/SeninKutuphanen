@@ -144,8 +144,8 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
         {
             using (var context = new LibraryContext())
             {
-                var book = await context.Libraries.FirstOrDefaultAsync(l => l.UserName == userName && l.Name == bookName);
-                if (book == null) return false;
+                var book = await context.Libraries.FirstOrDefaultAsync(l => l.UserName == userName && l.Name == bookName) ?? throw new ArgumentException("Null here");
+                if (book.BookImage == null || book == null) return false;
                 else return true;
             }
         }
