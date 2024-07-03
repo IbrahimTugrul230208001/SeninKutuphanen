@@ -23,16 +23,16 @@ namespace learningASP.NET_CORE.Controllers
 
         public IActionResult EditLibrary()
         {
-                ViewData["UserName"] = _userName;
-                ViewData["UserProfilePicture"] = _userService.ProfilePicture;
-                return View();
+            ViewData["UserName"] = _userName;
+            ViewData["UserProfilePicture"] = _userService.ProfilePicture;
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] Book b)
         {
             if (b != null)
-            {          
+            {
                 await _libraryManager.AddToLibraryAsync(new Library
                 {
                     UserName = _userName,
@@ -62,12 +62,12 @@ namespace learningASP.NET_CORE.Controllers
             }
             else
             {
-                return Json(new { success = false, redirectUrl = Url.Action("EditLibrary")});
+                return Json(new { success = false, redirectUrl = Url.Action("EditLibrary") });
             }
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody]int bookId)
+        public async Task<IActionResult> Delete([FromBody] int bookId)
         {
             if (bookId != 0)
             {
@@ -81,13 +81,13 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToShowcase([FromBody]int bookId)
+        public async Task<IActionResult> AddToShowcase([FromBody] int bookId)
         {
             if (bookId != 0)
             {
                 await _libraryManager.AddToShowcaseAsync(_userName, bookId);
                 string name = await _libraryManager.BookNameAsync(bookId);
-                return Json(new { success = true, bookName = name , redirectUrl = Url.Action("EditLibrary")});
+                return Json(new { success = true, bookName = name, redirectUrl = Url.Action("EditLibrary") });
             }
             else
             {
@@ -96,9 +96,9 @@ namespace learningASP.NET_CORE.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> RemoveBookShowcase([FromBody]string bookName)
-        {          
-            if(bookName != null)
+        public async Task<IActionResult> RemoveBookShowcase([FromBody] string bookName)
+        {
+            if (bookName != null)
             {
                 await _libraryManager.RemoveBookShowcaseAsync(_userName, bookName);
                 return Json(new { success = true, redirectUrl = Url.Action("EditLibrary") });
@@ -106,6 +106,26 @@ namespace learningASP.NET_CORE.Controllers
             else
             {
                 return Json(new { success = false, redirectUrl = Url.Action("EditLibrary") });
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormFile imageFile,IFormCollection receivedUserInput)
+        {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                byte[] imageData;
+                using (MemoryStream stream = new())
+                {
+                    imageFile.CopyTo(stream);
+                    imageData = stream.ToArray();
+                }
+                string? bookName = receivedUserInput["booktitle"].ToString();
+                await _libraryManager.AddBookImageAsync(imageData, _userName, bookName);
+                return RedirectToAction("EditLibrary");
+            }
+            else
+            {
+                return RedirectToAction("EditLibrary");
             }
         }
     }

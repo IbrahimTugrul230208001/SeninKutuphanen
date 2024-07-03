@@ -228,9 +228,8 @@
                     int a = 0;
                     ++a;
                     <div class="fav">
-                        @if (await _libraryManager.CheckImageStatusAsync(userName, book.Name) == false && showcaseList.Count>0)
-                        {
-                            
+                        @if (await _libraryManager.CheckImageStatusAsync(userName, book.Name) == false && book.Name != null)
+                        { 
                             <form action="UploadImage" method="post" enctype="multipart/form-data">
                                 <div class="booktitle-container"><label class="book-title" name="booktitle">@book.Name</label></div>
                                 <input type="hidden" name="booktitle" value="@book.Name" />

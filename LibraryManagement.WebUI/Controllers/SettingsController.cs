@@ -78,11 +78,11 @@ namespace learningASP.NET_CORE.Controllers
                 }
                 await _userManager.SetNewUserProfileAsync(_userService.UserName, imageData);
                 _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(_userService.UserName);
-                return Json(new { success = true, redirectUrl = Url.Action("Settings") });
+                return RedirectToAction("Settings");
             }
             else
             {
-                return Json(new { success = false, redirectUrl = Url.Action("Settings") });
+                return RedirectToAction("Settings");
             }
         }
         [HttpPut]
