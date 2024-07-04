@@ -180,37 +180,35 @@
     border: 2px solid #490000;
     position: relative;
     bottom: 400px;
-    padding-top:30px;
-    padding-bottom:30px;
+    padding:2%;
+    display:flex;
+    justify-content:space-between;
 }
 
 .filters-container {
-    padding: 10px;
+    padding: 1%;
 }
 
 .filterlabels {
     font-family: Arial, Helvetica, sans-serif;
-    margin-right: 10px; /* Add spacing between labels and textboxes */
     position: relative;
-    left: 25px;
+    left:2.5%;
+    top:5px;
 }
 
 .filterbox,.filter-combobox {
     position: relative;
-    left: 1.5%;
     height: 25px;
-    width: 120px;
-    flex: 1; /* Take remaining space */
+    width: 180px;
 }
 
 .deletebutton {
     position: relative;
-    left: 15%;
 }
 
 .AddToFavoritesButton {
     position: relative;
-    left: 15%;
+
 }
 /* Adjust the width of the table container */
 .table-container {

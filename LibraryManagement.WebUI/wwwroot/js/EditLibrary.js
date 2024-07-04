@@ -70,8 +70,8 @@ $(document).ready(function () {
             Name: $("#AddtextBox1").val(),
             Author: $("#AddtextBox2").val(),
             Category: $("#AddtextBox3").val(),
-            TotalOfPages: $("#AddtextBox4").val(),
-            CompletedPages: $("#AddtextBox5").val(),
+            CompletedPages: $("#AddtextBox4").val(),
+            TotalOfPages: $("#AddtextBox5").val(),
             Status: $("#AddtextBox6").val(),
         };
 
