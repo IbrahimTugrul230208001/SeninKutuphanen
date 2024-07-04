@@ -83,6 +83,7 @@ $(document).ready(function () {
             contentType: "application/json",
             success: function (response) {
                 if (response.success) {
+                    alert("Yeni kitap kütüphanenize eklendi!");
                     var tableBody = document.getElementById("tableBody");
                     var newRow = document.createElement("tr");
 

@@ -15,7 +15,7 @@
             contentType: "application/json",
             success: function (response) {
                 if (response.success) {
-                    alert("Giriş Yapılıyor...");
+                    toastr.success('Giriş yapılıyor...');
                     window.location.href = response.redirectUrl;
                 } else {
                     alert("Giriş yapılamadı.");
