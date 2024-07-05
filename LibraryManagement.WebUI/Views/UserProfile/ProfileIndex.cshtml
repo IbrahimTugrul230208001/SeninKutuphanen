@@ -70,9 +70,9 @@
           <div class="userstats-tablecontainer">
                 <div class="user-stats">
                     <h3 class="dot-currentlyreading"> Mevcut olarak okuyor: @await _libraryManager.BookStatusCounterAsync("Okuyor", userName)</h3>
-                    <h3 class="dot-planning">Okumayı planlıyor: @await _libraryManager.BookStatusCounterAsync("Planliyor", userName)</h3>
+                    <h3 class="dot-planning">Okumayı planlıyor: @await _libraryManager.BookStatusCounterAsync("Planlıyor", userName)</h3>
                     <h3 class="dot-completed">Tamamlandı: @await _libraryManager.BookStatusCounterAsync("Bitirdi", userName)</h3>
-                    <h3 class="dot-dropped">Okumayı bıraktı: @await _libraryManager.BookStatusCounterAsync("Birakti", userName)</h3>
+                    <h3 class="dot-dropped">Okumayı bıraktı: @await _libraryManager.BookStatusCounterAsync("Bıraktı", userName)</h3>
                     <h3 class="dot-notplanningtoread">Henüz okumuyor: @await _libraryManager.BookStatusCounterAsync("Beklemede", userName)</h3>
                     <h3 class="dot-totalofreadpages">Okunan toplam sayfa sayısı: @await _libraryManager.GetTotalOfReadPagesAsync(userName)</h3>
                     <h3 class="dot-totalOfReadBooks">Okunan toplam kitap sayısı: @await _libraryManager.CountCompletedBooksAsync(userName)</h3>
