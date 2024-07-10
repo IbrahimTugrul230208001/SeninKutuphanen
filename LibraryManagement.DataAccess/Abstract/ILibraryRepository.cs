@@ -27,6 +27,5 @@ namespace LibraryManagement.DataAccess.Abstract
         Task<List<Library>> ListBookShowcaseAsync(string userName);
         Task<int> BookIDAsync(string userName, string bookName);
         Task<string> BookNameAsync(int id);
-
     }
 }

@@ -76,10 +76,29 @@
                     <h3 class="dot-notplanningtoread">Henüz okumuyor: @await _libraryManager.BookStatusCounterAsync("Beklemede", userName)</h3>
                     <h3 class="dot-totalofreadpages">Okunan toplam sayfa sayısı: @await _libraryManager.GetTotalOfReadPagesAsync(userName)</h3>
                     <h3 class="dot-totalOfReadBooks">Okunan toplam kitap sayısı: @await _libraryManager.CountCompletedBooksAsync(userName)</h3>
+                    <h3 class="dot-completedPagesToday">Bugün okunan sayfa sayısı: </h3>
             <a href="/PersonalLibraryData/PersonalLibraryData">
                 <button class="displaylibrary">Kütüphaneye Git</button>
             </a>
               </div>
+                <div class="howManyPagesCompletedTodayContainer">
+               <h3 class="howManyPagesCompletedTodayTitle">Bugün kaç sayfa okudun?</h3>
+              <div class="addition">
+                 
+                  <button type="button" id="increaseBy50">+50</button>
+                  <button type="button" id="increaseBy20">+20</button>
+                  <button type="button" id="increaseBy10">+10</button>
+                  <button type="button" id="increaseBy5">+5</button>
+                  <button type="button" id="increaseBy1">+1</button>
+              </div>
+              <div class="subtraction">
+                   <button type="button" id="decreaseBy50">-50</button>
+                   <button type="button" id="decreaseBy20">-20</button>
+                   <button type="button" id="decreaseBy10">-10</button>
+                   <button type="button" id="decreaseBy5">-5</button>
+                   <button type="button" id="decreaseBy1">-1</button>
+              </div>
+             </div>
             <div class="table-container">
                 <table class="Table1">
                     <thead class="Table1Columns">

@@ -74,5 +74,10 @@ namespace LibraryManagement.Business.Concrete
         {
             await _userRepository.RemoveProfilePictureAsync(userName);
         }
+
+        public async Task<int> CompletedPagesOfTodayAsync(string userName)
+        {
+            return await _userRepository.CompletedPagesOfTodayAsync(userName);
+        }
     }
 }

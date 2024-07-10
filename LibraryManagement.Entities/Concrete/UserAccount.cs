@@ -16,5 +16,6 @@ namespace LibraryManagement.Entities.Concrete
         public string? ResidementPlaceCity { get; set; }
         public string? ResidementPlaceCountry { get; set; }
         public byte[]? UserProfilePicture { get; set; } 
+        public int CompletedPagesOfToday { get; set; }
     }
 }

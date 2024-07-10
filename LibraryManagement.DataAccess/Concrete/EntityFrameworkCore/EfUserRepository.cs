@@ -10,7 +10,7 @@ using System.Security.Cryptography;
 
 namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 {
-    public class EfUserRepository:IUserRepository
+    public class EfUserRepository : IUserRepository
     {
         public async Task AddNewUserAsync(string userName, string password)
         {
@@ -201,11 +201,20 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 
         public async Task RemoveProfilePictureAsync(string userName)
         {
-            using(var context  = new LibraryContext())
+            using(var context = new LibraryContext())
             {
                 var user = await context.UserAccounts.SingleOrDefaultAsync(u=>u.UserName == userName) ?? throw new ArgumentException("Null object");
                 user.UserProfilePicture = null;
                 await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<int> CompletedPagesOfTodayAsync(string userName)
+        {
+            using (var context = new LibraryContext())
+            {
+                var user = await context.UserAccounts.SingleOrDefaultAsync(u => u.UserName == userName) ?? throw new ArgumentException("Null here");
+                return user.CompletedPagesOfToday;
             }
         }
     }
