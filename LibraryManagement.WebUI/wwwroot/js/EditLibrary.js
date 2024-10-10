@@ -152,7 +152,7 @@ $(document).ready(function () {
     $(".AddToFavoritesButton").click(function (event) {
         event.preventDefault();
         var bookID = $("#IdTextBoxFav").val();
-       
+
         $.ajax({
             type: "POST",
             url: "/EditLibrary/AddToShowcase",
@@ -171,10 +171,13 @@ $(document).ready(function () {
                         // Remove any default placeholder elements
                         emptyShowcase.find(".upload-label").remove();
                         alert("Kitap kullanıcı vitrinine eklendi!");
-
                     } else {
                         alert("İşlem esnasında bir hata oluştu.");
                     }
+
+                } else {
+                    // If response.success is false
+                    alert("İşlem esnasında bir hata oluştu.");
                 }
             },
             error: function (xhr, status, error) {
@@ -184,6 +187,8 @@ $(document).ready(function () {
         });
     });
 });
+
+
 
 $(document).ready(function () {
     $(".favbutton").click(function (event) {
@@ -286,7 +291,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const circularProgressBar = document.querySelector('.circular-progress');
 const rows = document.querySelectorAll(".Table1Rows tr");
-/*
+
 rows.forEach(row => {
     row.addEventListener('click', function () {
         // Remove the "selected" class from all rows
@@ -313,7 +318,7 @@ rows.forEach(row => {
 
     });
 });
-*/
+
 // Get reference to the table body
 var tbody = document.getElementById('tableBody');
 
