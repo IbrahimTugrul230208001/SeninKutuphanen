@@ -14,7 +14,6 @@ namespace LibraryManagement.DataAccess.Concrete
         {
             optionsBuilder.UseSqlServer("server = (localdb)\\mssqllocaldb;Database=LibraryManagement;integrated security=true");
         }
-
         public DbSet<Library> Libraries { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
     }

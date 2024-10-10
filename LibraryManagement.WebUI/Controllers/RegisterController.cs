@@ -30,7 +30,7 @@ public class RegisterController : Controller
             if (password == confirmPassword)
             {
                 await _userManager.AddNewUserAsync(userName, password);
-                return Json(new { success = true, redirectUrl = Url.Action("LogIn") });
+                return Json(new { success = true, redirectUrl = Url.Action("LogIn", "LogIn") });
             }
             else
             {
