@@ -10,7 +10,7 @@
             Category: $("#UpdatetextBox3").val(),
             CompletedPages: $("#UpdatetextBox4").val(),
             TotalOfPages: $("#UpdatetextBox5").val(),
-            Status: $("#UpdatetextBox6").val(),
+            Status: $("#UpdatetextBox6").val()
         };
 
         $.ajax({
@@ -72,7 +72,7 @@ $(document).ready(function () {
             Category: $("#AddtextBox3").val(),
             CompletedPages: $("#AddtextBox4").val(),
             TotalOfPages: $("#AddtextBox5").val(),
-            Status: $("#AddtextBox6").val(),
+            Status: $("#AddtextBox6").val()
         };
 
         $.ajax({
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const circularProgressBar = document.querySelector('.circular-progress');
 const rows = document.querySelectorAll(".Table1Rows tr");
-
+/*
 rows.forEach(row => {
     row.addEventListener('click', function () {
         // Remove the "selected" class from all rows
@@ -313,7 +313,7 @@ rows.forEach(row => {
 
     });
 });
-
+*/
 // Get reference to the table body
 var tbody = document.getElementById('tableBody');
 

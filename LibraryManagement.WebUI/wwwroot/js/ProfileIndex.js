@@ -39,7 +39,3 @@ document.addEventListener("DOMContentLoaded", function () {
         // document.getElementById("colorForm").submit();
     });
 });
-
-$(document).ready(function () {
-
-})
