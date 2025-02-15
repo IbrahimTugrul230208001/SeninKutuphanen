@@ -1,32 +1,74 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeninKütüphanen</title>
     <link rel="icon" href="icons&images/LibraryIcon.jpeg" type="jpeg">
-    <link rel="stylesheet" href="~/css/RegisterPage.css">
+    <link rel="stylesheet" href="~/css/LogInPage.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 </head>
-<body>
-    <div class="title">
-        <h2 class="titleofsite">Senin Kütüphanen</h2>
-    </div>
 
-    <form action="RegisterUser" method="post">
-        <div class="RegisterPage">
-            <div class="Register-content">
-                <h1 class="Register-title">Kayıt Ol</h1>
-                <h3 class="Name">Kullanıcı adı: <input name="TbxUserName" type="text" class="textbox" id="registerUserName"/></h3>
-                <h3 class="Password">Şifre: <input name="TbxPassword" type="password" class="textbox"id="registerPassword" /></h3>
-                <h3 class="PasswordAgain">Şifre Tekrar: <input name="TbxPasswordAgain" type="password" class="textbox" id="registerPasswordAgain"/></h3>
-                <a class="alreadyhaveaccount" href="/RegisterLogIn/LogInPage">Zaten hesabın var mı? Giriş yap!</a>
-                <button type="submit" class="Register-button" id="registerButton">Kayıt Ol</button>
+<body class="bg-gray-100">
+
+    <div class="min-h-screen flex">
+        <!-- Left Side: Image -->
+        <div class="flex-1">
+            <img src="~/img/library.jpeg" alt="Library Image" class="w-full h-full object-cover" />
+        </div>
+
+
+        <!-- Right Side: Form -->
+        <div class="flex-1 flex items-center justify-center bg-gray-100">
+            <div class="bg-white shadow-lg rounded-lg max-w-md w-full p-8">
+                <div class="text-center mb-8">
+                    <h2 class="text-4xl font-semibold text-gray-700">Senin Kütüphanen</h2>
+                    <p class="text-gray-500 mt-2">Yeni hesap oluştur</p>
+                </div>
+
+                <form action="RegisterUser" method="POST">
+                    <!-- Email Input -->
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-600">E-posta adresi</label>
+                        <input type="email" name="email" id="email" placeholder="example@example.com"
+                               class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="mb-6">
+                        <label for="password" class="block text-gray-600">Şifre</label>
+                        <input type="password" name="password" id="password" placeholder="Your Password"
+                               class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                    </div>
+                    <!-- Password Again Input -->
+                    <div class="mb-6">
+                        <label for="password" class="block text-gray-600">Şifre Tekrar</label>
+                        <input type="password" name="password" id="password-again" placeholder="Your Password"
+                               class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                            class="w-full p-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        Kayıt Ol
+                    </button>
+                </form>
+
+                <!-- Sign-up Redirect -->
+                <p class="mt-4 text-center text-gray-600 text-sm">
+                    Hesabın zaten var mı? <a href="/LogIn/LogIn"
+                                             class="text-blue-500 hover:underline">Giriş yap</a>.
+                </p>
             </div>
         </div>
-    </form>
+    </div>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/js/Register.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/LogIn.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </body>
+
 </html>

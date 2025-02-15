@@ -1,95 +1,112 @@
 ﻿html, body {
-    width: 100%; /* Ensure the body and html elements fill the viewport width */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-    background-color: #e8e8e8;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #e8e8e8, #f2f2f2);
+    font-family: 'Arial', sans-serif;
 }
 
 .title {
-    position: sticky; /* Add sticky positioning */
+    position: sticky;
     top: 0;
     display: flex;
     justify-content: space-between;
     width: 100%;
     height: 85px;
     align-items: center;
-    border-bottom: 1.5px solid black;
-    background-color: rgb(75, 1, 1);
-    z-index: 2; /* Set a high z-index value */
+    border-bottom: 1.5px solid #490000;
+    background-color: #490000;
+    z-index: 2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .titleofsite {
-    color: rgb(245, 245, 220);
+    color: #f5f5dc;
     text-align: center;
     margin: auto;
-    font-family: Arial, Helvetica, sans-serif;
-    position: absolute; /* Change position to absolute */
-    left: 50%; /* Move to the middle horizontally */
-    transform: translateX(-50%); /* Center the element */
-    width: max-content; /* Ensure the width fits the content */
+    font-size: 24px;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .RegisterPage {
     display: flex;
     justify-content: center;
-    margin-top: 100px;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    padding: 20px;
 }
 
 .Register-content {
-    display: inline-block;
-    border: 1px solid black;
-    padding: 20px;
-    border-radius: 20px;
-    width: 350px;
-    font-family: Arial, Helvetica, sans-serif;
+    background-color: #490000;
+    color: #f5f5dc;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #f5f5dc;
+    border-radius: 10px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .Register-title {
     display: flex;
     justify-content: center;
-    color: #490000;
+    color: #f5f5dc;
     text-decoration: underline;
-}
-
-.Name {
-    margin-left: 37px;
-}
-
-.Password {
-    margin-left: 105px;
-}
-
-.PasswordAgain {
-    margin-left: 45px;
+    font-size: 28px;
+    margin-bottom: 20px;
 }
 
 .Register-button {
-    color: rgb(75, 1, 1);
-    border: 2px solid rgb(75, 1, 1);
+    color: #fff;
+    border: 2px solid #490000;
     font-weight: 700;
-    width: 170px;
+    width: 100%;
     border-radius: 5px;
-    margin-left: 155px;
+    padding: 10px;
     transition: 0.4s;
-    margin-top: 10px;
-    height: 30px;
-
+    margin-top: 20px;
+    background-color: #490000;
+    cursor: pointer;
+    text-align: center;
 }
 
 .Register-button:hover {
-        color: white;
-        background-color: #490000;
-        cursor: pointer;
-        box-shadow: 4px 4px 4px gray;
+        background-color: #5c0202;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
     .Register-button:active {
-        opacity: 0.7;
+        opacity: 0.8;
+    }
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #f5f5dc;
+    border-radius: 5px;
+    background-color: #f5f5dc;
+    font-size: 16px;
+    color: #490000;
+    transition: 0.3s;
+}
+
+    input[type="text"]:focus, input[type="password"]:focus {
+        border-color: #490000;
+        outline: none;
+        box-shadow: 0 0 5px rgba(73, 0, 0, 0.8);
     }
 
 .alreadyhaveaccount {
     font-size: small;
-    margin-left: 140px;
+    text-align: center;
+    margin-top: 10px;
 }
 
     .alreadyhaveaccount:hover, .Noaccount:hover {
@@ -99,6 +116,8 @@
     }
 
 .Noaccount {
-    margin-left: 160px;
-    font-size: small;
+    text-align: center;
+    margin-top: 10px;
+    display: block;
+    color: #490000;
 }

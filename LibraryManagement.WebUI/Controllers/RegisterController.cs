@@ -23,13 +23,13 @@ public class RegisterController : Controller
     {
         try
         {
-            string userName = user.UserName;
+            string email = user.Email;
             string password = user.NewPassword;
             string confirmPassword = user.NewPasswordAgain;
 
             if (password == confirmPassword)
             {
-                await _userManager.AddNewUserAsync(userName, password);
+                await _userManager.AddNewUserAsync(email, password);
                 return Json(new { success = true, redirectUrl = Url.Action("LogIn", "LogIn") });
             }
             else

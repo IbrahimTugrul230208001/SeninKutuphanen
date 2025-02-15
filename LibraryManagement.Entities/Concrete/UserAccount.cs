@@ -12,6 +12,7 @@ namespace LibraryManagement.Entities.Concrete
         [Key]
         public int Id { get; set; }
         public string? UserName { get; set; }
+        public string? Email { get; set; }
         public string? PasswordHash { get; set; }
         public string? ResidementPlaceCity { get; set; }
         public string? ResidementPlaceCountry { get; set; }

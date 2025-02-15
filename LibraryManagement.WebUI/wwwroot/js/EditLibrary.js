@@ -171,13 +171,10 @@ $(document).ready(function () {
                         // Remove any default placeholder elements
                         emptyShowcase.find(".upload-label").remove();
                         alert("Kitap kullanıcı vitrinine eklendi!");
-                    } else {
+                    }
+                    else {
                         alert("İşlem esnasında bir hata oluştu.");
                     }
-
-                } else {
-                    // If response.success is false
-                    alert("İşlem esnasında bir hata oluştu.");
                 }
             },
             error: function (xhr, status, error) {

@@ -192,13 +192,12 @@
 .filterlabels {
     font-family: Arial, Helvetica, sans-serif;
     position: relative;
-    left:2.5%;
     top:5px;
 }
 
 .filterbox,.filter-combobox {
     position: relative;
-    width: 180px;
+    width: 10%;
 }
 
 .deletebutton {

@@ -24,12 +24,13 @@ namespace learningASP.NET_CORE.Controllers
         [HttpPost]
         public async Task<IActionResult> UserLogIn([FromBody]User user)
         {
-            string userName = user.UserName;
+            string email = user.Email;
             string password = user.Password;
-            if (await _userManager.ValidateUserAsync(userName, password) == true)
+            if (await _userManager.ValidateUserAsync(email, password) == true)
             {
-                _userService.UserName = userName;
-                _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(userName);
+
+                _userService.UserName = await _userManager.UserNameAsync(email);
+                _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(_userService.UserName);
                 return Json(new { success = true, redirectUrl = Url.Action("ProfileIndex","UserProfile")});
             }
             else

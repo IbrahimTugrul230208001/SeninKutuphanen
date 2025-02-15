@@ -12,40 +12,54 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 {
     public class EfUserRepository : IUserRepository
     {
-        public async Task AddNewUserAsync(string userName, string password)
+        public async Task AddNewUserAsync(string email, string password)
         {
             try
             {
-                UserAccount userAccount = new()
+                if (await ValidateEmailAsync(email) == true)
                 {
-                    UserName = userName,
-                    PasswordHash = HashPassword(password),
-                    ResidementPlaceCity = "-",
-                    ResidementPlaceCountry = "-"
-                };
-                using (var context = new LibraryContext())
-                {
-                    try
+                    UserAccount userAccount = new()
                     {
-                        // Attempt to query the database to check the connection
-                        var test = context.Database.CanConnect();
-                        Console.WriteLine($"Database connection test result: {test}");
-                    }
-                    catch (Exception dbEx)
+                        Email = email,
+                        PasswordHash = HashPassword(password),
+                        ResidementPlaceCity = "-",
+                        ResidementPlaceCountry = "-"
+                    };
+                    using (var context = new LibraryContext())
                     {
-                        Console.WriteLine($"Database connection error: {dbEx.Message}");
-                        throw; // Re-throw to catch in the main catch block
-                    }
+                        try
+                        {
+                            var test = context.Database.CanConnect();
+                            Console.WriteLine($"Database connection test result: {test}");
+                        }
+                        catch (Exception dbEx)
+                        {
+                            Console.WriteLine($"Database connection error: {dbEx.Message}");
+                            throw;
+                        }
 
-                    await context.UserAccounts.AddAsync(userAccount);
-                    await context.SaveChangesAsync();
+                        await context.UserAccounts.AddAsync(userAccount);
+                        await context.SaveChangesAsync();
+                    }
                 }
-            }
+                else
+                {
+                    Console.WriteLine("Email already exists in the database.");
+                }
+                }
             catch (Exception ex)
             {
-                // Log the exception (use a logger in a real application)
                 Console.WriteLine($"Error: {ex.Message}");
                 throw;
+            }
+        }
+
+        public async Task<bool> ValidateEmailAsync(string email)
+        {
+            using (var context = new LibraryContext())
+            {
+                bool emailExists = await context.UserAccounts.AnyAsync(u => u.Email == email);
+                return !emailExists;
             }
         }
 
@@ -108,11 +122,11 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
-        public async Task<bool> ValidateUserAsync(string userName, string password)
+        public async Task<bool> ValidateUserAsync(string email, string password)
         {
             using (var context = new LibraryContext())
             {
-                var user = await context.UserAccounts.FirstOrDefaultAsync(u => u.UserName == userName);
+                var user = await context.UserAccounts.FirstOrDefaultAsync(u => u.Email == email);
 
                 if (user != null)
                 {
@@ -182,6 +196,18 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 {
                     return "/img/profilepicture.jpeg";
                 }
+            }
+        }
+        public async Task<string?> UserNameAsync(string email)
+        {
+            using (var context = new LibraryContext())
+            {
+                var user = await context.UserAccounts
+                    .Where(u => u.Email == email)
+                    .Select(u => u.UserName)
+                    .FirstOrDefaultAsync();
+
+                return user; 
             }
         }
 

@@ -8,7 +8,7 @@ namespace LibraryManagement.DataAccess.Abstract
     {
         public interface IUserRepository
         {
-            Task AddNewUserAsync(string userName, string password);
+            Task AddNewUserAsync(string email, string password);
             Task SetNewUserNameAsync(int ID, string userName);
             Task SetNewUserProfileAsync(string userName, byte[] imageFile);
             Task SetNewResidementPlacesAsync(string city, string country, string userName);
@@ -21,6 +21,7 @@ namespace LibraryManagement.DataAccess.Abstract
             Task<bool> VerifyPasswordAsync(string userName, string password);
             Task RemoveProfilePictureAsync(string userName);
             Task<int> CompletedPagesOfTodayAsync(string userName);
+            Task<string> UserNameAsync(string email);
     }
 }
 

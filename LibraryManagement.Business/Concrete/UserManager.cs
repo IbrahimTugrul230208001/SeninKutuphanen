@@ -15,9 +15,9 @@ namespace LibraryManagement.Business.Concrete
               _userRepository = userRepository;
         }
 
-        public async Task AddNewUserAsync(string userName, string password)
+        public async Task AddNewUserAsync(string email, string password)
         {
-            await _userRepository.AddNewUserAsync(userName, password);
+            await _userRepository.AddNewUserAsync(email, password);
         }
 
         public async Task SetNewUserNameAsync(int ID, string userName)
@@ -60,9 +60,9 @@ namespace LibraryManagement.Business.Concrete
             return await _userRepository.ProfilePictureImageAsync(userName);
         }
 
-        public async Task<bool> ValidateUserAsync(string userName, string password)
-        {
-            return await _userRepository.ValidateUserAsync(userName, password);
+        public async Task<bool> ValidateUserAsync(string email, string password)
+        { 
+           return await _userRepository.ValidateUserAsync(email, password);
         }
 
         public async Task<bool> VerifyPasswordAsync(string userName, string password)
@@ -78,6 +78,11 @@ namespace LibraryManagement.Business.Concrete
         public async Task<int> CompletedPagesOfTodayAsync(string userName)
         {
             return await _userRepository.CompletedPagesOfTodayAsync(userName);
+        }
+
+        public async Task<string> UserNameAsync(string email)
+        {
+            return await _userRepository.UserNameAsync(email);
         }
     }
 }

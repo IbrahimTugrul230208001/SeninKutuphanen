@@ -2,9 +2,9 @@
     $("#registerButton").click(function (event) {
         event.preventDefault();
         var user = {
-            UserName: $("#registerUserName").val(),
-            NewPassword: $("#registerPassword").val(),
-            NewPasswordAgain: $("#registerPasswordAgain").val()
+            UserName: $("#email").val(),
+            NewPassword: $("#password").val(),
+            NewPasswordAgain: $("#password-again").val()
         };
         $.ajax({
             type: "POST",

@@ -1,10 +1,10 @@
 ﻿$(document).ready(function () {
-    $("#loginButton").click(function (event) {
+    $("#login").click(function (event) {
         event.preventDefault();
 
         var user = {
-            UserName: $("#tbxUserName").val(),
-            Password: $("#tbxPassword").val()
+            Email: $("#email").val(),
+            Password: $("#password").val()
         };
 
         $.ajax({
@@ -15,7 +15,7 @@
             contentType: "application/json",
             success: function (response) {
                 if (response.success) {
-                    toastr.success('Giriş yapılıyor...');
+                    alert("Giriş Yapılıyor.");
                     window.location.href = response.redirectUrl;
                 } else {
                     alert("Giriş yapılamadı.");
