@@ -12,15 +12,15 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 {
     public class EfUserRepository : IUserRepository
     {
-        public async Task AddNewUserAsync(string email, string password)
+        public async Task AddNewUserAsync(string email, string userName, string password)
         {
             try
             {
-                if (await ValidateEmailAsync(email) == true)
-                {
+                
                     UserAccount userAccount = new()
                     {
                         Email = email,
+                        UserName = userName,
                         PasswordHash = HashPassword(password),
                         ResidementPlaceCity = "-",
                         ResidementPlaceCountry = "-"
@@ -41,11 +41,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                         await context.UserAccounts.AddAsync(userAccount);
                         await context.SaveChangesAsync();
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Email already exists in the database.");
-                }
+                
                 }
             catch (Exception ex)
             {
@@ -63,7 +59,14 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
-
+        public async Task<bool> ValidateUserNameAsync(string userName)
+        {
+            using (var context = new LibraryContext())
+            {
+                bool userNameExists = await context.UserAccounts.AnyAsync(u => u.UserName == userName);
+                return !userNameExists;
+            }
+        }
         public string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())

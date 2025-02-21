@@ -1,8 +1,9 @@
 ﻿$(document).ready(function () {
-    $("#registerButton").click(function (event) {
+    $("#register").click(function (event) {
         event.preventDefault();
         var user = {
-            UserName: $("#email").val(),
+            Email: $("#email").val(),
+            UserName: $("#username").val(),
             NewPassword: $("#password").val(),
             NewPasswordAgain: $("#password-again").val()
         };
@@ -14,7 +15,6 @@
             contentType: "application/json",
             success: function (response) {
                 if (response.success) {
-                    alert("Kullanıcı kayıt edildi!");
                     window.location.href = response.redirectUrl;
                 } else {
                     alert("Kayıt esnasında bir hata oluştu: " + response.message);

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeninKütüphanen</title>
     <link rel="icon" href="icons&images/LibraryIcon.jpeg" type="jpeg">
-    <link rel="stylesheet" href="~/css/LogInPage.css" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 </head>
@@ -25,47 +24,37 @@
             <div class="bg-white shadow-lg rounded-lg max-w-md w-full p-8">
                 <div class="text-center mb-8">
                     <h2 class="text-4xl font-semibold text-gray-700">Senin Kütüphanen</h2>
-                    <p class="text-gray-500 mt-2">Hesabına erişim sağlamak için giriş yap</p>
+                    <p class="text-gray-500 mt-2">Doğrulama kodunu giriniz</p>
                 </div>
 
-                <form action="UserLogIn" method="POST">
+                <form action="Verify" method="POST">
                     <!-- Email Input -->
                     <div class="mb-4">
-                        <label for="email" class="block text-gray-600">E-posta adresi</label>
-                        <input type="email" name="email" id="email" placeholder="example@example.com"
-                               class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-                    </div>
-
-                    <!-- Password Input -->
-                    <div class="mb-6">
-                        <label for="password" class="block text-gray-600">Şifre</label>
-                        <input type="password" name="password" id="password" placeholder="Şifre"
+                        <label for="code" class="block text-gray-600">E-posta adresi</label>
+                        <input type="text" id="code" placeholder="Doğrulama Kodu"
                                class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" id="login"
+                    <button type="submit" id="verify"
                             class="w-full p-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                        Giriş Yap
+                        Onayla
+                    </button>
+                    <!-- Resend Button -->
+                    <button type="submit" id="resend"
+                            class="w-full p-3 bg-white text-blue-500 border-2 border-blue-500 font-semibold rounded-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-2">
+                        Kodu Tekrar Gönder
                     </button>
                 </form>
-
-                <!-- Forgot Password Link -->
-                <div class="text-center mt-4">
-                    <a href="#" class="text-blue-500 text-sm">Şifreni mi unuttun?</a>
-                </div>
-
-                <!-- Sign-up Redirect -->
-                <p class="mt-4 text-center text-gray-600 text-sm">
-                    Henüz hesabın yok mu? <a href="/Register/Register"
-                                             class="text-blue-500 hover:underline">Kayıt ol</a>.
-                </p>
             </div>
         </div>
     </div>
 
+
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/LogIn.js"></script>
+    <script src="/js/Verification.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </body>
 

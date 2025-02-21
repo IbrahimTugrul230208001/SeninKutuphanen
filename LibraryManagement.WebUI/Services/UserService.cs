@@ -4,7 +4,9 @@
     {
         private string _profilePicture;
         private string _userName;
-
+        private string _verificationCode;
+        private string _email;
+        private string _password;
         public string ProfilePicture
         {
             get => _profilePicture;
@@ -15,6 +17,22 @@
         {
             get => _userName;
             set => _userName = value;
+        }
+
+        public string VerificationCode
+        {
+            get=> _verificationCode;
+            set => _verificationCode = value;
+        }
+        public string Email 
+        {
+            get => _email;
+            set => _email = value; 
+        }
+        public string Password
+        {
+            get => _password;
+            set => _password = value;
         }
     }
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeninKütüphanen</title>
     <link rel="stylesheet" href="/css/Settings.css"> 
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel = "icon" href = "/img/LibraryIcon.jpeg" type = "jpeg">
 </head>
 
@@ -13,27 +14,26 @@
         string userName = ViewData["UserName"].ToString();
         string userProfilePicture = ViewData["UserProfilePicture"].ToString();
     }
-    <div class="title-main">
-        <div class="profile-container">
-            <a href="/UserProfile/ProfileIndex">
-                <img class="profilepicture" src="@userProfilePicture" />
-                <h3 id="userName" class="profilename">@userName</h3>
-            </a>
-            <a href="/EditLibrary/EditLibrary">
-                <h3 class="user-library">Kullanıcı Kitaplığı</h3>
-            </a>
-        </div>
-        <div class="titleofsite">
-            <h2>Senin Kütüphanen</h2>
-        </div>
-        <div class="logout-section">
-            <a href="/LogIn/LogIn" class="logout-button">
-                Çıkış Yap
-                <img class="gobackimage" src="/img/goback.png" />
-            </a>
-        </div>
-    </div>
+    <nav class="bg-gray-900 text-white px-6 py-3 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <img src="/img/logo.png" class="w-12 h-12 rounded-full">
+                <span class="font-semibold text-lg">SeninKütüphanen</span>
+            </div>
 
+
+            <!-- Profile & Notification -->
+            <div class="flex items-center space-x-4">
+                <ul class="hidden md:flex space-x-6 text-gray-300">
+                    <li><a href="/EditLibrary/EditLibrary" class="hover:text-white">Kitaplık</a></li>
+                    <li><a href="/Settings/Settings" class="hover:text-white">Ayarlar</a></li>
+                </ul>
+                <span class="hidden md:inline text-gray-400 hover:text-white cursor-pointer">🔔</span>
+                <a href="/UserProfile/ProfileIndex"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
+            </div>
+        </div>
+    </nav>
 
    <div class="page-container">
     <div class="settings-container">

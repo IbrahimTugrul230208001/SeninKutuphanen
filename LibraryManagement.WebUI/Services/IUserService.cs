@@ -4,5 +4,8 @@
     {
         string ProfilePicture { get; set; }
         string UserName { get; set; }
+        string Email { get; set; }
+        string VerificationCode { get; set; }
+        string Password { get; set; }
     }
 }
