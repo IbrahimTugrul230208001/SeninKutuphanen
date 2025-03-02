@@ -345,3 +345,9 @@ document.getElementById('txtSearchByName').addEventListener('input', filterTable
 document.getElementById('txtSearchByAuthor').addEventListener('input', filterTable);
 document.getElementById('txtSearchByCategory').addEventListener('input', filterTable);
 
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+
+menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+});

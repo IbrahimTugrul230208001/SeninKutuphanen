@@ -32,4 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "orange " + (readingPercent + planningPercent + completedPercent + droppedPercent) + "%, orange " + (readingPercent + planningPercent + completedPercent + droppedPercent + onHoldPercent) + "%)";
 });
 
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
 
+menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+});

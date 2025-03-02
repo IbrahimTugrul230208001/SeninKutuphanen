@@ -26,16 +26,33 @@
                 <span class="font-semibold text-lg">SeninKütüphanen</span>
             </div>
 
+            <!-- Desktop Menu -->
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                ☰ <!-- Hamburger Icon -->
+            </button>
 
             <!-- Profile & Notification -->
             <div class="flex items-center space-x-4">
-                <ul class="hidden md:flex space-x-6 text-gray-300">
-                    <li><a href="/EditLibrary/EditLibrary" class="hover:text-white">Kitaplık</a></li>
-                    <li><a href="/Settings/Settings" class="hover:text-white">Ayarlar</a></li>
-                </ul>
-                <span class="hidden md:inline text-gray-400 hover:text-white cursor-pointer">🔔</span>
-                <a href="/UserProfile/ProfileIndex"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/EditLibrary/EditLibrary" class="text-gray-300 hover:text-white">Kitaplık</a>
+                    <a href="/Settings/Settings" class="text-gray-300 hover:text-white">Ayarlar</a>
+                </div>
+                <div class="relative">
+                    <span class="text-2xl text-gray-400 hover:text-white cursor-pointer">🔔</span>
+                    <span class="absolute bg-red-500 text-white text-[10px] font-bold px-1 rounded-full flex items-center justify-center min-w-[16px] h-[16px]
+                    -top-[2px] -right-[5px]">
+                        3
+                    </span>
+                </div>
+                <a href="/UserProfile/UserProfile"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
             </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden flex flex-col space-y-2 bg-gray-800 py-3 px-6">
+            <a href="/EditLibrary/EditLibrary" class="text-gray-300 hover:text-white">Kitaplık</a>
+            <a href="/Settings/Settings" class="text-gray-300 hover:text-white">Ayarlar</a>
         </div>
     </nav>
 
