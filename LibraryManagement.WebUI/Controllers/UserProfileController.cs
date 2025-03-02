@@ -15,11 +15,11 @@ namespace learningASP.NET_CORE.Controllers
             _userService = userService;
         }
 
-        public IActionResult ProfileIndex()
+        public IActionResult UserProfile()
         {
             if (_userService.UserName == null)
             {
-                return RedirectToAction("LogInPage", "RegisterLogIn");
+                return RedirectToAction("LogIn", "LogIn");
             }
             ViewData["UserName"] = _userService.UserName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
