@@ -47,6 +47,7 @@ public class RegisterController : Controller
             string verificationCode = new Random().Next(100000, 999999).ToString();
             _userService.VerificationCode = verificationCode;
             await SendEmailAsync(email, verificationCode);
+            await _userManager.AddNewUserAsync(email,userName,password);
             return Json(new { success = true, redirectUrl = Url.Action("Verification", "Verification") });
         }
         catch (ApplicationException ex)

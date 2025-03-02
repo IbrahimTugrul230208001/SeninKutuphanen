@@ -20,7 +20,6 @@ namespace LibraryManagement.DataAccess.Abstract
             Task<bool> ValidateUserAsync(string userName, string password);
             Task<bool> VerifyPasswordAsync(string userName, string password);
             Task RemoveProfilePictureAsync(string userName);
-            Task<int> CompletedPagesOfTodayAsync(string userName);
             Task<string> UserNameAsync(string email);
             Task<bool> ValidateUserNameAsync(string userName);
             Task<bool> ValidateEmailAsync(string email);

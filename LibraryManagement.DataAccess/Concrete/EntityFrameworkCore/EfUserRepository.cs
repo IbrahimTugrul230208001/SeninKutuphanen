@@ -238,13 +238,6 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
-        public async Task<int> CompletedPagesOfTodayAsync(string userName)
-        {
-            using (var context = new LibraryContext())
-            {
-                var user = await context.UserAccounts.SingleOrDefaultAsync(u => u.UserName == userName) ?? throw new ArgumentException("Null here");
-                return user.CompletedPagesOfToday;
-            }
-        }
+    
     }
 }

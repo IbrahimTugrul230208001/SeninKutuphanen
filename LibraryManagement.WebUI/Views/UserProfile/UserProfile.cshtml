@@ -219,45 +219,20 @@
         <h2 class="text-center text-2xl font-bold text-gray-800 mb-6">Kullanıcı Vitrini</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             <!-- Book Items -->
-
+             @{
+                        var listShowcase = await _libraryManager.ListBookShowcaseAsync(userName);
+                        foreach(var book in listShowcase)
+                        {
             <div class="flex flex-col items-center space-y-2 bg-gray-100 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer">
                 <img class="w-32 h-48 object-cover rounded-md transform hover:scale-110 transition-transform duration-400" src="~/img/" alt="Kitap 1">
                 <span class="text-gray-700 font-semibold">Kitap 1</span>
             </div>
-           
+                }
+                }
         </div>
     </div>
    
-            <div class="favorites-container">
-                <h2 class="favtitle">Kullanıcı Vitrini</h2>
-                <div class="favorites">
-                    @{
-                        var listShowcase = await _libraryManager.ListBookShowcaseAsync(userName);
-                        foreach(var book in listShowcase)
-                        {
-                            <div class="fav">
-                            <div class="label-container"><label>@book.Name</label></div>
-                                <div class="imgBox"><img class="favbookimg" src="@await _libraryManager.BookImageAsync(userName,book.Name)" /></div>
-                            </div>
-                        }   
-                        for(int i = 0; i < 10 - listShowcase.Count; i++)
-                        {
-                            <div class="fav">
-                                <div class="label-container"><label>-</label></div>
-                                <div class="imgBox"><img class="question-mark" src="~/img/R-removebg-preview.png" /></div>
-                            </div>
-                        }
-                    }
-                </div>
-            </div>
-            </div>
-
-
-    </div>
-
-
-
-
+           
     <script src="/js/ProfileIndex.js"></script>
 </body>
 </html>
