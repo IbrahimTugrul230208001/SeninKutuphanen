@@ -230,61 +230,8 @@ $(document).ready(function () {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Get all cells in the table
-    var cells = document.querySelectorAll(".Table1Rows td");
 
-    // Add click event listener to each cell
-    cells.forEach(function (cell) {
-        cell.addEventListener("click", function (event) {
-            // Deselect all other rows
-            var rows = document.querySelectorAll(".Table1Rows tr");
-            rows.forEach(function (row) {
-                row.classList.remove("selected");
-            });
 
-            // Select the parent row of the clicked cell
-            var row = cell.parentNode;
-            row.classList.add("selected");
-        });
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Get all rows in the table body
-    var rows = document.querySelectorAll(".Table1Rows tr");
-
-    // Add click event listener to each row
-    rows.forEach(function (row) {
-        row.addEventListener("click", function (event) {
-            // Deselect all other rows
-            rows.forEach(function (otherRow) {
-                otherRow.classList.remove("selected");
-            });
-
-            row.classList.add("selected");
-
-            var cells = row.querySelectorAll("td");
-            let ID = cells[0].textContent;
-            let name = cells[1].textContent;
-            let author = cells[2].textContent;
-            let category = cells[3].textContent;
-            let completedPages = cells[4].textContent;
-            let totalPages = cells[5].textContent;
-            let status = cells[6].textContent;
-
-            document.getElementById("UpdatetextBox0").value = ID;
-            document.getElementById("UpdatetextBox1").value = name;
-            document.getElementById("UpdatetextBox2").value = author;
-            document.getElementById("UpdatetextBox3").value = category;
-            document.getElementById("UpdatetextBox4").value = completedPages;
-            document.getElementById("UpdatetextBox5").value = totalPages;
-            document.getElementById("UpdatetextBox6").value = status;
-            document.getElementById("IdTextBoxDel").value = ID;
-            document.getElementById("IdTextBoxFav").value = ID;
-        });
-    });
-});
 
 const circularProgressBar = document.querySelector('.circular-progress');
 const rows = document.querySelectorAll(".Table1Rows tr");
@@ -350,4 +297,42 @@ const mobileMenu = document.getElementById('mobile-menu');
 
 menuBtn.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    var tableBody = document.getElementById("tableBody");
+
+    tableBody.addEventListener("click", function (event) {
+        var row = event.target.closest("tr");
+        if (!row) return; // Ensure a row was clicked
+
+        // Deselect all rows
+        document.querySelectorAll("#tableBody tr").forEach(r => r.classList.remove("bg-gray-400"));
+
+        // Select the clicked row
+        row.classList.add("bg-gray-400"); // Darker gray background when selected
+
+        // Get data from clicked row
+        var cells = row.getElementsByTagName("td");
+        if (cells.length < 7) return; // Prevent errors if there are missing columns
+
+        let ID = cells[0].textContent.trim();
+        let name = cells[1].textContent.trim();
+        let author = cells[2].textContent.trim();
+        let category = cells[3].textContent.trim();
+        let completedPages = cells[4].textContent.trim();
+        let totalPages = cells[5].textContent.trim();
+        let status = cells[6].textContent.trim();
+
+        // Populate input fields
+        document.getElementById("UpdatetextBox0").value = ID;
+        document.getElementById("UpdatetextBox1").value = name;
+        document.getElementById("UpdatetextBox2").value = author;
+        document.getElementById("UpdatetextBox3").value = category;
+        document.getElementById("UpdatetextBox4").value = completedPages;
+        document.getElementById("UpdatetextBox5").value = totalPages;
+        document.getElementById("UpdatetextBox6").value = status;
+        document.getElementById("IdTextBoxDel").value = ID;
+        document.getElementById("IdTextBoxFav").value = ID;
+    });
 });

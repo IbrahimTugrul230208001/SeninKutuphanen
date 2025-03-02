@@ -11,8 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeninKütüphanen</title>
     <link rel="icon" href="/img/LibraryIcon" type="jpeg">
-    <link rel="stylesheet" href="/css/EditLibrary.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/EditLibrary.css">
 </head>
 <body>
     @{
@@ -71,11 +71,11 @@
             </div>
         </div>
 
-        <div class="overflow-x-auto bg-white shadow-md rounded-lg max-h-[350px]">
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg max-h-[350px] min-h-[350px]">
             <table class="min-w-full text-sm text-left border border-gray-600">
                 <thead class="bg-gray-700 text-white sticky top-[-1px]">
                     <tr>
-                        <th class="px-4 py-2">ID</th>
+                        <th class="px-4 py-2"></th>
                         <th class="px-4 py-2">İsim</th>
                         <th class="px-4 py-2">Yazar</th>
                         <th class="px-4 py-2">Kategori</th>
@@ -85,26 +85,14 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody" class="divide-y border border-gray-300">
-                    <tr>
                     @{
-                            using (var context = new LibraryContext())
+                        using (var context = new LibraryContext())
+                        {
+                            var libraries = context.Libraries.Where(l => l.UserName == userName).ToList();
+                            foreach (var lib in libraries)
                             {
-                                var libraries = context.Libraries.Where(l => l.UserName == userName).
-                                Select(lib => new Library
-                {
-                    Id = lib.Id,
-                    Name = lib.Name,
-                    Author = lib.Author,
-                    Category = lib.Category,
-                    CompletedPages = lib.CompletedPages,
-                    TotalOfPages = lib.TotalOfPages,
-                    Status = lib.Status,
-
-                });
-                                foreach (var lib in libraries)
-                                {
-                                <tr>
-                                    <td class="invisible px-4 py-2 border border-gray-300">@lib.Id</td>
+                                <tr class="table-row cursor-pointer">
+                                    <td class="px-4 py-2 border border-gray-300 text-transparent">@lib.Id</td>
                                     <td class="px-4 py-2 border border-gray-300">@lib.Name</td>
                                     <td class="px-4 py-2 border border-gray-300">@lib.Author</td>
                                     <td class="px-4 py-2 border border-gray-300">@lib.Category</td>
@@ -112,28 +100,30 @@
                                     <td class="px-4 py-2 border border-gray-300">@lib.TotalOfPages</td>
                                     <td class="px-4 py-2 border border-gray-300">@lib.Status</td>
                                 </tr>
-                                }
                             }
                         }
+                    }
                 </tbody>
             </table>
         </div>
- 
+
         <div class="mt-6 grid grid-cols-1 md:grid-cols-1 gap-6">
             <div class="p-4 bg-white shadow rounded-lg">
                 <h3 class="text-lg font-semibold mb-3">Kitap Ara</h3>
                 <input type="text" id="txtSearchByName" placeholder="Kitap İsmi" class="w-full p-2 border rounded mb-2">
                 <input type="text" id="txtSearchByAuthor" placeholder="Yazar İsmi" class="w-full p-2 border rounded mb-2">
                 <select type="text" id="txtSearchByCategory" placeholder="Kategori" class="w-full p-2 border rounded mb-2">
-                    <option value="Roman">Tarih & Kültür</option>
-                    <option value="Hikaye">Edebiyat & Roman</option>
-                    <option value="Bilim Kurgu">Ekonomi, İş ve Hukuk</option>
-                    <option value="Kişisel Gelişim">Psikoloji & Kişisel Gelişim</option>
-                    <option value="Biyografi">Toplum, Felsefe ve Din</option>
-                    <option value="Din">Bilim & Teknoloji</option>
-                    <option value="Çocuk">Sanat & Tasarım</option>
+                    <option value=""></option>
+                    <option value="Tarih & Kültür">Tarih & Kültür</option>
+                    <option value="Edebiyat & Roman">Edebiyat & Roman</option>
+                    <option value="Ekonomi, İş ve Hukuk">Ekonomi, İş ve Hukuk</option>
+                    <option value="Psikoloji & Kişisel Gelişim">Psikoloji & Kişisel Gelişim</option>
+                    <option value="Toplum, Felsefe ve Din">Toplum, Felsefe ve Din</option>
+                    <option value="Bilim & Teknoloji">Bilim & Teknoloji</option>
+                    <option value="Sanat & Tasarım">Sanat & Tasarım</option>
                     <option value="Diğer">Diğer</option>
-                </select>                <button class="w-full bg-red-500 text-white p-2 rounded mt-2">Seçili Kitabı Sil</button>
+                </select>                
+                <button class="w-full bg-red-500 text-white p-2 rounded mt-2">Seçili Kitabı Sil</button>
                 <button class="w-full bg-yellow-500 text-white p-2 rounded mt-2">Favorilere Ekle</button>
             </div>
         </div>
@@ -143,9 +133,27 @@
                 <h3 class="text-lg font-semibold mb-3">Yeni Kitap Ekle</h3>
                 <input type="text" placeholder="İsim" class="w-full p-2 border rounded mb-2">
                 <input type="text" placeholder="Yazar" class="w-full p-2 border rounded mb-2">
-                <input type="text" placeholder="Kategori" class="w-full p-2 border rounded mb-2">
+                <select type="text" id="txtSearchByCategory" placeholder="Kategori" class="w-full p-2 border rounded mb-2">
+                    <option value=""></option>
+                    <option value="Roman">Tarih & Kültür</option>
+                    <option value="Hikaye">Edebiyat & Roman</option>
+                    <option value="Bilim Kurgu">Ekonomi, İş ve Hukuk</option>
+                    <option value="Kişisel Gelişim">Psikoloji & Kişisel Gelişim</option>
+                    <option value="Biyografi">Toplum, Felsefe ve Din</option>
+                    <option value="Din">Bilim & Teknoloji</option>
+                    <option value="Çocuk">Sanat & Tasarım</option>
+                    <option value="Diğer">Diğer</option>
+                </select>
                 <input type="text" placeholder="Tamamlanan Sayfalar" class="w-full p-2 border rounded mb-2">
                 <input type="text" placeholder="Toplam Sayfa" class="w-full p-2 border rounded mb-2">
+                <select type="text" id="UpdatetextBox6" placeholder="Statü" class="w-full p-2 border rounded mb-2">
+                    <option value="Okunuyor">Okunuyor</option>
+                    <option value="Okundu">Okundu</option>
+                    <option value="Okunacak">Okunacak</option>
+                    <option value="Bitirdi">Bitirdi</option>
+                    <option value="Bıraktı">Bıraktı</option>
+                    <option value="Okunmuyor">Okunmuyor</option>
+                </select>
                 <button class="w-full bg-green-500 text-white p-2 rounded mt-2">Ekle</button>
             </div>
             <div class="p-4 bg-white shadow rounded-lg">
@@ -219,6 +227,6 @@
 
  
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/js/EditLibrary.js"></script>
+    <script src="/js/EditLibrary.js"></script>
 </body>
 </html>
