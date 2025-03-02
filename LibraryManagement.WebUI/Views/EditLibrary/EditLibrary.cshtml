@@ -73,7 +73,7 @@
 
         <div class="overflow-x-auto bg-white shadow-md rounded-lg max-h-[350px]">
             <table class="min-w-full text-sm text-left border border-gray-600">
-                <thead class="bg-gray-700 text-white ">
+                <thead class="bg-gray-700 text-white sticky top-[-1px]">
                     <tr>
                         <th class="px-4 py-2">ID</th>
                         <th class="px-4 py-2">İsim</th>
@@ -122,10 +122,18 @@
         <div class="mt-6 grid grid-cols-1 md:grid-cols-1 gap-6">
             <div class="p-4 bg-white shadow rounded-lg">
                 <h3 class="text-lg font-semibold mb-3">Kitap Ara</h3>
-                <input type="text" placeholder="Kitap İsmi" class="w-full p-2 border rounded mb-2">
-                <input type="text" placeholder="Yazar İsmi" class="w-full p-2 border rounded mb-2">
-                <input type="text" placeholder="Kategori" class="w-full p-2 border rounded mb-2">
-                <button class="w-full bg-red-500 text-white p-2 rounded mt-2">Seçili Kitabı Sil</button>
+                <input type="text" id="txtSearchByName" placeholder="Kitap İsmi" class="w-full p-2 border rounded mb-2">
+                <input type="text" id="txtSearchByAuthor" placeholder="Yazar İsmi" class="w-full p-2 border rounded mb-2">
+                <select type="text" id="txtSearchByCategory" placeholder="Kategori" class="w-full p-2 border rounded mb-2">
+                    <option value="Roman">Tarih & Kültür</option>
+                    <option value="Hikaye">Edebiyat & Roman</option>
+                    <option value="Bilim Kurgu">Ekonomi, İş ve Hukuk</option>
+                    <option value="Kişisel Gelişim">Psikoloji & Kişisel Gelişim</option>
+                    <option value="Biyografi">Toplum, Felsefe ve Din</option>
+                    <option value="Din">Bilim & Teknoloji</option>
+                    <option value="Çocuk">Sanat & Tasarım</option>
+                    <option value="Diğer">Diğer</option>
+                </select>                <button class="w-full bg-red-500 text-white p-2 rounded mt-2">Seçili Kitabı Sil</button>
                 <button class="w-full bg-yellow-500 text-white p-2 rounded mt-2">Favorilere Ekle</button>
             </div>
         </div>
@@ -142,11 +150,29 @@
             </div>
             <div class="p-4 bg-white shadow rounded-lg">
                 <h3 class="text-lg font-semibold mb-3">Kitabı Güncelle</h3>
-                <input type="text" placeholder="İsim" class="w-full p-2 border rounded mb-2">
-                <input type="text" placeholder="Yazar" class="w-full p-2 border rounded mb-2">
-                <input type="text" placeholder="Kategori" class="w-full p-2 border rounded mb-2">
-                <input type="text" placeholder="Tamamlanan Sayfalar" class="w-full p-2 border rounded mb-2">
-                <input type="text" placeholder="Toplam Sayfa" class="w-full p-2 border rounded mb-2">
+                <input type="hidden" id="UpdatetextBox0">
+                <input type="text" id="UpdatetextBox1" placeholder="İsim" class="w-full p-2 border rounded mb-2">
+                <input type="text" id="UpdatetextBox2" placeholder="Yazar" class="w-full p-2 border rounded mb-2">
+                <select type="text" id="UpdatetextBox3" placeholder="Kategori" class="w-full p-2 border rounded mb-2">
+                    <option value="Roman">Tarih & Kültür</option>
+                    <option value="Hikaye">Edebiyat & Roman</option>
+                    <option value="Bilim Kurgu">Ekonomi, İş ve Hukuk</option>
+                    <option value="Kişisel Gelişim">Psikoloji & Kişisel Gelişim</option>
+                    <option value="Biyografi">Toplum, Felsefe ve Din</option>
+                    <option value="Din">Bilim & Teknoloji</option>
+                    <option value="Çocuk">Sanat & Tasarım</option>
+                    <option value="Diğer">Diğer</option>
+                </select>
+                <input type="text" id="UpdatetextBox4" placeholder="Tamamlanan Sayfalar" class="w-full p-2 border rounded mb-2">
+                <input type="text" id="UpdatetextBox5" placeholder="Toplam Sayfa" class="w-full p-2 border rounded mb-2">
+                <select type="text" id="UpdatetextBox6" placeholder="Statü" class="w-full p-2 border rounded mb-2">
+                    <option value="Okunuyor">Okunuyor</option>
+                    <option value="Okundu">Okundu</option>
+                    <option value="Okunacak">Okunacak</option>
+                    <option value="Bitirdi">Bitirdi</option>
+                    <option value="Bıraktı">Bıraktı</option>
+                    <option value="Okunmuyor">Okunmuyor</option>
+                </select>
                 <button class="w-full bg-blue-500 text-white p-2 rounded mt-2">Güncelle</button>
             </div>
         </div>
