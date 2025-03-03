@@ -66,14 +66,20 @@
 $(document).ready(function () {
     $("#AddButton").click(function (event) {
         event.preventDefault();
+
         var formData = {
-            Name: $("#AddtextBox1").val(),
-            Author: $("#AddtextBox2").val(),
-            Category: $("#AddtextBox3").val(),
-            CompletedPages: $("#AddtextBox4").val(),
-            TotalOfPages: $("#AddtextBox5").val(),
-            Status: $("#AddtextBox6").val()
+            Name: $("#AddName").val(),
+            Author: $("#AddAuthor").val(),
+            Category: $("#AddCategory").val(),
+            CompletedPages: $("#AddCompletedPages").val(),
+            TotalOfPages: $("#AddTotalPages").val(),
+            Status: $("#AddStatus").val()
         };
+
+        if (!formData.Name || !formData.Author || !formData.Category || !formData.CompletedPages || !formData.TotalOfPages || !formData.Status) {
+            alert("Lütfen tüm alanları doldurun!");
+            return;
+        }
 
         $.ajax({
             type: "POST",
@@ -84,25 +90,8 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert("Yeni kitap kütüphanenize eklendi!");
-                    var tableBody = document.getElementById("tableBody");
-                    var newRow = document.createElement("tr");
-
-                    newRow.innerHTML = `
-                        <td style="visibility:hidden;">${response.newBookId}</td>
-                        <td>${formData.Name}</td>
-                        <td>${formData.Author}</td>
-                        <td>${formData.Category}</td>
-                        <td>${formData.CompletedPages}</td>
-                        <td>${formData.TotalOfPages}</td>
-                        <td>${formData.Status}</td>
-                    `;
-                    tableBody.appendChild(newRow);
-                    $("#AddtextBox1").val('');
-                    $("#AddtextBox2").val('');
-                    $("#AddtextBox3").val('');
-                    $("#AddtextBox4").val('');
-                    $("#AddtextBox5").val('');
-                    $("#AddtextBox6").val('');
+                    location.reload();
+                    $("#AddName, #AddAuthor, #AddCategory, #AddCompletedPages, #AddTotalPages, #AddStatus").val('');
                 } else {
                     alert("Ekleme sırasında bir hata oluştu: " + response.error);
                 }
@@ -114,6 +103,7 @@ $(document).ready(function () {
         });
     });
 });
+
 
 
 

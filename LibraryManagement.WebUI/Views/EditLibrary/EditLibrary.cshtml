@@ -131,10 +131,10 @@
         <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="p-4 bg-white shadow rounded-lg">
                 <h3 class="text-lg font-semibold mb-3">Yeni Kitap Ekle</h3>
-                <input type="text" placeholder="İsim" class="w-full p-2 border rounded mb-2">
-                <input type="text" placeholder="Yazar" class="w-full p-2 border rounded mb-2">
-                <select type="text" id="txtSearchByCategory" placeholder="Kategori" class="w-full p-2 border rounded mb-2">
-                    <option value=""></option>
+                <input type="text" id="AddName" placeholder="İsim" class="w-full p-2 border rounded mb-2">
+                <input type="text" id="AddAuthor" placeholder="Yazar" class="w-full p-2 border rounded mb-2">
+                <select id="AddCategory" class="w-full p-2 border rounded mb-2">
+                    <option value="">Kategori Seç</option>
                     <option value="Roman">Tarih & Kültür</option>
                     <option value="Hikaye">Edebiyat & Roman</option>
                     <option value="Bilim Kurgu">Ekonomi, İş ve Hukuk</option>
@@ -144,9 +144,9 @@
                     <option value="Çocuk">Sanat & Tasarım</option>
                     <option value="Diğer">Diğer</option>
                 </select>
-                <input type="text" placeholder="Tamamlanan Sayfalar" class="w-full p-2 border rounded mb-2">
-                <input type="text" placeholder="Toplam Sayfa" class="w-full p-2 border rounded mb-2">
-                <select type="text" id="UpdatetextBox6" placeholder="Statü" class="w-full p-2 border rounded mb-2">
+                <input type="text" id="AddCompletedPages" placeholder="Tamamlanan Sayfalar" class="w-full p-2 border rounded mb-2">
+                <input type="text" id="AddTotalPages" placeholder="Toplam Sayfa" class="w-full p-2 border rounded mb-2">
+                <select id="AddStatus" class="w-full p-2 border rounded mb-2">
                     <option value="Okunuyor">Okunuyor</option>
                     <option value="Okundu">Okundu</option>
                     <option value="Okunacak">Okunacak</option>
@@ -154,7 +154,8 @@
                     <option value="Bıraktı">Bıraktı</option>
                     <option value="Okunmuyor">Okunmuyor</option>
                 </select>
-                <button class="w-full bg-green-500 text-white p-2 rounded mt-2">Ekle</button>
+
+                <button id="AddButton" class="w-full bg-green-500 text-white p-2 rounded mt-2 hover:bg-green-400">Ekle</button>
             </div>
             <div class="p-4 bg-white shadow rounded-lg">
                 <h3 class="text-lg font-semibold mb-3">Kitabı Güncelle</h3>
@@ -181,7 +182,7 @@
                     <option value="Bıraktı">Bıraktı</option>
                     <option value="Okunmuyor">Okunmuyor</option>
                 </select>
-                <button class="w-full bg-blue-500 text-white p-2 rounded mt-2">Güncelle</button>
+                <button class="w-full bg-blue-500 text-white p-2 rounded mt-2 hover:bg-blue-400">Güncelle</button>
             </div>
         </div>
 
