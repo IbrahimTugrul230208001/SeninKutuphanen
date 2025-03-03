@@ -334,5 +334,17 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("UpdatetextBox6").value = status;
         document.getElementById("IdTextBoxDel").value = ID;
         document.getElementById("IdTextBoxFav").value = ID;
+
+        let percentage = Math.round((completedPages / totalPages) * 100);
+        percentage = Math.max(0, Math.min(100, percentage)); // Ensure percentage is between 0-100
+
+        let circle = document.getElementById("progress-circle");
+        let progressValue = document.getElementById("progressValue");
+
+        let circumference = 251.2; // Circumference of the circle (2 * π * 40)
+        let offset = circumference - (percentage / 100) * circumference;
+
+        circle.style.strokeDashoffset = offset;
+        progressValue.textContent = percentage + "%";
     });
 });
