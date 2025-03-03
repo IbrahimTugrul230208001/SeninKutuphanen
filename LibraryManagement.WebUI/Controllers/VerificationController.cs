@@ -3,7 +3,6 @@ using LibraryManagement.Business.Concrete;
 using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
-using MimeKit;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 

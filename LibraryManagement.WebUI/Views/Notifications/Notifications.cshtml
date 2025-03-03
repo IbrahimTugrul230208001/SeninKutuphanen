@@ -1,0 +1,85 @@
+﻿@using LibraryManagement.Business.Concrete
+@using LibraryManagement.DataAccess.Concrete
+@using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
+@using LibraryManagement.Entities.Concrete
+@using Microsoft.Data.SqlClient
+@using System.Data
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200">
+    @{
+        LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
+        string userName = ViewData["UserName"].ToString();
+        string userProfilePicture = ViewData["UserProfilePicture"].ToString();
+    }
+    <nav class="bg-gray-900 text-white px-6 py-3 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <img src="/img/logo.png" class="w-12 h-12 rounded-full">
+                <span class="font-semibold text-lg">SeninKütüphanen</span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                ☰ <!-- Hamburger Icon -->
+            </button>
+
+            <!-- Profile & Notification -->
+            <div class="flex items-center space-x-4">
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/EditLibrary/EditLibrary" class="text-gray-300 hover:text-white">Kitaplık</a>
+                    <a href="/Settings/Settings" class="text-gray-300 hover:text-white">Ayarlar</a>
+                </div>
+                <div class="relative">
+                    <span class="text-2xl text-gray-400 hover:text-white cursor-pointer">🔔</span>
+                    <span class="absolute bg-red-500 text-white text-[10px] font-bold px-1 rounded-full flex items-center justify-center min-w-[16px] h-[16px]
+                    -top-[2px] -right-[5px]">
+                        3
+                    </span>
+                </div>
+                <a href="/UserProfile/UserProfile"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden flex flex-col space-y-2 bg-gray-800 py-3 px-6">
+            <a href="/EditLibrary/EditLibrary" class="text-gray-300 hover:text-white">Kitaplık</a>
+            <a href="/Settings/Settings" class="text-gray-300 hover:text-white">Ayarlar</a>
+        </div>
+    </nav>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+    <div class="max-w-4xl mx-auto p-6 mt-6 bg-white shadow rounded-lg">
+        <h2 class="text-2xl font-semibold mb-4">Bildirimler</h2>
+        <div class="space-y-4">
+            <div class="p-4 bg-gray-100 rounded shadow">
+                <p class="text-gray-700 font-medium">📚 Yeni bir kitap önerisi var: "Sapiens"</p>
+                <span class="text-sm text-gray-500">2 saat önce</span>
+            </div>
+            <div class="p-4 bg-gray-100 rounded shadow">
+                <p class="text-gray-700 font-medium">🎯 Okuma hedefinizin %50’sine ulaştınız!</p>
+                <span class="text-sm text-gray-500">1 gün önce</span>
+            </div>
+            <div class="p-4 bg-gray-100 rounded shadow">
+                <p class="text-gray-700 font-medium">👤 Bir arkadaşınız yeni bir kitap ekledi!</p>
+                <span class="text-sm text-gray-500">3 gün önce</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

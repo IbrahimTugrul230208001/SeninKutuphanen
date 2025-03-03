@@ -4,13 +4,13 @@
 
         // Gather form data
         var formData = {
-            Id: $("#UpdatetextBox0").val(),
-            Name: $("#UpdatetextBox1").val(),
-            Author: $("#UpdatetextBox2").val(),
-            Category: $("#UpdatetextBox3").val(),
-            CompletedPages: $("#UpdatetextBox4").val(),
-            TotalOfPages: $("#UpdatetextBox5").val(),
-            Status: $("#UpdatetextBox6").val()
+                    Id: $("#UpdateId").val(),
+                    Name: $("#UpdateName").val(),
+                    Author: $("#UpdateAuthor").val(),
+                    Category: $("#UpdateCategory").val(),
+                    CompletedPages: $("#UpdateCompletedPages").val(),
+                    TotalOfPages: $("#UpdateTotalOfPages").val(),
+                    Status: $("#UpdateStatus").val()
         };
 
         $.ajax({
@@ -315,13 +315,13 @@ document.addEventListener("DOMContentLoaded", function () {
         let status = cells[6].textContent.trim();
 
         // Populate input fields
-        document.getElementById("UpdatetextBox0").value = ID;
-        document.getElementById("UpdatetextBox1").value = name;
-        document.getElementById("UpdatetextBox2").value = author;
-        document.getElementById("UpdatetextBox3").value = category;
-        document.getElementById("UpdatetextBox4").value = completedPages;
-        document.getElementById("UpdatetextBox5").value = totalPages;
-        document.getElementById("UpdatetextBox6").value = status;
+        document.getElementById("UpdateId").value = ID;
+        document.getElementById("UpdateName").value = name;
+        document.getElementById("UpdateAuthor").value = author;
+        document.getElementById("UpdateCategory").value = category;
+        document.getElementById("UpdateCompletedPages").value = completedPages;
+        document.getElementById("UpdateTotalOfPages").value = totalPages;
+        document.getElementById("UpdateStatus").value = status;
         document.getElementById("IdTextBoxDel").value = ID;
         document.getElementById("IdTextBoxFav").value = ID;
     });
