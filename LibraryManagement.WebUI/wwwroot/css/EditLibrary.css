@@ -1,3 +1,6 @@
 ﻿.selected {
     background-color: #9ca3af !important; 
 }
+#progress-circle {
+    transition: stroke-dashoffset 0.6s ease-in-out;
+}

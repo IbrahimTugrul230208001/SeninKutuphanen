@@ -310,11 +310,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll("#tableBody tr").forEach(r => r.classList.remove("bg-gray-400"));
 
         // Select the clicked row
-        row.classList.add("bg-gray-400"); // Darker gray background when selected
+        row.classList.add("bg-gray-400"); 
 
         // Get data from clicked row
         var cells = row.getElementsByTagName("td");
-        if (cells.length < 7) return; // Prevent errors if there are missing columns
+        if (cells.length < 7) return; 
 
         let ID = cells[0].textContent.trim();
         let name = cells[1].textContent.trim();
@@ -334,17 +334,48 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("UpdatetextBox6").value = status;
         document.getElementById("IdTextBoxDel").value = ID;
         document.getElementById("IdTextBoxFav").value = ID;
+    });
+});
 
+document.addEventListener("DOMContentLoaded", function () {
+    var tableBody = document.getElementById("tableBody");
+    var circle = document.getElementById("progress-circle");
+    var progressValue = document.getElementById("progressValue");
+    var circumference = 251.2; // Circle circumference (2 * π * r)
+
+    tableBody.addEventListener("click", function (event) {
+        var row = event.target.closest("tr");
+        if (!row) return;
+
+        document.querySelectorAll("#tableBody tr").forEach(r => r.classList.remove("bg-gray-400"));
+        row.classList.add("bg-gray-400");
+
+        var cells = row.getElementsByTagName("td");
+        if (cells.length < 7) return;
+
+        let completedPages = parseInt(cells[4].textContent.trim()) || 0;
+        let totalPages = parseInt(cells[5].textContent.trim()) || 1;
         let percentage = Math.round((completedPages / totalPages) * 100);
-        percentage = Math.max(0, Math.min(100, percentage)); // Ensure percentage is between 0-100
+        percentage = Math.max(0, Math.min(100, percentage));
 
-        let circle = document.getElementById("progress-circle");
-        let progressValue = document.getElementById("progressValue");
+        let targetOffset = circumference - (percentage / 100) * circumference;
 
-        let circumference = 251.2; // Circumference of the circle (2 * π * 40)
-        let offset = circumference - (percentage / 100) * circumference;
+        // Animate progress bar
+        let currentOffset = parseFloat(circle.style.strokeDashoffset) || circumference;
+        let step = (currentOffset - targetOffset) / 30; // Adjust for smoothness
+        let frame = 0;
 
-        circle.style.strokeDashoffset = offset;
+        function animateProgress() {
+            if (frame < 30) {
+                circle.style.strokeDashoffset = currentOffset - step * frame;
+                frame++;
+                requestAnimationFrame(animateProgress);
+            } else {
+                circle.style.strokeDashoffset = targetOffset;
+            }
+        }
+
+        animateProgress();
         progressValue.textContent = percentage + "%";
     });
 });
