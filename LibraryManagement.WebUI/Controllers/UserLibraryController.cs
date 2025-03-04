@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace learningASP.NET_CORE.Controllers
 {
-    public class PersonalLibraryDataController : Controller
+    public class UserLibraryController : Controller
     {
         private readonly IUserService _userService;
-        public PersonalLibraryDataController(IUserService userService)
+        public UserLibraryController(IUserService userService)
         {
             _userService = userService;
         }
-        public IActionResult PersonalLibraryData()
+        public IActionResult UserLibrary()
         {
             ViewData["UserName"] = _userService.UserName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;

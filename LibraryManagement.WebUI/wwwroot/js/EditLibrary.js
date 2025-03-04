@@ -9,7 +9,7 @@
                     Author: $("#UpdateAuthor").val(),
                     Category: $("#UpdateCategory").val(),
                     CompletedPages: $("#UpdateCompletedPages").val(),
-                    TotalOfPages: $("#UpdateTotalOfPages").val(),
+                    TotalOfPages: $("#UpdateTotalPages").val(),
                     Status: $("#UpdateStatus").val()
         };
 
@@ -320,7 +320,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("UpdateAuthor").value = author;
         document.getElementById("UpdateCategory").value = category;
         document.getElementById("UpdateCompletedPages").value = completedPages;
-        document.getElementById("UpdateTotalOfPages").value = totalPages;
+        document.getElementById("UpdateTotalPages").value = totalPages;
         document.getElementById("UpdateStatus").value = status;
         document.getElementById("IdTextBoxDel").value = ID;
         document.getElementById("IdTextBoxFav").value = ID;
