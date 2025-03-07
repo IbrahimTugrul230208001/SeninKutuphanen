@@ -22,35 +22,20 @@
             success: function (response) {
                 if (response.success) {
                     alert("Kitap bilgileri başarıyla güncellendi!");
-
-                    // Find the selected row
-                    var selectedRow = document.querySelector(".Table1Rows tr.selected");
-
-                    if (selectedRow) {
-                        // Update the cells of the selected row
-                        var cells = selectedRow.querySelectorAll("td");
-                        cells[0].textContent = formData.Id;
+                    var row = document.querySelector(`#tableBody tr[data-id="${formData.Id}"]`);
+                    if (row) {
+                        // Update the row with the new data
+                        var cells = row.querySelectorAll("td");
                         cells[1].textContent = formData.Name;
                         cells[2].textContent = formData.Author;
                         cells[3].textContent = formData.Category;
                         cells[4].textContent = formData.CompletedPages;
                         cells[5].textContent = formData.TotalOfPages;
                         cells[6].textContent = formData.Status;
-
-                        // Optionally, you can also update the circular progress bar
-                        const completionRate = (formData.CompletedPages / formData.TotalOfPages) * 100;
-                        const parsedPercentage = parseFloat(completionRate);
-                        const degreeValue = (parsedPercentage / 100) * 360;
-                        const formattedDegreeValue = parsedPercentage.toFixed(2); // Convert to a string with two decimal places
-
-                        if (!isNaN(parsedPercentage) && parsedPercentage >= 0 && parsedPercentage <= 100) {
-                            circularProgressBar.style.background = `conic-gradient(#8b4513 ${degreeValue}deg, #ccc 0deg)`;
-                            document.getElementById("progressValue").textContent = `${formattedDegreeValue}%`;
-                        } else {
-                            console.error('Invalid input or prompt canceled.');
-                        }
                     }
-                } else {
+
+                }
+                else {
                     alert("Güncelleme sırasında bir hata oluştu: " + response.error);
                 }
             },
