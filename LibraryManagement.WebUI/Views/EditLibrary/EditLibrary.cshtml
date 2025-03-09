@@ -69,7 +69,7 @@
                     <circle class="text-gray-300" stroke-width="10" cx="50" cy="50" r="40" fill="none" stroke="currentColor"></circle>
                     <circle id="progress-circle" class="text-blue-500" stroke-width="10" cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
                 </svg>
-                <span id="progressValue" class="absolute inset-0 flex items-center justify-center text-lg font-bold">0%</span>
+                <span id="progressValue" class="absolute inset-0 flex items-center justify-center text-lg font-bold"></span>
             </div>
         </div>
 
@@ -93,7 +93,7 @@
                             var libraries = context.Libraries.Where(l => l.UserName == userName).ToList();
                             foreach (var lib in libraries)
                             {
-                                <tr class="table-row cursor-pointer">
+                                <tr data-id="@lib.Id" class="table-row cursor-pointer">
                                     <td class="px-4 py-2 border border-gray-300 text-transparent">@lib.Id</td>
                                     <td class="px-4 py-2 border border-gray-300">@lib.Name</td>
                                     <td class="px-4 py-2 border border-gray-300">@lib.Author</td>
@@ -124,9 +124,15 @@
                     <option value="Bilim & Teknoloji">Bilim & Teknoloji</option>
                     <option value="Sanat & Tasarım">Sanat & Tasarım</option>
                     <option value="Diğer">Diğer</option>
-                </select>                
-                <button class="w-full bg-red-500 text-white p-2 rounded mt-2">Seçili Kitabı Sil</button>
-                <button class="w-full bg-yellow-500 text-white p-2 rounded mt-2">Favorilere Ekle</button>
+                </select>
+                <button id="DeleteBook" class="w-full bg-red-500 text-white p-2 rounded mt-2 hover:bg-red-600">
+                    Seçili Kitabı Sil
+                </button>
+
+                <button id="AddToFavoritesButton" class="w-full bg-yellow-500 text-white p-2 rounded mt-2 hover:bg-yellow-600">
+                    Favorilere Ekle
+                </button>
+
             </div>
         </div>
 
@@ -149,7 +155,7 @@
                 <input type="text" id="AddCompletedPages" placeholder="Tamamlanan Sayfalar" class="w-full p-2 border rounded mb-2">
                 <input type="text" id="AddTotalPages" placeholder="Toplam Sayfa" class="w-full p-2 border rounded mb-2">
                 <select id="AddStatus" class="w-full p-2 border rounded mb-2">
-                    <option value="Okunuyor">Okuyor</option>
+                    <option value="Okuyor">Okuyor</option>
                     <option value="Okunacak">Okunacak</option>
                     <option value="Bitirdi">Bitirdi</option>
                     <option value="Bıraktı">Bıraktı</option>
@@ -163,20 +169,20 @@
                 <input type="text" id="UpdateName" placeholder="İsim" class="w-full p-2 border rounded mb-2">
                 <input type="text" id="UpdateAuthor" placeholder="Yazar" class="w-full p-2 border rounded mb-2">
                 <select id="UpdateCategory" class="w-full p-2 border rounded mb-2">
-                    <option value="Roman">Tarih & Kültür</option>
-                    <option value="Hikaye">Edebiyat & Roman</option>
-                    <option value="Bilim Kurgu">Ekonomi, İş ve Hukuk</option>
-                    <option value="Kişisel Gelişim">Psikoloji & Kişisel Gelişim</option>
-                    <option value="Biyografi">Toplum, Felsefe ve Din</option>
-                    <option value="Din">Bilim & Teknoloji</option>
-                    <option value="Çocuk">Sanat & Tasarım</option>
+                    <option value=""></option>
+                    <option value="Tarih & Kültür">Tarih & Kültür</option>
+                    <option value="Edebiyat & Roman">Edebiyat & Roman</option>
+                    <option value="Ekonomi, İş ve Hukuk">Ekonomi, İş ve Hukuk</option>
+                    <option value="Psikoloji & Kişisel Gelişim">Psikoloji & Kişisel Gelişim</option>
+                    <option value="Toplum, Felsefe ve Din">Toplum, Felsefe ve Din</option>
+                    <option value="Bilim & Teknoloji">Bilim & Teknoloji</option>
+                    <option value="Sanat & Tasarım">Sanat & Tasarım</option>
                     <option value="Diğer">Diğer</option>
                 </select>
                 <input type="text" id="UpdateCompletedPages" placeholder="Tamamlanan Sayfalar" class="w-full p-2 border rounded mb-2">
                 <input type="text" id="UpdateTotalPages" placeholder="Toplam Sayfa" class="w-full p-2 border rounded mb-2">
                 <select id="UpdateStatus" class="w-full p-2 border rounded mb-2">
-                    <option value="Okunuyor">Okunuyor</option>
-                    <option value="Okundu">Okundu</option>
+                    <option value="Okuyor">Okuyor</option>
                     <option value="Okunacak">Okunacak</option>
                     <option value="Bitirdi">Bitirdi</option>
                     <option value="Bıraktı">Bıraktı</option>

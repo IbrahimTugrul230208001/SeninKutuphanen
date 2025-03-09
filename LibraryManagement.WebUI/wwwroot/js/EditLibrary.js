@@ -1,16 +1,15 @@
 ﻿$(document).ready(function () {
     $("#UpdateButton").click(function (event) {
-        event.preventDefault(); // Prevent default form submission
+        event.preventDefault();
 
-        // Gather form data
         var formData = {
-                    Id: $("#UpdateId").val(),
-                    Name: $("#UpdateName").val(),
-                    Author: $("#UpdateAuthor").val(),
-                    Category: $("#UpdateCategory").val(),
-                    CompletedPages: $("#UpdateCompletedPages").val(),
-                    TotalOfPages: $("#UpdateTotalPages").val(),
-                    Status: $("#UpdateStatus").val()
+            Id: $("#UpdateId").val(),
+            Name: $("#UpdateName").val(),
+            Author: $("#UpdateAuthor").val(),
+            Category: $("#UpdateCategory").val(),
+            CompletedPages: $("#UpdateCompletedPages").val(),
+            TotalOfPages: $("#UpdateTotalPages").val(),
+            Status: $("#UpdateStatus").val()
         };
 
         $.ajax({
@@ -24,7 +23,6 @@
                     alert("Kitap bilgileri başarıyla güncellendi!");
                     var row = document.querySelector(`#tableBody tr[data-id="${formData.Id}"]`);
                     if (row) {
-                        // Update the row with the new data
                         var cells = row.querySelectorAll("td");
                         cells[1].textContent = formData.Name;
                         cells[2].textContent = formData.Author;
@@ -33,9 +31,7 @@
                         cells[5].textContent = formData.TotalOfPages;
                         cells[6].textContent = formData.Status;
                     }
-
-                }
-                else {
+                } else {
                     alert("Güncelleme sırasında bir hata oluştu: " + response.error);
                 }
             },
@@ -46,6 +42,7 @@
         });
     });
 });
+
 
 
 $(document).ready(function () {
@@ -75,7 +72,21 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert("Yeni kitap kütüphanenize eklendi!");
-                    location.reload();
+
+                    // Create new row
+                    var newRow = `<tr data-id="${response.id}" class="table-row cursor-pointer">
+                        <td class="px-4 py-2 border border-gray-300 text-transparent">${response.id}</td>
+                        <td class="px-4 py-2 border border-gray-300">${formData.Name}</td>
+                        <td class="px-4 py-2 border border-gray-300">${formData.Author}</td>
+                        <td class="px-4 py-2 border border-gray-300">${formData.Category}</td>
+                        <td class="px-4 py-2 border border-gray-300">${formData.CompletedPages}</td>
+                        <td class="px-4 py-2 border border-gray-300">${formData.TotalOfPages}</td>
+                        <td class="px-4 py-2 border border-gray-300">${formData.Status}</td>
+                    </tr>`;
+
+                    $("#tableBody").append(newRow); // Add row without refresh
+
+                    // Clear input fields
                     $("#AddName, #AddAuthor, #AddCategory, #AddCompletedPages, #AddTotalPages, #AddStatus").val('');
                 } else {
                     alert("Ekleme sırasında bir hata oluştu: " + response.error);
@@ -91,12 +102,10 @@ $(document).ready(function () {
 
 
 
-
 $(document).ready(function () {
     $("#DeleteBook").click(function (event) {
         event.preventDefault();
-        var bookId = $("#IdTextBoxDel").val();
-        
+        var bookId = $("#UpdateId").val(); // Ensure input exists for book ID
 
         $.ajax({
             type: "DELETE",
@@ -107,11 +116,8 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.success) {
                     alert("Kitap kütüphaneden kaldırıldı.");
-                    $("#tableBody tr").filter(function () {
-                        return $(this).find("td:first").text() == bookId;
-                    }).remove();
-                }
-                else {
+                    $("#tableBody tr[data-id='" + bookId + "']").remove();
+                } else {
                     alert("Kaldırma işlemi esnasında bir hata oluştu: " + response.error);
                 }
             },
@@ -119,14 +125,12 @@ $(document).ready(function () {
                 console.log("Error details:", xhr, status, error);
                 alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
             }
-            });
+        });
     });
-});
 
-$(document).ready(function () {
-    $(".AddToFavoritesButton").click(function (event) {
+    $("#AddToFavoritesButton").click(function (event) {
         event.preventDefault();
-        var bookID = $("#IdTextBoxFav").val();
+        var bookID = $("#UpdateId").val(); // Ensure input exists for book ID
 
         $.ajax({
             type: "POST",
@@ -136,20 +140,20 @@ $(document).ready(function () {
             contentType: "application/json",
             success: function (response) {
                 if (response.success) {
-                    // Construct new book HTML
-                    var emptyShowcase = $("#showcaseContainer .fav:has(label[name='booktitle']:contains('-'))").first();
-
-                    if (emptyShowcase.length > 0) { // Check if an empty box was found
-                        // Update the empty showcase with the new book details
-                        emptyShowcase.find("label[name='booktitle']").text(response.bookName);
-                        emptyShowcase.find("input[name='booktitle']").val(response.bookName);
-                        // Remove any default placeholder elements
-                        emptyShowcase.find(".upload-label").remove();
-                        alert("Kitap kullanıcı vitrinine eklendi!");
-                    }
-                    else {
-                        alert("İşlem esnasında bir hata oluştu.");
-                    }
+                    var showcaseContainer = $("#showcaseContainer");
+                    showcaseContainer.append(`
+                        <div class="bg-gray-200 p-4 rounded-lg text-center fav">
+                            <span class="block text-sm font-semibold">${response.bookName}</span>
+                            <div class="w-full h-32 bg-gray-300 rounded mt-2"></div>
+                            <form action="RemoveBookShowcase" method="post">
+                                <input type="hidden" name="booktitle" value="${response.bookName}" />
+                                <button type="submit" class="w-full bg-red-500 text-white p-2 rounded mt-2">Kaldır</button>
+                            </form>
+                        </div>
+                    `);
+                    alert("Kitap kullanıcı vitrinine eklendi!");
+                } else {
+                    alert("İşlem esnasında bir hata oluştu.");
                 }
             },
             error: function (xhr, status, error) {
@@ -159,6 +163,7 @@ $(document).ready(function () {
         });
     });
 });
+
 
 
 
