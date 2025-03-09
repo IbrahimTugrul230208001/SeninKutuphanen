@@ -113,3 +113,25 @@ const mobileMenu = document.getElementById('mobile-menu');
 menuBtn.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
 });
+
+$.document.ready(function () {
+ 
+    $.ajax({
+        type: "PUT",
+        url: "/Settings/LogOut",
+        data: JSON.stringify(user),
+        dataType: "json",
+        contentType: "application/json",
+        success: function (response) {
+            if (response.success) {
+                alert("Çıkış yapılıyor.");
+            } else {
+                alert("Çıkış esnasında bir hata oluştu.");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log("Error details:", xhr, status, error);
+            alert("Sunucu ile irtibat kurulurken bir hata oluştu.");
+        }
+    });
+});

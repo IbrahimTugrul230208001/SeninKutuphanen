@@ -98,5 +98,11 @@ namespace learningASP.NET_CORE.Controllers
                 return Json(new { success = true, redirectUrl = Url.Action("Settings") });
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> LogOut()
+        {
+            return RedirectToAction("LogIn", "LogIn"); 
+        }
     }
 }
