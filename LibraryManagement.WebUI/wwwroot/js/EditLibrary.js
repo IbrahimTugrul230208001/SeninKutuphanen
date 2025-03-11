@@ -73,15 +73,14 @@ $(document).ready(function () {
                 if (response.success) {
                     alert("Yeni kitap kütüphanenize eklendi!");
 
-                    // Create new row
                     var newRow = `<tr data-id="${response.id}" class="table-row cursor-pointer">
-                        <td class="px-4 py-2 border border-gray-300 text-transparent">${response.id}</td>
-                        <td class="px-4 py-2 border border-gray-300">${formData.Name}</td>
-                        <td class="px-4 py-2 border border-gray-300">${formData.Author}</td>
-                        <td class="px-4 py-2 border border-gray-300">${formData.Category}</td>
-                        <td class="px-4 py-2 border border-gray-300">${formData.CompletedPages}</td>
-                        <td class="px-4 py-2 border border-gray-300">${formData.TotalOfPages}</td>
-                        <td class="px-4 py-2 border border-gray-300">${formData.Status}</td>
+                        <td class="px-4 py-2 border border-gray-300">${response.id}</td>
+                        <td class="px-4 py-2 border border-gray-300">${response.Name}</td>
+                        <td class="px-4 py-2 border border-gray-300">${response.Author}</td>
+                        <td class="px-4 py-2 border border-gray-300">${response.Category}</td>
+                        <td class="px-4 py-2 border border-gray-300">${response.CompletedPages}</td>
+                        <td class="px-4 py-2 border border-gray-300">${response.TotalOfPages}</td>
+                        <td class="px-4 py-2 border border-gray-300">${response.Status}</td>
                     </tr>`;
 
                     $("#tableBody").append(newRow); // Add row without refresh
@@ -103,8 +102,7 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
-    $("#DeleteBook").click(function (event) {
-        event.preventDefault();
+    $("#DeleteBook").click(function () {
         var bookId = $("#UpdateId").val(); // Ensure input exists for book ID
 
         $.ajax({
@@ -128,8 +126,7 @@ $(document).ready(function () {
         });
     });
 
-    $("#AddToFavoritesButton").click(function (event) {
-        event.preventDefault();
+    $("#AddToFavoritesButton").click(function () {
         var bookID = $("#UpdateId").val(); // Ensure input exists for book ID
 
         $.ajax({
