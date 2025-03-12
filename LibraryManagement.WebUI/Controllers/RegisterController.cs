@@ -75,12 +75,55 @@ public class RegisterController : Controller
             var bodyBuilder = new BodyBuilder
             {
                 HtmlBody = $@"
+<!DOCTYPE html>
 <html>
+<head>
+    <meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+    <title>Verification Code</title>
+    <style>
+        body {{
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }}
+        .container {{
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }}
+        h3 {{
+            color: #bb86fc;
+        }}
+        p {{
+            font-size: 16px;
+        }}
+        .code {{
+            font-size: 24px;
+            font-weight: bold;
+            color: #03dac6;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }}
+    </style>
+</head>
 <body>
-    <h3>Your Verification Code: {code}</h3>
-    <p>Use this code to verify your account.</p>
+    <div class=""container"">
+        <h3>Your Verification Code</h3>
+        <p>Use this code to verify your account:</p>
+        <div class=""code"">{code}</div>
+    </div>
 </body>
-</html>"
+</html>
+"
             };
 
             message.Body = bodyBuilder.ToMessageBody();
