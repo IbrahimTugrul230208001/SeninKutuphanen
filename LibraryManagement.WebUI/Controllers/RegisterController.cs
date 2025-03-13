@@ -130,7 +130,7 @@ public class RegisterController : Controller
             message.Body = bodyBuilder.ToMessageBody();
 
             // Retrieve the API key securely (e.g., from environment variables)
-            string key = _configuration["SMTP:key"]; ;
+            string key = _configuration["SMTP:key"];
 
             using var client = new SmtpClient();
 

@@ -14,10 +14,12 @@ namespace learningASP.NET_CORE.Controllers
     {
         UserManager _userManager = new UserManager(new EfUserRepository());
         private readonly IUserService _userService;
+        private readonly IConfiguration _configuration;
 
-        public VerificationController(IUserService userService)
+        public VerificationController(IUserService userService,IConfiguration configuration)
         {
             _userService = userService;
+            _configuration = configuration;
         }
         public IActionResult Verification()
         {
@@ -106,7 +108,7 @@ namespace learningASP.NET_CORE.Controllers
                 message.Body = bodyBuilder.ToMessageBody();
 
                 // Retrieve the API key securely (e.g., from environment variables)
-                var key = 
+                var key = _configuration["SMTP:key"];
 
                 using var client = new SmtpClient();
 
