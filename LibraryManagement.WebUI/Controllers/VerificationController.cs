@@ -106,7 +106,7 @@ namespace learningASP.NET_CORE.Controllers
                 message.Body = bodyBuilder.ToMessageBody();
 
                 // Retrieve the API key securely (e.g., from environment variables)
-                string key = "EwzkqAaPmTv9jnDS";
+                var key = 
 
                 using var client = new SmtpClient();
 

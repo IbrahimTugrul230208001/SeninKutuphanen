@@ -4,7 +4,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using learningASP.NET_CORE.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
+// Retrieve the API key from appsettings.json
+var key = configuration["SMTP:key"];
+
+Console.WriteLine($"SMTP Key: {key}");
 // Add services to the container
 builder.Services.AddControllersWithViews();
 

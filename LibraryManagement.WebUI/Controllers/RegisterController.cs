@@ -12,10 +12,11 @@ public class RegisterController : Controller
 {
     UserManager _userManager = new UserManager(new EfUserRepository());
     private readonly IUserService _userService;
-
-    public RegisterController(IUserService userService)
+    private readonly IConfiguration _configuration;
+    public RegisterController(IUserService userService,IConfiguration configuration)
     {
         _userService = userService;
+        _configuration = configuration;
     }
     public IActionResult Register()
     {
@@ -129,7 +130,7 @@ public class RegisterController : Controller
             message.Body = bodyBuilder.ToMessageBody();
 
             // Retrieve the API key securely (e.g., from environment variables)
-            string key = "EwzkqAaPmTv9jnDS";
+            string key = _configuration["SMTP:key"]; ;
 
             using var client = new SmtpClient();
 
