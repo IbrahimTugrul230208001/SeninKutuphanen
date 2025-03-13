@@ -40,7 +40,7 @@ namespace learningASP.NET_CORE.Controllers
             }
         }
         [HttpPost]
-        public async Task SendEmailAsync(string email)
+        public async Task SendEmail(string email)
         {
             try
             {
@@ -94,8 +94,8 @@ namespace learningASP.NET_CORE.Controllers
 </head>
 <body>
     <div class=""container"">
-        <h3>Your Verification Code</h3>
-        <p>Use this code to verify your account:</p>
+        <h3>Doğrulama Kodunuz</h3>
+        <p>Hesabınızı doğrulamak için bu kodu kullanın:</p>
         <div class=""code"">{VerificationCode()}</div>
     </div>
 </body>
