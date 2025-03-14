@@ -1,10 +1,12 @@
 ﻿$document.ready(function () {
     $("#verify").click(function () {
-        var code = $("#code").val();
+        var user ={
+            VerificationCode: $("#code").val()
+        };
         $.ajax({
             type: "POST",
-            url: "Verification/VerifyEmail",
-            data: JSON.stringify(code),
+            url: "/Verification/VerifyEmail",
+            data: JSON.stringify(user),
             dataType: "json",
             contentType: "application/json",
             success: function (response) {

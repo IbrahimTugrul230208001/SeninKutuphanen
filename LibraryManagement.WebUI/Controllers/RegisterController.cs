@@ -118,8 +118,8 @@ public class RegisterController : Controller
 </head>
 <body>
     <div class=""container"">
-        <h3>Your Verification Code</h3>
-        <p>Use this code to verify your account:</p>
+        <h3>Doğrulama Kodunuz</h3>
+        <p>Doğrulama için bu kodu kullanın:</p>
         <div class=""code"">{code}</div>
     </div>
 </body>

@@ -7,6 +7,7 @@ using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using learningASP.NET_CORE.Models;
 
 namespace learningASP.NET_CORE.Controllers
 {
@@ -26,9 +27,9 @@ namespace learningASP.NET_CORE.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> VerifyEmail(string verificationCode)
+        public async Task<IActionResult> VerifyEmail([FromBody] User user)
         {
-            if(verificationCode == _userService.VerificationCode)
+            if(user.VerificationCode == _userService.VerificationCode)
             {
                 string email = _userService.Email;
                 string userName = _userService.UserName;
@@ -42,13 +43,13 @@ namespace learningASP.NET_CORE.Controllers
             }
         }
         [HttpPost]
-        public async Task SendEmail(string email)
+        public async Task SendEmail()
         {
             try
             {
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress("Senin Kütüphanen", "seninkutuphanen@outlook.com"));
-                message.To.Add(new MailboxAddress("", email));
+                message.To.Add(new MailboxAddress("", _userService.Email));
                 message.Subject = "Verification Code";
 
                 var bodyBuilder = new BodyBuilder
