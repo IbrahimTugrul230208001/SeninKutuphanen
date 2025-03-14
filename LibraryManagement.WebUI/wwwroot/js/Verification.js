@@ -1,4 +1,4 @@
-﻿$document.ready(function () {
+﻿$(document).ready(function () {
     $("#verify").click(function () {
         var user ={
             VerificationCode: $("#code").val()
