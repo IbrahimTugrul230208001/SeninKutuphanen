@@ -35,7 +35,7 @@ namespace learningASP.NET_CORE.Controllers
                 string userName = _userService.UserName;
                 string password = _userService.Password;
                 await _userManager.AddNewUserAsync(email, userName, password);
-                return Json(new { success = true, redirectUrl = Url.Action("LogIn","LogIn") });
+                return Json(new { success = true , redirectUrl = Url.Action("UserProfile", "UserProfile") });
             }
             else
             {

@@ -12,6 +12,7 @@
             success: function (response) {
                 if (response.success) {
                     alert("Doğrulama başarılı");
+                    window.location.href = response.redirectUrl;
                 }
                 else {
                     alert("Doğrulama başarısız, kodu tekrar giriniz.");
