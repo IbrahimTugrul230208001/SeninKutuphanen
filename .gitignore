@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /LibraryManagementWeb.sln
 
 .env
+/LibraryManagement.WebUI/appsettings.json
