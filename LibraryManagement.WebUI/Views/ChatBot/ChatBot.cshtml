@@ -1,0 +1,127 @@
+﻿@using LibraryManagement.Business.Concrete
+@using LibraryManagement.DataAccess.Concrete
+@using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
+@using LibraryManagement.Entities.Concrete
+@using Microsoft.Data.SqlClient
+@using System.Data
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeninKütüphanen</title>
+    <link rel="icon" href="/img/logo.png" type="jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/EditLibrary.css">
+</head>
+<body class="bg-gray-200">
+    @{
+        LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
+        string userName = ViewData["UserName"].ToString();
+        string userProfilePicture = ViewData["UserProfilePicture"].ToString();
+    }
+    <nav class="bg-gray-900 text-white px-6 py-3 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <img src="/img/logo.png" class="w-12 h-12 rounded-full">
+                <span class="font-semibold text-lg">BenimKitaplığım</span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                ☰ <!-- Hamburger Icon -->
+            </button>
+
+            <!-- Profile & Notification -->
+            <div class="flex items-center space-x-4">
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/EditLibrary/EditLibrary" class="text-gray-300 hover:text-white">Kitaplık</a>
+                    <a href="/Settings/Settings" class="text-gray-300 hover:text-white">Ayarlar</a>
+                    <a href="/Settings/Settings" class="text-gray-300 hover:text-white">BenimAsistanım</a>
+                </div>
+                <div class="relative">
+                    <a href="/Notifications/Notifications">
+                        <span class="text-2xl text-gray-400 hover:text-white cursor-pointer">🔔</span>
+                    </a>
+                    <span class="absolute bg-red-500 text-white text-[10px] font-bold px-1 rounded-full flex items-center justify-center min-w-[16px] h-[16px]
+                    -top-[2px] -right-[5px]">
+                        3
+                    </span>
+                </div>
+                <a href="/UserProfile/UserProfile"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden flex flex-col space-y-2 bg-gray-800 py-3 px-6">
+            <a href="/EditLibrary/EditLibrary" class="text-gray-300 hover:text-white">Kitaplık</a>
+            <a href="/Settings/Settings" class="text-gray-300 hover:text-white">Ayarlar</a>
+        </div>
+    </nav>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+    <!-- Chat UI Section (Place below the navbar) -->
+    <div class="max-w-7xl mx-auto p-6">
+        <!-- Conversation Container -->
+        <div id="chat-container" class="bg-white rounded-lg shadow p-4 h-[calc(100vh-200px)] overflow-y-auto space-y-4">
+            <!-- Bot Message -->
+            <div class="flex items-start">
+                <img src="/img/logo.png" alt="Bot" class="w-10 h-10 rounded-full mr-3">
+                <div class="bg-gray-100 p-3 rounded-lg max-w-xl">
+                    <p class="text-gray-800">Merhaba, ben BenimAsistanım. Nasıl yardımcı olabilirim?</p>
+                </div>
+            </div>
+            <!-- User Message -->
+            <div class="flex items-end justify-end">
+                <div class="bg-blue-600 p-3 rounded-lg max-w-xl text-white">
+                    <p>Kitap önerilerin var mı?</p>
+                </div>
+                <img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" alt="User" class="w-10 h-10 rounded-full ml-3">
+            </div>
+            <!-- Additional sample messages can be added here following the same structure -->
+        </div>
+
+        <!-- Chat Input -->
+        <div class="mt-4 flex">
+            <input id="chat-input" type="text" placeholder="Mesajını yaz..." class="flex-1 border border-gray-300 rounded-l-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="send-btn" class="bg-blue-600 text-white px-4 rounded-r-lg hover:bg-blue-700 focus:outline-none">Gönder</button>
+        </div>
+    </div>
+
+    <!-- Optional: Minimal JavaScript to toggle new messages (for demonstration) -->
+    <script>
+        const sendBtn = document.getElementById('send-btn');
+        const chatInput = document.getElementById('chat-input');
+        const chatContainer = document.getElementById('chat-container');
+
+        sendBtn.addEventListener('click', () => {
+          const messageText = chatInput.value.trim();
+          if (messageText !== "") {
+            // Create a new user message element
+            const userMsgEl = document.createElement('div');
+            userMsgEl.className = 'flex items-end justify-end';
+            userMsgEl.innerHTML = `
+              <div class="bg-blue-600 p-3 rounded-lg max-w-xl text-white">
+                <p>${messageText}</p>
+              </div>
+              <img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" alt="User" class="w-10 h-10 rounded-full ml-3">
+            `;
+            chatContainer.appendChild(userMsgEl);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            chatInput.value = "";
+            // Here you would typically also send the message to your backend/API and render the bot's reply.
+          }
+        });
+    </script>
+
+</body>
+</html>
