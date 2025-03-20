@@ -9,39 +9,32 @@ hubConnection.start()
         console.error(err.toString()));
 
 hubConnection.on("ReceiveMessage", responseMessage => {
-    const aiMessageEl = document.createElement('div');
-    aiMessageEl.className = 'flex items-start'; // Adjust styling as needed
-    aiMessageEl.innerHTML = `
-        <img src="/img/logo.png" alt="Bot" class="w-10 h-10 rounded-full mr-3">
-        <div class="bg-gray-100 p-3 rounded-lg max-w-xl">
-            <p class="text-gray-800">${responseMessage}</p>
-        </div>
-    `;
-    chatBox.appendChild(aiMessageEl);
+    const aiMessage = `<div class="flex items-start">
+                <img src="/img/logo.png" alt="Bot" class="w-10 h-10 rounded-full mr-3">
+                <div id="chat-box" class="bg-gray-100 p-3 rounded-lg max-w-xl">
+                    <p class="text-gray-800">${responseMessage}</p>
+                </div>
+            </div>`;
+    chatBox.innerHTML += aiMessage;
     chatBox.scrollTop = chatBox.scrollHeight;
 });
 
-
-const input = document.getElementById("chat-input");
+const input = document.getElementById("user-input");
 const chatBox = document.getElementById("chat-box");
 
 function sendPrompt() {
     if (input.value.trim() === "") return;
 
-    const userMessageEl = document.createElement('div');
-    userMessageEl.className = 'flex items-end justify-end';
-    userMessageEl.innerHTML = `
-    <div class="bg-blue-600 p-3 rounded-lg max-w-xl text-white">
-        <p>${input.value}</p>
-    </div>
-    <img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" alt="User" class="w-10 h-10 rounded-full ml-3">
-`;
-    chatBox.appendChild(userMessageEl);
+    const userMessage = `<div class="flex items-end justify-end">
+                <div id="chat-input" class="bg-blue-600 p-3 rounded-lg max-w-xl text-white">
+                    <p>${input.value}</p>
+                </div>
+                <img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" alt="User" class="w-10 h-10 rounded-full ml-3">
+            </div>`;
+    chatBox.innerHTML += userMessage;
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    fetch("https://localhost:7254/ChatBot/ChatBot", {
+    fetch("https://localhost:7118/ChatBot/ChatBot", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -53,13 +46,3 @@ function sendPrompt() {
         .catch(error => console.error("Error", error));
     input.value = "";
 }
-
-document.getElementById("send-btn").addEventListener("click", sendPrompt);
-
-// Also trigger sendPrompt on "Enter" key press
-document.getElementById("chat-input").addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        event.preventDefault(); // Prevents accidental form submission
-        sendPrompt();
-    }
-});

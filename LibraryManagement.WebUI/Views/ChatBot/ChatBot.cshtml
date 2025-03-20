@@ -72,14 +72,14 @@
     <!-- Chat UI Section (Place below the navbar) -->
     <div class="max-w-7xl mx-auto p-6">
         <!-- Conversation Container -->
-        <div id="chat-container" class="bg-white rounded-lg shadow p-4 h-[calc(100vh-200px)] overflow-y-auto space-y-4">
+        <div id="chat-box" class="bg-white rounded-lg shadow p-4 h-[calc(100vh-200px)] overflow-y-auto space-y-4">
             <!-- Bot Message -->
             <div id="connection-id" class="text-sm text-gray-500 mt-4">
                 <p>Connection ID: <span id="connectionId"></span></p>
             </div>
             <div class="flex items-start">
                 <img src="/img/logo.png" alt="Bot" class="w-10 h-10 rounded-full mr-3">
-                <div id="chat-box" class="bg-gray-100 p-3 rounded-lg max-w-xl">
+                <div class="bg-gray-100 p-3 rounded-lg max-w-xl">
                     <p class="text-gray-800">Merhaba, ben BenimAsistanım. Nasıl yardımcı olabilirim?</p>
                 </div>
             </div>
@@ -98,8 +98,8 @@
         <!-- Chat Input -->
         <!-- Chat Input -->
         <div class="mt-4 relative">
-            <input id="chat-input" type="text" placeholder="Mesajını yaz..." class="w-full border border-gray-300 rounded-lg p-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button id="send-btn" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-10 h-10 flex items-center justify-center focus:outline-none">
+            <input id="user-input" type="text" placeholder="Mesajını yaz..." class="w-full border border-gray-300 rounded-lg p-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="sendPrompt()" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-10 h-10 flex items-center justify-center focus:outline-none">
                 <!-- Up arrow icon -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
