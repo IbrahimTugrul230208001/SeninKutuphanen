@@ -6,6 +6,8 @@ using Microsoft.SemanticKernel;
 using OpenAI;
 using System.ClientModel;
 using learningASP.NET_CORE.Hubs;
+using OllamaSharp.Models.Chat;
+using learningASP.NET_CORE.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -37,8 +39,6 @@ builder.Services.AddSignalR();
 
 
 
-Console.WriteLine($"SMTP Key: {key}");
-// Add services to the container
 builder.Services.AddControllersWithViews();
 
 // Register UserService as a singleton
@@ -65,6 +65,8 @@ app.MapGet("/", context =>
     context.Response.Redirect("/LogIn/LogIn");
     return Task.CompletedTask;
 });
+app.MapPost("/chat", async (AIService aiService, ChatRequestVM chatRequest, CancellationToken cancellationToken)
+    => await aiService.GetMessageStreamAsync(chatRequest.Prompt, chatRequest.ConnectionId, cancellationToken));
 app.MapHub<AIHub>("ai-hub");
 app.Run();
 

@@ -30,7 +30,7 @@ using learningASP.NET_CORE.Services;
             }
             catch (Exception ex)
             {
-
+            Console.WriteLine(ex.Message);
             }
             history.AddAssistantMessage(responseContent);
         }
