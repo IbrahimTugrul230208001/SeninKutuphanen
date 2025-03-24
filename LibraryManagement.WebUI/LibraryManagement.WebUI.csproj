@@ -43,6 +43,7 @@
     <PackageReference Include="Microsoft.SemanticKernel.Plugins.Memory" Version="1.41.0-alpha" />
     <PackageReference Include="Microsoft.SemanticKernel.Plugins.Web" Version="1.41.0-alpha" />
     <PackageReference Include="MimeKit" Version="4.10.0" />
+    <PackageReference Include="OpenAI" Version="2.2.0-beta.4" />
   </ItemGroup>
 
   <ItemGroup>

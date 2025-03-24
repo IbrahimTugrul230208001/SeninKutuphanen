@@ -6,19 +6,19 @@ using Microsoft.SemanticKernel;
 using OpenAI;
 using System.ClientModel;
 using learningASP.NET_CORE.Hubs;
-using OllamaSharp.Models.Chat;
-using learningASP.NET_CORE.ViewModels;
+using Microsoft.AspNetCore.Builder;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Retrieve the API key from appsettings.json
 var key = configuration["SMTP:key"];
-var apikey = configuration["DeepSeek:Apikey"];
+var apikey = configuration["Gemini:Apikey"];
 builder.Services
     .AddKernel()
     .AddOpenAIChatCompletion(
-        modelId: "deepseek/deepseek-r1-zero:free",
+        modelId: "google/gemini-2.0-pro-exp-02-05:free",
         openAIClient: new OpenAIClient(
             credential: new ApiKeyCredential($"{apikey}"),
             options: new OpenAIClientOptions
@@ -43,7 +43,7 @@ builder.Services.AddControllersWithViews();
 
 // Register UserService as a singleton
 builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<AIService>();
+builder.Services.AddSingleton<IAIServices,AIService>();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -55,6 +55,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseRouting();
 app.UseCors();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}"
@@ -65,8 +66,8 @@ app.MapGet("/", context =>
     context.Response.Redirect("/LogIn/LogIn");
     return Task.CompletedTask;
 });
-app.MapPost("/chat", async (AIService aiService, ChatRequestVM chatRequest, CancellationToken cancellationToken)
-    => await aiService.GetMessageStreamAsync(chatRequest.Prompt, chatRequest.ConnectionId, cancellationToken));
+
+
 app.MapHub<AIHub>("ai-hub");
 app.Run();
 
