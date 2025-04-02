@@ -18,7 +18,7 @@ var apikey = configuration["Gemini:Apikey"];
 builder.Services
     .AddKernel()
     .AddOpenAIChatCompletion(
-        modelId: "google/gemini-2.0-pro-exp-02-05:free",
+        modelId: "google/gemini-2.5-pro-exp-03-25:free",
         openAIClient: new OpenAIClient(
             credential: new ApiKeyCredential($"{apikey}"),
             options: new OpenAIClientOptions
@@ -66,6 +66,7 @@ app.MapGet("/", context =>
     context.Response.Redirect("/LogIn/LogIn");
     return Task.CompletedTask;
 });
+
 
 
 app.MapHub<AIHub>("ai-hub");

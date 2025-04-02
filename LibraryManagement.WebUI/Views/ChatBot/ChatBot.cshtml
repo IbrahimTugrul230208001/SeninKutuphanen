@@ -11,8 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeninKütüphanen</title>
     <link rel="icon" href="/img/logo.png" type="jpeg">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/css/EditLibrary.css">
+    <link href="~/lib/tailwindcss/tailwind.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/ChatBot.css">
 </head>
 <body class="bg-gray-200">
     @{
@@ -80,8 +80,6 @@
         </div>
 
         <!-- Chat Input -->
-        <!-- Chat Input -->
-        <!-- Chat Input -->
         <div class="mt-4 relative">
             <input id="user-input" type="text" placeholder="Mesajını yaz..." class="w-full border border-gray-300 rounded-lg p-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <button onclick="sendPrompt()" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white rounded-full w-10 h-10 flex items-center justify-center focus:outline-none">
@@ -94,7 +92,10 @@
 
     </div>
 
+    <script src="~/lib/markdown/lib/markdown.min.js"></script>
+    <script src="~/lib/marked/marked.min.js"></script>
     <script src="/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+
     <script src="/js/ChatBot.js"></script>
 </body>
 </html>

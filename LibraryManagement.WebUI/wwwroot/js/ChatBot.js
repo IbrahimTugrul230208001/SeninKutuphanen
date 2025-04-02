@@ -1,5 +1,4 @@
-﻿// Initialize SignalR connection
-var hubConnection = new signalR.HubConnectionBuilder()
+﻿var hubConnection = new signalR.HubConnectionBuilder()
     .withUrl("https://localhost:7254/ai-hub")
     .build();
 
@@ -11,12 +10,30 @@ async function startHubConnection() {
         console.log("SignalR Connected. Connection ID:", hubConnection.connectionId);
     } catch (err) {
         console.error("SignalR Connection Error:", err.toString());
-        setTimeout(startHubConnection, 5000); // Retry connection every 5 seconds
+        setTimeout(startHubConnection, 5000); 
     }
 }
-startHubConnection(); // Start connection on page load
+startHubConnection(); 
 
-// Function to send the user input
+
+hubConnection.on("ReceiveMessage", (message) => {
+    console.log("Received AI Response:", message);
+
+    const chatBox = document.getElementById("chat-box");
+    const modifiedMessage = marked.parse(message);
+    const aiMessage =
+        `<div class="flex items-start">
+            <img src="/img/logo.png" alt="Bot" class="w-10 h-10 rounded-full mr-3">
+                <div class="bg-gray-100 p-3 rounded-lg max-w-xl">
+                    <p class="text-gray-800">${modifiedMessage}</p>
+                </div>
+        </div>`;
+
+    chatBox.innerHTML += aiMessage;
+    chatBox.scrollTop = chatBox.scrollHeight;
+});
+
+
 function sendPrompt() {
     var input = document.getElementById("user-input");
     var chatBox = document.getElementById("chat-box");
@@ -66,7 +83,6 @@ function sendPrompt() {
                 return;
             }
 
-            // 5. Add AI Response to Chat Box
             const aiMessage = `
         <div class="flex items-start">
             <img src="/img/logo.png" alt="Bot" class="w-10 h-10 rounded-full mr-3">
@@ -79,4 +95,3 @@ function sendPrompt() {
         })
         .catch(error => console.error("Error:", error));
 }
-
