@@ -18,9 +18,16 @@ hubConnection.on("ReceiveMessage", (message) => {
     console.log("Received AI Response:", message);
 
     const chatBox = document.getElementById("chat-box");
+    // Parse and format the message (if you're using a markdown library)
     const modifiedMessage = marked.parse(message);
 
-    // Create the message structure first
+    // Remove the loading placeholder if it exists
+    const loadingMessageBlock = document.getElementById("loading-message");
+    if (loadingMessageBlock) {
+        loadingMessageBlock.remove();
+    }
+
+    // Create the final AI message structure
     const aiMessage = document.createElement('div');
     aiMessage.classList.add("flex", "items-start");
 
@@ -62,7 +69,7 @@ function sendPrompt() {
 
     if (input.value.trim() === "") return; // Don't send empty messages
 
-    // ✅ Save the input value before clearing
+    // Save the input value before clearing
     const userMessageText = input.value;
 
     // 1. Add User's Message to Chat Box
@@ -84,7 +91,33 @@ function sendPrompt() {
         return;
     }
 
-    // 4. Send the prompt to backend
+    // 4. Add a loading message placeholder
+    const loadingMessageBlock = document.createElement('div');
+    loadingMessageBlock.id = "loading-message";
+    loadingMessageBlock.classList.add("flex", "items-start");
+
+    const aiImage = document.createElement('img');
+    aiImage.src = "/img/logo.png";
+    aiImage.alt = "Bot";
+    aiImage.classList.add("w-10", "h-10", "rounded-full", "mr-3");
+
+    const loadingContainer = document.createElement('div');
+    loadingContainer.classList.add("bg-gray-100", "p-3", "rounded-lg", "max-w-xl");
+    
+    // Create and add the loading GIF image
+    const gifImage = document.createElement('img');
+    gifImage.src = "/img/gif-5-unscreen.gif"; // Replace with the actual path to your loading gif
+    gifImage.alt = "Loading...";
+    gifImage.classList.add("w-12", "h-12","mr-10","mb-7");
+    gifImage.classList.add("loading-gif");
+
+    loadingContainer.appendChild(gifImage);
+    loadingMessageBlock.appendChild(aiImage);
+    loadingMessageBlock.appendChild(loadingContainer);
+    chatBox.appendChild(loadingMessageBlock);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // 5. Send the prompt to backend
     console.log("Sending Prompt:", userMessageText);
     console.log("Connection ID:", hubConnection.connectionId);
 
@@ -94,7 +127,7 @@ function sendPrompt() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            prompt: userMessageText, // ✅ Use stored value
+            prompt: userMessageText,
             connectionId: hubConnection.connectionId
         })
     })
@@ -104,16 +137,8 @@ function sendPrompt() {
                 console.error("Invalid API response:", data);
                 return;
             }
-
-            const aiMessage = `
-        <div class="flex items-start">
-            <img src="/img/logo.png" alt="Bot" class="w-10 h-10 rounded-full mr-3">
-            <div class="bg-gray-100 p-3 rounded-lg max-w-xl">
-                <p class="text-gray-800">${data.response}</p> <!-- Assuming response is in 'response' -->
-            </div>
-        </div>`;
-            chatBox.innerHTML += aiMessage;
-            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+            // Optionally, you could handle the response here too,
+            // but we will update the placeholder in the SignalR callback.
         })
         .catch(error => console.error("Error:", error));
 }
