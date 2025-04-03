@@ -21,28 +21,40 @@ public class AIService(IHubContext<AIHub> hubContext, IChatCompletionService cha
 
         // Use StringBuilder to accumulate the full response
         var responseBuilder = new StringBuilder();
-
+        string finalResponse = null;
         try
         {
-            await foreach (var response in chatCompletionService.GetStreamingChatMessageContentsAsync(
-                history,
-                executionSettings: openAIPromptExecutionSettings,
-                kernel: kernel))
+            while (finalResponse == null)
             {
-                cancellationToken?.ThrowIfCancellationRequested();
+                await foreach (var response in chatCompletionService.GetStreamingChatMessageContentsAsync(
+                    history,
+                    executionSettings: openAIPromptExecutionSettings,
+                    kernel: kernel))
+                {
+                    cancellationToken?.ThrowIfCancellationRequested();
 
-                // Append each chunk of the response to the buffer
-                responseBuilder.Append(response.ToString());
+                    // Append each chunk of the response to the buffer
+                    responseBuilder.Append(response.ToString());
+                }
+
+                // Get the final response after the streaming is complete
+                finalResponse = responseBuilder.ToString();
+
+                if (string.IsNullOrEmpty(finalResponse))
+                {
+                    // If the final response is null or empty, reset the responseBuilder and try again
+                    responseBuilder.Clear();
+                    finalResponse = null;
+                }
+                else
+                {
+                    // Send the final response as one message
+                    await hubContext.Clients.Client(connectionId).SendAsync("ReceiveMessage", finalResponse);
+
+                    // Add the full response to history (after streaming completes)
+                    history.AddAssistantMessage(finalResponse);
+                }
             }
-
-            // Get the final response after the streaming is complete
-            string finalResponse = responseBuilder.ToString();
-
-            // Send the final response as one message
-            await hubContext.Clients.Client(connectionId).SendAsync("ReceiveMessage", finalResponse);
-
-            // Add the full response to history (after streaming completes)
-            history.AddAssistantMessage(finalResponse);
         }
         catch (Exception ex)
         {

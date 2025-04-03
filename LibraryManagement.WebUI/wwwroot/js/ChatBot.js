@@ -14,24 +14,46 @@ async function startHubConnection() {
     }
 }
 startHubConnection(); 
-
-
 hubConnection.on("ReceiveMessage", (message) => {
     console.log("Received AI Response:", message);
 
     const chatBox = document.getElementById("chat-box");
     const modifiedMessage = marked.parse(message);
-    const aiMessage =
-        `<div class="flex items-start">
-            <img src="/img/logo.png" alt="Bot" class="w-10 h-10 rounded-full mr-3">
-                <div class="bg-gray-100 p-3 rounded-lg max-w-xl">
-                    <p class="text-gray-800">${modifiedMessage}</p>
-                </div>
-        </div>`;
 
-    chatBox.innerHTML += aiMessage;
-    chatBox.scrollTop = chatBox.scrollHeight;
+    // Create the message structure first
+    const aiMessage = document.createElement('div');
+    aiMessage.classList.add("flex", "items-start");
+
+    const imgElement = document.createElement('img');
+    imgElement.src = "/img/logo.png";
+    imgElement.alt = "Bot";
+    imgElement.classList.add("w-10", "h-10", "rounded-full", "mr-3");
+
+    const messageContainer = document.createElement('div');
+    messageContainer.classList.add("bg-gray-100", "p-3", "rounded-lg", "max-w-xl");
+
+    const messageText = document.createElement('p');
+    messageText.classList.add("text-gray-800");
+    messageText.innerHTML = ""; // Start with an empty string
+
+    messageContainer.appendChild(messageText);
+    aiMessage.appendChild(imgElement);
+    aiMessage.appendChild(messageContainer);
+
+    chatBox.appendChild(aiMessage);  // Add message container to chat box
+
+    // Initialize the typewriter effect on the message text
+    const typewriter = new Typewriter(messageText, {
+        delay: 10,
+        cursor: ''
+    });
+
+    typewriter.typeString(modifiedMessage).start().callFunction(() => {
+        chatBox.scrollTop = chatBox.scrollHeight;  // Scroll after typing is done
+    });
 });
+
+
 
 
 function sendPrompt() {
