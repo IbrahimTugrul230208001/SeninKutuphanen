@@ -6,41 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeninKütüphanen</title>
     <link rel="icon" href="/img/logo.png" type="jpeg">
-    <link href="~/lib/tailwindcss/tailwind.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
 <body class="bg-gray-200">
 
-    <div class="min-h-screen flex">
+    <div class="flex min-h-screen">
         <!-- Left Side: Image -->
         <div class="flex-1">
-            <img src="~/img/library.jpeg" alt="Library Image" class="w-full h-full object-cover" />
+            <img src="~/img/library.jpeg" alt="Library Image" class="h-full w-full object-cover" />
         </div>
 
 
         <!-- Right Side: Form -->
-        <div class="flex-1 flex items-center justify-center bg-gray-100">
-            <div class="bg-white shadow-lg rounded-lg max-w-md w-full p-8">
-                <div class="text-center mb-8">
-                    <h2 class="text-4xl font-semibold text-gray-700">BenimKitaplığım</h2>
+        <div class="bg-gray-100 flex flex-1 items-center justify-center">
+            <div class="bg-white p-8 w-full max-w-md rounded-lg shadow-lg">
+                <div class="mb-8 text-center">
+                    <h2 class="text-gray-700 text-4xl font-semibold">BenimKitaplığım</h2>
                     <p class="text-gray-500 mt-2">Doğrulama kodunu giriniz</p>
                 </div>
 
                     <!-- Email Input -->
                     <div class="mb-4">
-                        <label for="code" class="block text-gray-600">E-posta adresi</label>
+                        <label for="code" class="text-gray-600 block">E-posta adresi</label>
                         <input type="text" id="code" placeholder="Doğrulama Kodu"
-                               class="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                               class="p-3 mt-2 border-gray-300 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400" required />
                     </div>
 
                     <!-- Submit Button -->
                     <button id="verify"
-                            class="w-full p-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                            class="p-3 bg-blue-500 text-white w-full rounded-lg font-semibold hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300">
                         Onayla
                     </button>
                     <!-- Resend Button -->
                     <button id="resend"
-                            class="w-full p-3 bg-white text-blue-500 border-2 border-blue-500 font-semibold rounded-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-2">
+                            class="p-3 bg-white text-blue-500 border-blue-500 mt-2 w-full rounded-lg border-2 font-semibold hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300">
                         Kodu Tekrar Gönder
                     </button>
             </div>

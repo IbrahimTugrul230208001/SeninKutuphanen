@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User's Profile</title>
     <link rel="icon" href="/img/logo.png" type="jpeg">
-    <link href="~/lib/tailwindcss/tailwind.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.24/dist/tailwind.min.css" rel="stylesheet">
 </head>
   <body class="bg-gray-200">
     @{
@@ -21,30 +21,29 @@
         string? userName = Convert.ToString(ViewData["UserName"]);
         string? userProfilePicture = Convert.ToString(ViewData["UserProfilePicture"]);
     }
-    <nav class="bg-gray-900 text-white px-6 py-3 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <nav class="bg-gray-900 text-white px-6 py-3 top-0 sticky z-50">
+        <div class="mx-auto flex max-w-7xl items-center justify-between">
             <!-- Logo -->
-            <div class="flex items-center space-x-3">
+            <div class="space-x-3 flex items-center">
                 <img src="/img/logo.png" class="w-12 h-12 rounded-full">
-                <span class="font-semibold text-lg">BenimKitaplığım</span>
+                <span class="text-lg font-semibold">BenimKitaplığım</span>
             </div>
 
             <!-- Desktop Menu -->
             <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+            <button id="menu-btn" class="text-white focus:outline-none md:hidden">
                 ☰ <!-- Hamburger Icon -->
             </button>
 
             <!-- Profile & Notification -->
-            <div class="flex items-center space-x-4">
-                <div class="hidden md:flex items-center space-x-6">
+            <div class="space-x-4 flex items-center">
+                <div class="space-x-6 hidden items-center md:flex">
                     <a href="/EditLibrary/EditLibrary" class="text-gray-300 hover:text-white">Kitaplık</a>
                     <a href="/Settings/Settings" class="text-gray-300 hover:text-white">Ayarlar</a>
                 </div>
                 <div class="relative">
-                    <span class="text-2xl text-gray-400 hover:text-white cursor-pointer">🔔</span>
-                    <span class="absolute bg-red-500 text-white text-[10px] font-bold px-1 rounded-full flex items-center justify-center min-w-[16px] h-[16px]
-                    -top-[2px] -right-[5px]">
+                    <span class="text-gray-400 cursor-pointer text-2xl hover:text-white">🔔</span>
+                    <span class="bg-red-500 text-white px-1 absolute -right-[5px] -top-[2px] flex h-[16px] min-w-[16px] items-center justify-center rounded-full font-bold text-[10px]">
                         3
                     </span>
                 </div>
@@ -53,18 +52,18 @@
         </div>
 
         <!-- Mobile Dropdown Menu -->
-        <div id="mobile-menu" class="hidden md:hidden flex flex-col space-y-2 bg-gray-800 py-3 px-6">
+        <div id="mobile-menu" class="space-y-2 bg-gray-800 py-3 px-6 flex hidden flex-col md:hidden">
             <a href="/EditLibrary/EditLibrary" class="text-gray-300 hover:text-white">Kitaplık</a>
             <a href="/Settings/Settings" class="text-gray-300 hover:text-white">Ayarlar</a>
         </div>
     </nav>
 
-    <div class="flex flex-col md:flex-row justify-between gap-6  m-5 mt-10">
+    <div class="gap-6 m-5 mt-10 flex flex-col justify-between md:flex-row">
         <!-- Profile Section -->
-        <div class="bg-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
+        <div class="bg-white p-6 w-full rounded-lg shadow-lg md:w-1/3">
             <img class="w-32 h-32 mx-auto rounded-full" src="@((userProfilePicture != null) ? userProfilePicture : "/img/profilepicture.jpeg")" alt="Profile Picture">
             <a href="/Settings/Settings">
-                <button class="mt-4 bg-blue-500 text-white p-2 rounded-full w-full hover:bg-blue-400">Profil Ayarları</button>
+                <button class="mt-4 bg-blue-500 text-white p-2 w-full rounded-full hover:bg-blue-400">Profil Ayarları</button>
             </a>
             <div class="mt-6">
                 <h3 class="font-semibold">Kullanıcı adı: @userName</h3>
@@ -73,36 +72,36 @@
             </div>
             <div class="mt-4">
                 <h4 class="font-semibold">Kitap Türleri:</h4>
-                <div class="flex flex-wrap gap-4 mt-4">
-                    <div class="flex items-center space-x-2">
+                <div class="gap-4 mt-4 flex flex-wrap">
+                    <div class="space-x-2 flex items-center">
                         <div class="bg-blue-500 w-4 h-4 rounded-full"></div>
                         <span class="text-sm">Tarih & Kültür</span>
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="space-x-2 flex items-center">
                         <div class="bg-green-500 w-4 h-4 rounded-full"></div>
                         <span class="text-sm">Edebiyat & Roman</span>
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="space-x-2 flex items-center">
                         <div class="bg-yellow-500 w-4 h-4 rounded-full"></div>
                         <span class="text-sm">Ekonomi, İş ve Hukuk</span>
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="space-x-2 flex items-center">
                         <div class="bg-purple-500 w-4 h-4 rounded-full"></div>
                         <span class="text-sm">Psikoloji & Kişisel Gelişim</span>
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="space-x-2 flex items-center">
                         <div class="bg-red-500 w-4 h-4 rounded-full"></div>
                         <span class="text-sm">Toplum, Felsefe ve Din</span>
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="space-x-2 flex items-center">
                         <div class="bg-indigo-500 w-4 h-4 rounded-full"></div>
                         <span class="text-sm">Bilim & Teknoloji</span>
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="space-x-2 flex items-center">
                         <div class="bg-pink-500 w-4 h-4 rounded-full"></div>
                         <span class="text-sm">Sanat & Tasarım</span>
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="space-x-2 flex items-center">
                         <div class="bg-gray-500 w-4 h-4 rounded-full"></div>
                         <span class="text-sm">Diğer</span>
                     </div>
@@ -110,8 +109,8 @@
             </div>
             <!-- Circular Progress Bar for Genre Readings -->
             <div class="mt-6 flex justify-center">
-                <div class="relative w-32 h-32">
-                    <svg class="absolute inset-0" width="100%" height="100%" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                <div class="w-32 h-32 relative">
+                    <svg class="inset-0 absolute" width="100%" height="100%" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
                         <!-- Background Circle -->
                         <circle class="text-gray-200" fill="none" stroke-width="3" stroke="currentColor" cx="18" cy="18" r="16"></circle>
 
@@ -124,17 +123,17 @@
                         <!-- Purple Segment (60%) -->
                         <circle class="text-purple-500" fill="none" stroke-width="3" stroke-linecap="round" stroke="currentColor" cx="18" cy="18" r="16" stroke-dasharray="60.312, 100" stroke-dashoffset="155.208"></circle>
                     </svg>
-                    <div class="absolute inset-0 flex items-center justify-center font-semibold text-xl">75%</div>
+                    <div class="inset-0 absolute flex items-center justify-center text-xl font-semibold">75%</div>
                 </div>
             </div>
         </div>
 
         <!-- Statistics Section -->
-        <div class="bg-white p-6 rounded-lg shadow-lg w-full md:w-2/3">
-            <h2 class="text-center text-xl font-bold mb-6 underline">İstatistikler</h2>
+        <div class="bg-white p-6 w-full rounded-lg shadow-lg md:w-2/3">
+            <h2 class="mb-6 text-center text-xl font-bold underline">İstatistikler</h2>
 
             <!-- Symmetric Status List -->
-            <div class="grid grid-cols-2 gap-6 text-lg mb-6">
+            <div class="gap-6 mb-6 grid grid-cols-2 text-lg">
                 <div class="flex flex-col items-center">
                     <h3 class="font-semibold">Planlıyor</h3>
                     <span class="text-blue-500 text-3xl">@await _libraryManager.BookStatusCounterAsync("Planlıyor", userName)</span>
@@ -145,7 +144,7 @@
                 </div>
                 
             </div>
-            <div class="grid grid-cols-2 gap-6 text-lg mb-6">
+            <div class="gap-6 mb-6 grid grid-cols-2 text-lg">
                 <div class="flex flex-col items-center">
                     <h3 class="font-semibold">Okumuyor</h3>
                     <span class="text-yellow-500 text-3xl">@await _libraryManager.BookStatusCounterAsync("Okumuyor", userName)</span>
@@ -156,18 +155,18 @@
                 </div>
             </div>
             <a href="/UserLibrary/UserLibrary">
-                <button class="bg-blue-500 text-white p-2 rounded-full w-full hover:bg-blue-400">Kütüphaneye Git</button>
+                <button class="bg-blue-500 text-white p-2 w-full rounded-full hover:bg-blue-400">Kütüphaneye Git</button>
             </a>
-            <div class="mt-6 overflow-y-auto max-h-80 border border-gray-300">
-                <table class="min-w-full table-auto border border-gray-300">
-                    <thead class="bg-gray-200 top-[-2px] sticky border-gray-300">
+            <div class="mt-6 max-h-80 border-gray-300 overflow-y-auto border">
+                <table class="border-gray-300 min-w-full table-auto border">
+                    <thead class="bg-gray-200 top-[-2px] border-gray-300 sticky">
                         <tr>
-                            <th class="px-4 py-3 text-left border-b border-gray-300"></th>
-                            <th class="px-4 py-3 text-left border-b border-gray-300">İsim</th>
-                            <th class="px-4 py-3 text-left border-b border-gray-300">Yazar</th>
-                            <th class="px-4 py-3 text-left border-b border-gray-300">Kategori</th>
-                            <th class="px-4 py-3 text-left border-b border-gray-300">Tamamlanan Sayfalar</th>
-                            <th class="px-4 py-3 text-left border-b border-gray-300">Toplam Sayfa</th>
+                            <th class="px-4 py-3 border-gray-300 border-b text-left"></th>
+                            <th class="px-4 py-3 border-gray-300 border-b text-left">İsim</th>
+                            <th class="px-4 py-3 border-gray-300 border-b text-left">Yazar</th>
+                            <th class="px-4 py-3 border-gray-300 border-b text-left">Kategori</th>
+                            <th class="px-4 py-3 border-gray-300 border-b text-left">Tamamlanan Sayfalar</th>
+                            <th class="px-4 py-3 border-gray-300 border-b text-left">Toplam Sayfa</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -189,12 +188,12 @@
                                 foreach (var library in libraries)
                                 {
                                     <tr>
-                                        <td class="px-4 py-2 border-b border-gray-300"></td>
-                                        <td class="px-4 py-2 border-b border-gray-300">@library.Name</td>
-                                        <td class="px-4 py-2 border-b border-gray-300">@library.Author</td>
-                                        <td class="px-4 py-2 border-b border-gray-300">@library.Category</td>
-                                        <td class="px-4 py-2 border-b border-gray-300">@library.CompletedPages</td>
-                                        <td class="px-4 py-2 border-b border-gray-300">@library.TotalOfPages</td>
+                                        <td class="px-4 py-2 border-gray-300 border-b"></td>
+                                        <td class="px-4 py-2 border-gray-300 border-b">@library.Name</td>
+                                        <td class="px-4 py-2 border-gray-300 border-b">@library.Author</td>
+                                        <td class="px-4 py-2 border-gray-300 border-b">@library.Category</td>
+                                        <td class="px-4 py-2 border-gray-300 border-b">@library.CompletedPages</td>
+                                        <td class="px-4 py-2 border-gray-300 border-b">@library.TotalOfPages</td>
                                     </tr>
                                 }
                             }
@@ -206,16 +205,16 @@
         </div>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow-lg mt-8 m-5">
-        <h2 class="text-center text-2xl font-bold text-gray-800 mb-6">Kullanıcı Vitrini</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+    <div class="bg-white p-6 mt-8 m-5 rounded-lg shadow-lg">
+        <h2 class="text-gray-800 mb-6 text-center text-2xl font-bold">Kullanıcı Vitrini</h2>
+        <div class="gap-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             <!-- Book Items -->
              @{
                         var listShowcase = await _libraryManager.ListBookShowcaseAsync(userName);
                         foreach(var book in listShowcase)
                         {
-            <div class="flex flex-col items-center space-y-2 bg-gray-100 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer">
-                <img class="w-32 h-48 object-cover rounded-md transform hover:scale-110 transition-transform duration-400" src="~/img/" alt="Kitap 1">
+            <div class="space-y-2 bg-gray-100 p-4 flex cursor-pointer flex-col items-center rounded-lg shadow-md transition-shadow hover:shadow-lg">
+                <img class="w-32 h-48 duration-400 transform rounded-md object-cover transition-transform hover:scale-110" src="~/img/" alt="Kitap 1">
                 <span class="text-gray-700 font-semibold">@book.Name</span>
             </div>
                 }

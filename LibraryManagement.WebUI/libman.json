@@ -19,11 +19,6 @@
       "provider": "jsdelivr",
       "library": "markdown@0.5.0",
       "destination": "wwwroot/lib/markdown/"
-    },
-    {
-      "provider": "cdnjs",
-      "library": "tailwindcss@2.2.19",
-      "destination": "wwwroot/lib/tailwindcss/"
     }
   ]
 }
