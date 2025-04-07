@@ -102,7 +102,7 @@ function sendPrompt() {
     aiImage.classList.add("w-10", "h-10", "rounded-full", "mr-3");
 
     const loadingContainer = document.createElement('div');
-    loadingContainer.classList.add("bg-gray-100", "p-3", "rounded-lg", "max-w-xl");
+    loadingContainer.classList.add("mb-10", "p-3", "rounded-lg", "max-w-xl");
     
     // Create and add the loading GIF image
     const gifImage = document.createElement('img');

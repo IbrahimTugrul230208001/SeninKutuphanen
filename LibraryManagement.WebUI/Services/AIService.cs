@@ -16,15 +16,18 @@ public class AIService(IHubContext<AIHub> hubContext, IChatCompletionService cha
         };
 
         var history = HistoryService.GetChatHistory(connectionId);
-
         history.AddUserMessage(prompt);
 
-        // Use StringBuilder to accumulate the full response
-        var responseBuilder = new StringBuilder();
-        string finalResponse = null;
-        try
+        const int maxRetries = 3;
+        int attempt = 0;
+        bool success = false;
+
+        while (attempt < maxRetries && !success)
         {
-            while (finalResponse == null)
+            var responseBuilder = new StringBuilder();
+            attempt++;
+
+            try
             {
                 await foreach (var response in chatCompletionService.GetStreamingChatMessageContentsAsync(
                     history,
@@ -33,34 +36,42 @@ public class AIService(IHubContext<AIHub> hubContext, IChatCompletionService cha
                 {
                     cancellationToken?.ThrowIfCancellationRequested();
 
-                    // Append each chunk of the response to the buffer
-                    responseBuilder.Append(response.ToString());
+                    if (!string.IsNullOrWhiteSpace(response.ToString()))
+                    {
+                        responseBuilder.Append(response.ToString());
+                    }
                 }
 
-                // Get the final response after the streaming is complete
-                finalResponse = responseBuilder.ToString();
+                string finalResponse = responseBuilder.ToString().Trim();
 
-                if (string.IsNullOrEmpty(finalResponse))
+                if (!string.IsNullOrWhiteSpace(finalResponse))
                 {
-                    // If the final response is null or empty, reset the responseBuilder and try again
-                    responseBuilder.Clear();
-                    finalResponse = null;
+                    // Send and save
+                    await hubContext.Clients.Client(connectionId).SendAsync("ReceiveMessage", finalResponse);
+                    history.AddAssistantMessage(finalResponse);
+                    success = true;
                 }
                 else
                 {
-                    // Send the final response as one message
-                    await hubContext.Clients.Client(connectionId).SendAsync("ReceiveMessage", finalResponse);
-
-                    // Add the full response to history (after streaming completes)
-                    history.AddAssistantMessage(finalResponse);
+                    Console.WriteLine($"[Attempt {attempt}] Empty response, retrying...");
+                    await Task.Delay(1000); // Wait before retry
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Attempt {attempt}] Exception: {ex.Message}");
+                await Task.Delay(1000); // Wait before retry
+            }
         }
-        catch (Exception ex)
+
+        if (!success)
         {
-            Console.WriteLine(ex.Message);
+            const string failMsg = "⚠️ Sorry, the AI didn't respond. Please try again shortly.";
+            await hubContext.Clients.Client(connectionId).SendAsync("ReceiveMessage", failMsg);
+            history.AddAssistantMessage(failMsg);
         }
     }
+
 }
 
 

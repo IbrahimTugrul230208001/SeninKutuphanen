@@ -14,13 +14,18 @@ var configuration = builder.Configuration;
 
 // Retrieve the API key from appsettings.json
 var key = configuration["SMTP:key"];
-var apikey = configuration["Gemini:Apikey"];
+var apiKey = configuration["Gemini-2.5:Apikey"];
+var modelId = configuration["Gemini-2.5:ModelId"];
+
+var apiKey_1 = configuration["Qwen:ApiKey"];
+var modelId_1 = configuration["Qwen:ModelId"];   
+
 builder.Services
     .AddKernel()
     .AddOpenAIChatCompletion(
-        modelId: "google/gemini-2.5-pro-exp-03-25:free",
+        modelId: modelId,
         openAIClient: new OpenAIClient(
-            credential: new ApiKeyCredential($"{apikey}"),
+            credential: new ApiKeyCredential($"{apiKey}"),
             options: new OpenAIClientOptions
             {
                 Endpoint = new Uri("https://openrouter.ai/api/v1")

@@ -16,5 +16,6 @@ namespace LibraryManagement.DataAccess.Concrete
         }
         public DbSet<Library> Libraries { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
+        public DbSet<AudioLibrary> AudioLibraries { get; set; }
     }
 }
