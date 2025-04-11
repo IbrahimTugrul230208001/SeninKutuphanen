@@ -10,10 +10,11 @@ async function startHubConnection() {
         console.log("SignalR Connected. Connection ID:", hubConnection.connectionId);
     } catch (err) {
         console.error("SignalR Connection Error:", err.toString());
-        setTimeout(startHubConnection, 5000); 
+        setTimeout(startHubConnection, 5000);
     }
 }
-startHubConnection(); 
+startHubConnection();
+
 hubConnection.on("ReceiveMessage", (message) => {
     console.log("Received AI Response:", message);
 
@@ -58,11 +59,14 @@ hubConnection.on("ReceiveMessage", (message) => {
     typewriter.typeString(modifiedMessage).start().callFunction(() => {
         chatBox.scrollTop = chatBox.scrollHeight;  // Scroll after typing is done
     });
+
+    // Ensure the scroll is updated after the AI's response
+    setTimeout(() => {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 100); // Add a small delay to ensure scrolling happens after message is rendered
 });
 
-
-
-
+// Function to send user input to backend
 function sendPrompt() {
     var input = document.getElementById("user-input");
     var chatBox = document.getElementById("chat-box");
@@ -103,12 +107,12 @@ function sendPrompt() {
 
     const loadingContainer = document.createElement('div');
     loadingContainer.classList.add("mb-10", "p-3", "rounded-lg", "max-w-xl");
-    
+
     // Create and add the loading GIF image
     const gifImage = document.createElement('img');
     gifImage.src = "/img/gif-5-unscreen.gif"; // Replace with the actual path to your loading gif
     gifImage.alt = "Loading...";
-    gifImage.classList.add("w-12", "h-12","mr-10","mb-7");
+    gifImage.classList.add("w-12", "h-12", "mr-10", "mb-7");
     gifImage.classList.add("loading-gif");
 
     loadingContainer.appendChild(gifImage);

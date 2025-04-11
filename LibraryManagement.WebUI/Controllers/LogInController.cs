@@ -20,6 +20,10 @@ namespace learningASP.NET_CORE.Controllers
         {
             return View();
         }
+        public IActionResult Register()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> UserLogIn([FromBody]User user)

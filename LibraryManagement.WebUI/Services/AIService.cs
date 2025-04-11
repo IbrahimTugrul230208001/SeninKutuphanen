@@ -66,7 +66,7 @@ public class AIService(IHubContext<AIHub> hubContext, IChatCompletionService cha
 
         if (!success)
         {
-            const string failMsg = "⚠️ Sorry, the AI didn't respond. Please try again shortly.";
+            const string failMsg = "⚠️ Kusura bakmayın, yapay zeka asistanı cevap veremedi.Birazdazn tekrar deneyiniz.";
             await hubContext.Clients.Client(connectionId).SendAsync("ReceiveMessage", failMsg);
             history.AddAssistantMessage(failMsg);
         }
