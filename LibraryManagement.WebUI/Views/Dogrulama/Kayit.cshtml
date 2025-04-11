@@ -14,56 +14,65 @@
     <div class="flex min-h-screen">
         <!-- Left Side: Image -->
         <div class="flex-1">
-            <img src="~/img/library.jpeg" alt="Library Image" class="h-full w-full object-cover"/>
+            <img src="~/img/library.jpeg" alt="Library Image" class="h-full w-full object-cover" />
         </div>
 
 
         <!-- Right Side: Form -->
         <div class="bg-gray-100 flex flex-1 items-center justify-center">
             <div class="bg-white p-8 w-full max-w-md rounded-lg shadow-lg">
-                <img src="/img/logo.png" class="w-20 h-20 mb-5 mx-auto rounded-full">
                 <div class="mb-8 text-center">
                     <h2 class="text-gray-700 text-4xl font-semibold">BenimKitaplığım</h2>
-                    <p class="text-gray-500 mt-2">Hesabına erişim sağlamak için giriş yap</p>
+                    <p class="text-gray-500 mt-2">Yeni hesap oluştur</p>
                 </div>
 
-                <form action="UserLogIn" method="POST">
+                <form action="RegisterUser" method="POST">
                     <!-- Email Input -->
                     <div class="mb-4">
                         <label for="email" class="text-gray-600 block">E-posta adresi</label>
-                        <input type="email" name="email" id="email" placeholder="example@example.com"
+                        <input type="email"  id="email" placeholder="example@example.com"
+                               class="p-3 mt-2 border-gray-300 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                    </div>
+                    <!-- Username Input -->
+                    <div class="mb-4">
+                        <label for="username" class="text-gray-600 block">Kullanıcı Adı</label>
+                        <input type="text"  id="username" placeholder="Kullanıcı Adı"
                                class="p-3 mt-2 border-gray-300 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400" required />
                     </div>
 
                     <!-- Password Input -->
                     <div class="mb-6">
                         <label for="password" class="text-gray-600 block">Şifre</label>
-                        <input type="password" name="password" id="password" placeholder="Şifre"
+                        <input type="password"  id="password" placeholder="Şifre"
+                               class="p-3 mt-2 border-gray-300 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                    </div>
+                    <!-- Password Again Input -->
+                    <div class="mb-6">
+                        <label for="password" class="text-gray-600 block">Şifre Tekrar</label>
+                        <input type="password"  id="password-again" placeholder="Şifre Tekrar"
                                class="p-3 mt-2 border-gray-300 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400" required />
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" id="login"
+                    <button type="submit" id="register"
                             class="p-3 bg-blue-500 text-white w-full rounded-lg font-semibold hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                        Giriş Yap
+                        Kayıt Ol
                     </button>
                 </form>
 
-                <!-- Forgot Password Link -->
-                <div class="mt-4 text-center">
-                    <a href="#" class="text-blue-500 text-sm">Şifreni mi unuttun?</a>
-                </div>
-
                 <!-- Sign-up Redirect -->
                 <p class="mt-4 text-gray-600 text-center text-sm">
-                    Henüz hesabın yok mu? <a href="/Register/Register"
-                                             class="text-blue-500 hover:underline">Kayıt ol</a>.
+                    Hesabın zaten var mı? <a href="/Dogrulama/Giris"
+                                             class="text-blue-500 hover:underline">Giriş yap</a>.
                 </p>
             </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/LogIn.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/Register.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </body>
+
 </html>

@@ -9,26 +9,26 @@ using MimeKit;
 
 namespace learningASP.NET_CORE.Controllers
 {
-    public class DoğrulamaController : Controller
+    public class DogrulamaController : Controller
     {
         UserManager _userManager = new UserManager(new EfUserRepository());
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
 
-        public DoğrulamaController(IUserService userService,IConfiguration configuration)
+        public DogrulamaController(IUserService userService,IConfiguration configuration)
         {
             _userService = userService;
             _configuration = configuration;
         }
-        public IActionResult LogIn()
+        public IActionResult Giris()
         {
             return View();
         }
-        public IActionResult Verification()
+        public IActionResult Kayit()
         {
             return View();
         }
-        public IActionResult Register()
+        public IActionResult KullaniciDogrulama()
         {
             return View();
         }

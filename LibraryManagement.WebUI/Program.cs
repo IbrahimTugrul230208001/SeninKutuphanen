@@ -68,7 +68,7 @@ app.MapControllerRoute(
 
 app.MapGet("/", context =>
 {
-    context.Response.Redirect("/LogIn/LogIn");
+    context.Response.Redirect("/Dogrulama/Giris");
     return Task.CompletedTask;
 });
 
