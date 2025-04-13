@@ -63,7 +63,7 @@ namespace learningASP.NET_CORE.Controllers
                 _userService.UserName = userName;
                 _userService.Email = email;
                 _userService.Password = password;
-                return Json(new { success = true, redirectUrl = Url.Action("Verification", "Verification") });
+                return Json(new { success = true, redirectUrl = Url.Action("KullaniciDogrulama", "Dogrulama") });
             }
             catch (ApplicationException ex)
             {
@@ -86,7 +86,7 @@ namespace learningASP.NET_CORE.Controllers
                 string userName = _userService.UserName;
                 string password = _userService.Password;
                 await _userManager.AddNewUserAsync(email, userName, password);
-                return Json(new { success = true, redirectUrl = Url.Action("UserProfile", "UserProfile") });
+                return Json(new { success = true, redirectUrl = Url.Action("Profil", "Kullanici") });
             }
             else
             {
@@ -215,7 +215,7 @@ namespace learningASP.NET_CORE.Controllers
 
                 _userService.UserName = await _userManager.UserNameAsync(email);
                 _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(_userService.UserName);
-                return Json(new { success = true, redirectUrl = Url.Action("UserProfile", "UserProfile") });
+                return Json(new { success = true, redirectUrl = Url.Action("Profil", "Kullanici") });
             }
             else
             {

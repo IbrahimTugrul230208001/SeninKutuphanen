@@ -9,7 +9,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/LogIn/UserLogIn",
+            url: "/Dogrulama/UserLogIn",
             data: JSON.stringify(user),
             dataType: "json",
             contentType: "application/json",

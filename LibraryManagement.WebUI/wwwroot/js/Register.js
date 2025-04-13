@@ -9,7 +9,7 @@
         };
         $.ajax({
             type: "POST",
-            url: "/Register/RegisterUser",
+            url: "/Dogrulama/RegisterUser",
             data: JSON.stringify(user),
             dataType: "json",
             contentType: "application/json",

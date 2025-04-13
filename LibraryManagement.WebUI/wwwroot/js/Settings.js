@@ -8,7 +8,7 @@
 
             $.ajax({
                 type: "PUT",
-                url: "/Settings/SetNewUserName",
+                url: "/Kullanici/SetNewUserName",
                 data: JSON.stringify(userName),
                 dataType: "json",
                 contentType: "application/json",
@@ -38,7 +38,7 @@
         console.log("ülke: "+$("#TbxSetNewCountry").val())
         $.ajax({
             type: "PUT",
-            url: "/Settings/SetNewResidementPlaces",
+            url: "/Kullanici/SetNewResidementPlaces",
             data: JSON.stringify(user),
             dataType: "json",
             contentType: "application/json",
@@ -61,7 +61,7 @@
         var userName = $("#userName").text();
         $.ajax({
             type: "PUT",
-            url: "/Settings/RemoveProfilePicture",
+            url: "/Kullanici/RemoveProfilePicture",
             data: JSON.stringify(userName),
             dataType: "json",
             contentType: "application/json",
@@ -89,7 +89,7 @@
 
         $.ajax({
             type: "PUT",
-            url: "/Settings/SetNewPassword",
+            url: "/Kullanici/SetNewPassword",
             data: JSON.stringify(user),
             dataType: "json",
             contentType: "application/json",
@@ -118,7 +118,7 @@ $.document.ready(function () {
  
     $.ajax({
         type: "PUT",
-        url: "/Settings/LogOut",
+        url: "/Kullanici/LogOut",
         data: JSON.stringify(user),
         dataType: "json",
         contentType: "application/json",

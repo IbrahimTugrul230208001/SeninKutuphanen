@@ -21,7 +21,7 @@
                 <img src="/img/logo.png" class="w-12 h-12 rounded-full">
                 <span class="text-lg font-semibold">BenimKitaplığım</span>
             </div>
-  
+
             <!-- Desktop Menu -->
             <!-- Mobile Menu Button -->
             <button id="menu-btn" class="text-white focus:outline-none md:hidden">
@@ -31,9 +31,9 @@
             <!-- Profile & Notification -->
             <div class="space-x-4 flex items-center">
                 <div class="space-x-6 hidden items-center md:flex">
-                    <a href="/EditLibrary/EditLibrary" class="text-gray-300 hover:text-white">Kitaplık</a>
-                    <a href="/Settings/Settings" class="text-gray-300 hover:text-white">Ayarlar</a>
-                    <a href="/ChatBot/Chatbot" class="text-gray-300 hover:text-white">BenimAsistanım</a>
+                    <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
+                    <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
+                    <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
                 </div>
                 <div class="relative">
                     <span class="text-gray-400 cursor-pointer text-2xl hover:text-white">🔔</span>
@@ -41,14 +41,14 @@
                         3
                     </span>
                 </div>
-                <a href="/UserProfile/UserProfile"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
+                <a href="/Kullanici/Profil"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
             </div>
         </div>
 
         <!-- Mobile Dropdown Menu -->
         <div id="mobile-menu" class="space-y-2 bg-gray-800 py-3 px-6 flex hidden flex-col md:hidden">
-            <a href="/EditLibrary/EditLibrary" class="text-gray-300 hover:text-white">Kitaplık</a>
-            <a href="/Settings/Settings" class="text-gray-300 hover:text-white">Ayarlar</a>
+            <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
+            <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
         </div>
     </nav>
 

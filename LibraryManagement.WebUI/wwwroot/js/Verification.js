@@ -5,7 +5,7 @@
         };
         $.ajax({
             type: "POST",
-            url: "/Verification/VerifyEmail",
+            url: "/Kullanici/VerifyEmail",
             data: JSON.stringify(user),
             dataType: "json",
             contentType: "application/json",
@@ -31,7 +31,7 @@ $(document).ready(function () {
     $("#resend").click(function () {
         $.ajax({
             type: "POST",
-            url: "Verification/ResendEmail",
+            url: "Kullanici/ResendEmail",
             dataType: "json",
             contentType: "application/json",
             success: function (response) {

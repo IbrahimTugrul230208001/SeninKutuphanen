@@ -14,7 +14,7 @@
 
         $.ajax({
             type: "PUT",
-            url: "/EditLibrary/Update",
+            url: "/Kullanici/Update",
             data: JSON.stringify(formData),
             dataType: "json",
             contentType: "application/json",
@@ -65,7 +65,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/EditLibrary/Add",
+            url: "/Kullanici/Add",
             data: JSON.stringify(formData),
             dataType: "json",
             contentType: "application/json",
@@ -107,7 +107,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "DELETE",
-            url: "/EditLibrary/Delete",
+            url: "/Kullanici/Delete",
             data: JSON.stringify(bookId),
             dataType: "json",
             contentType: "application/json",
@@ -131,7 +131,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/EditLibrary/AddToShowcase",
+            url: "/Kullanici/AddToShowcase",
             data: JSON.stringify(bookID),
             dataType: "json",
             contentType: "application/json",
@@ -171,7 +171,7 @@ $(document).ready(function () {
         var bookName = $("#bookTitle"+titleId).text();
             $.ajax({
                 type: "DELETE",
-                url: "/EditLibrary/RemoveBookShowcase",
+                url: "/Kullanici/RemoveBookShowcase",
                 data: JSON.stringify(bookName),
                 dataType: "json",
                 contentType: "application/json",
