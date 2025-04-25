@@ -123,16 +123,6 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 return await context.Libraries.CountAsync(l => l.UserName == userName && l.IsAddedToShowcase == true);
             }
         }
-        public async Task AddBookImageAsync(byte[] imageFile, string userName, string bookName)
-        {
-            using (var context = new LibraryContext())
-            {
-                var book = await context.Libraries.FirstOrDefaultAsync(l => l.Name == bookName && l.UserName == userName)
-                ?? throw new ArgumentException("Book not found.");
-                book.BookImage = imageFile;
-                await context.SaveChangesAsync();
-            }
-        }
         public async Task<List<Library>> ListBookShowcaseAsync(string userName)
         {
             using (var context = new LibraryContext())
@@ -157,9 +147,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 var book = await context.Libraries.FirstOrDefaultAsync(l => l.UserName == userName && l.Name == bookName);
                 if (book != null && book.BookImage != null)
                 {
-                    string base64String = Convert.ToBase64String(book.BookImage);
-                    string dataUri = $"data:image/jpeg;base64,{base64String}";
-                    return dataUri;
+                    return book.BookImage;
                 }
                 return "";
             }

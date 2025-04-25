@@ -12,7 +12,7 @@ namespace LibraryManagement.DataAccess.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server = (localdb)\\mssqllocaldb;Database=LibraryManagement;integrated security=true");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=ibrahim06;Database=LibraryManagement;");
         }
         public DbSet<Library> Libraries { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }

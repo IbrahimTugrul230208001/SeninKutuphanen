@@ -125,7 +125,7 @@ function sendPrompt() {
     console.log("Sending Prompt:", userMessageText);
     console.log("Connection ID:", hubConnection.connectionId);
 
-    fetch("/ChatBot/Chat", {
+    fetch("/Sohbet/Konus", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

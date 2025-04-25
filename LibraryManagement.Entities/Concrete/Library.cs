@@ -17,6 +17,6 @@ namespace LibraryManagement.Entities.Concrete
         public int TotalOfPages { get; set; }
         public string? Status { get; set; }
         public bool IsAddedToShowcase { get; set; }
-        public byte[]? BookImage { get; set; }
+        public string? BookImage { get; set; }
     }
 }

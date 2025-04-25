@@ -130,27 +130,7 @@ namespace learningASP.NET_CORE.Controllers
                 return Json(new { success = false, redirectUrl = Url.Action("EditLibrary") });
             }
         }
-        [HttpPost]
-        public IActionResult UploadImage(IFormFile imageFile, IFormCollection receivedUserInput)
-        {
-            if (imageFile != null && imageFile.Length > 0)
-            {
-                byte[] imageData;
-                using (MemoryStream stream = new())
-                {
-                    imageFile.CopyTo(stream);
-                    imageData = stream.ToArray();
-                }
-                string? bookName = receivedUserInput["booktitle"].ToString();
-                _libraryManager.AddBookImageAsync(imageData, _userName, bookName);
-                return RedirectToAction("EditLibrary");
-            }
-            else
-            {
-                return RedirectToAction("EditLibrary");
-            }
-        }
-       
+ 
         [HttpPut]
         public async Task<IActionResult> SetNewUserName([FromBody] string userName)
         {

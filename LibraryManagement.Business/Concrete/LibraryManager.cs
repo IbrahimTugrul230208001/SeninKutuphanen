@@ -66,10 +66,6 @@ namespace LibraryManagement.Business.Concrete
             return await _libraryRepository.CountFavoritesAsync(userName);
         }
 
-        public async Task AddBookImageAsync(byte[] imageFile, string userName, string bookName)
-        {
-            await _libraryRepository.AddBookImageAsync(imageFile, userName, bookName);
-        }
 
         public async Task<List<Library>> ListBookShowcaseAsync(string userName)
         {

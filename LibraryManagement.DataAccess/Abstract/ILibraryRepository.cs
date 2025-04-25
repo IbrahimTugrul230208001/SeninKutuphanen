@@ -13,7 +13,6 @@ namespace LibraryManagement.DataAccess.Abstract
         Task UpdateLibraryAsync(int ID, string userName, string bookName, string author, string category, int completedPages, int totalOfPages, string status);
         Task DeleteFromLibraryAsync(Library library);
         Task AddToShowcaseAsync(string userName, int ID);
-        Task AddBookImageAsync(byte[] imageFile, string userName, string bookName);
         Task RemoveBookShowcaseAsync(string userName, string bookName);
         Task<int> GetTotalOfReadPagesAsync(string userName);
         Task<int> BookStatusCounterAsync(string status, string userName);
