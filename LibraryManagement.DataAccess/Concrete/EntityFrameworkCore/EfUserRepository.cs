@@ -237,7 +237,5 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 await context.SaveChangesAsync();
             }
         }
-
-    
     }
 }

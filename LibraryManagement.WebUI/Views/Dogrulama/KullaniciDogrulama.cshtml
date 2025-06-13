@@ -1,57 +1,72 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
-
+<html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SeninKütüphanen</title>
-    <link rel="icon" href="/img/logo.png" type="jpeg">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BenimKitaplığım – Giriş</title>
+
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+          rel="stylesheet" />
+    <link href="~/css/LogInPage.css" rel="stylesheet" />
+
 </head>
 
-<body class="bg-gray-200">
-
-    <div class="flex min-h-screen">
-        <!-- Left Side: Image -->
-        <div class="flex-1">
-            <img src="~/img/library.jpeg" alt="Library Image" class="h-full w-full object-cover" />
-        </div>
+<body class="relative overflow-hidden bg-black">
 
 
-        <!-- Right Side: Form -->
-        <div class="bg-gray-100 flex flex-1 items-center justify-center">
-            <div class="bg-white p-8 w-full max-w-md rounded-lg shadow-lg">
-                <div class="mb-8 text-center">
-                    <h2 class="text-gray-700 text-4xl font-semibold">BenimKitaplığım</h2>
-                    <p class="text-gray-500 mt-2">Doğrulama kodunu giriniz</p>
+    <div class="bg-gradient-radial absolute inset-0 from-gray-900/80 via-gray-950 to-black"></div>
+    <!-- 2. Blue blob (top-left, slow drift) -->
+    <div class="animate-blob absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-blue-800/40 blur-3xl"></div>
+    <!-- 3. Purple blob (bottom-right, delayed drift) -->
+    <div class="animate-blob animation-delay-2000 absolute -right-40 bottom-0 h-[400px] w-[400px] rounded-full bg-purple-800/40 blur-3xl"></div>
+
+    <div class="relative flex min-h-screen items-center justify-center px-4">
+        <div class="animate-fadeIn w-full max-w-md transform transition-transform duration-700 hover:scale-105">
+            <!-- ============================= -->
+            <!--  Frosted-Glass Panel  -->
+            <!-- ============================= -->
+            <div class="rounded-2xl border border-gray-800 bg-gray-900/60 p-8 shadow-lg ring-1 ring-white/5 backdrop-blur-md">
+                <!-- Logo -->
+                <div class="mb-3 flex justify-center">
+                    <img src="/img/logo.png"
+                         alt="Logo"
+                         class="h-20 w-20 rounded-full border-2 border-gray-700 bg-gray-800" />
                 </div>
 
-                    <!-- Email Input -->
-                    <div class="mb-4">
-                        <label for="code" class="text-gray-600 block">E-posta adresi</label>
-                        <input type="text" id="code" placeholder="Doğrulama Kodu"
-                               class="p-3 mt-2 border-gray-300 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400" required />
-                    </div>
+                <!-- Header Text -->
+                <h2 class="text-center text-4xl font-semibold text-gray-100">BenimKitaplığım</h2>
+                <p class="mt-2 text-center text-gray-400">Hesabını gönderilen 6 haneli kodu gir</p>
 
-                    <!-- Submit Button -->
-                    <button id="verify"
-                            class="p-3 bg-blue-500 text-white w-full rounded-lg font-semibold hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                        Onayla
-                    </button>
-                    <!-- Resend Button -->
-                    <button id="resend"
-                            class="p-3 bg-white text-blue-500 border-blue-500 mt-2 w-full rounded-lg border-2 font-semibold hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                        Kodu Tekrar Gönder
-                    </button>
+
+
+
+                <div class="mt-3 space-y-1">
+                    <label for="email" class="block text-gray-300">Doğrulama Kodu</label>
+                    <input type="password"
+                           name="password"
+                           id="password"
+                           placeholder="Kodu giriniz"
+                           autocomplete="email"
+                           required
+                           class="w-full rounded-lg border border-gray-700 bg-gray-800/80 p-3 text-gray-100 placeholder-gray-400 backdrop-blur-sm transition-all duration-200 focus:bg-gray-800/80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900" />
+                </div>
+
+
+
+                <!-- Giriş Butonu -->
+                <button type="button" id="login"
+                        class="mt-5 w-full rounded-lg bg-blue-700 py-3 font-semibold text-white transition-all duration-200 hover:bg-blue-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-gray-900">
+                    Şifre Yenileme E-postası gönder
+                </button>
+
+
             </div>
         </div>
     </div>
 
-
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/Verification.js"></script>
 </body>
-
 </html>

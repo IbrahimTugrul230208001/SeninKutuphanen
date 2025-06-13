@@ -1,4 +1,4 @@
-﻿using learningASP.NET_CORE.Models;
+﻿ using learningASP.NET_CORE.Models;
 using learningASP.NET_CORE.Services;
 using LibraryManagement.Business.Concrete;
 using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore;
@@ -32,6 +32,10 @@ namespace learningASP.NET_CORE.Controllers
         {
             return View();
         }
+        public IActionResult SifreYenile()
+        {
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> RegisterUser([FromBody] User user)
         {
@@ -41,6 +45,7 @@ namespace learningASP.NET_CORE.Controllers
                 string userName = user.UserName;
                 string password = user.NewPassword;
                 string confirmPassword = user.NewPasswordAgain;
+
 
                 if (password != confirmPassword)
                 {
@@ -210,17 +215,26 @@ namespace learningASP.NET_CORE.Controllers
         {
             string email = user.Email;
             string password = user.Password;
-            if (await _userManager.ValidateUserAsync(email, password) == true)
+            try
             {
+                if (await _userManager.ValidateUserAsync(email, password) == true)
+                {
 
-                _userService.UserName = await _userManager.UserNameAsync(email);
-                _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(_userService.UserName);
-                return Json(new { success = true, redirectUrl = Url.Action("Profil", "Kullanici") });
+                    _userService.UserName = await _userManager.UserNameAsync(email);
+                    _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(_userService.UserName);
+                    return Json(new { success = true, redirectUrl = Url.Action("Profil", "Kullanici") });
+                }
+                else
+                {
+                    return Json(new { success = false, redirectUrl = Url.Action("LogIn") });
+                }
             }
-            else
+            catch (Exception dbEx)
             {
-                return Json(new { success = false, redirectUrl = Url.Action("LogIn") });
+                Console.WriteLine($"Database connection error: {dbEx.Message}");
+                throw;
             }
+          
         }
     }
 }

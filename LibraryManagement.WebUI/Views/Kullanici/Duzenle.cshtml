@@ -18,12 +18,13 @@
         LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
         string userName = ViewData["UserName"].ToString();
         string userProfilePicture = ViewData["UserProfilePicture"].ToString();
+        int userId = (int)ViewData["UserId"];
     }
-    <nav class="bg-gray-900 text-white px-6 py-3 top-0 sticky z-50">
+    <nav class="sticky top-0 z-50 bg-gray-900 px-6 py-3 text-white">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
             <!-- Logo -->
-            <div class="space-x-3 flex items-center">
-                <img src="/img/logo.png" class="w-12 h-12 rounded-full">
+            <div class="flex items-center space-x-3">
+                <img src="/img/logo.png" class="h-12 w-12 rounded-full">
                 <span class="text-lg font-semibold">BenimKitaplığım</span>
             </div>
 
@@ -34,30 +35,30 @@
             </button>
 
             <!-- Profile & Notification -->
-            <div class="space-x-4 flex items-center">
-                <div class="space-x-6 hidden items-center md:flex">
+            <div class="flex items-center space-x-4">
+                <div class="hidden items-center space-x-6 md:flex">
                     <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
                     <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
                     <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
                 </div>
                 <div class="relative">
-                    <span class="text-gray-400 cursor-pointer text-2xl hover:text-white">🔔</span>
-                    <span class="bg-red-500 text-white px-1 absolute -right-[5px] -top-[2px] flex h-[16px] min-w-[16px] items-center justify-center rounded-full font-bold text-[10px]">
+                    <span class="cursor-pointer text-2xl text-gray-400 hover:text-white">🔔</span>
+                    <span class="absolute -right-[5px] -top-[2px] flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-red-500 px-1 font-bold text-white text-[10px]">
                         3
                     </span>
                 </div>
-                <a href="/Kullanici/Profil"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
+                <a href="/Kullanici/Profil"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="h-12 w-12 rounded-full"></a>
             </div>
         </div>
 
         <!-- Mobile Dropdown Menu -->
-        <div id="mobile-menu" class="space-y-2 bg-gray-800 py-3 px-6 flex hidden flex-col md:hidden">
+        <div id="mobile-menu" class="flex hidden flex-col space-y-2 bg-gray-800 px-6 py-3 md:hidden">
             <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
             <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
         </div>
     </nav>
 
-    <div class="p-6 mx-auto max-w-6xl">
+    <div class="mx-auto max-w-6xl p-6">
         <h2 class="mb-6 text-center text-2xl font-semibold">Kitaplık</h2>
         <div class="mb-6 flex justify-center">
             <div class="relative h-[192px] w-[192px]">
@@ -65,13 +66,13 @@
                     <circle class="text-gray-300" stroke-width="10" cx="50" cy="50" r="40" fill="none" stroke="currentColor"></circle>
                     <circle id="progress-circle" class="text-blue-500" stroke-width="10" cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
                 </svg>
-                <span id="progressValue" class="inset-0 absolute flex items-center justify-center text-lg font-bold">0%</span>
+                <span id="progressValue" class="absolute inset-0 flex items-center justify-center text-lg font-bold">0%</span>
             </div>
         </div>
         <!-- Existing Readable Books Table -->
-        <div class="bg-white mb-8 max-h-[350px] min-h-[350px] overflow-x-auto rounded-lg shadow-md">
-            <table class="border-gray-600 min-w-full border text-left text-sm">
-                <thead class="bg-gray-700 text-white top-0 sticky">
+        <div class="mb-8 max-h-[350px] min-h-[350px] overflow-x-auto rounded-lg bg-white shadow-md">
+            <table class="min-w-full border border-gray-600 text-left text-sm">
+                <thead class="sticky top-0 bg-gray-700 text-white">
                     <tr>
                         <th class="px-4 py-2"></th>
                         <th class="px-4 py-2">İsim</th>
@@ -82,34 +83,48 @@
                         <th class="px-4 py-2">Durum</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody" class="border-gray-300 divide-y border">
+                <tbody id="tableBody" class="divide-y border border-gray-300">
                     @{
                         using (var context = new LibraryContext())
                         {
-                            var libraries = context.Libraries.Where(l => l.UserName == userName).ToList();
-                            foreach (var lib in libraries)
+                            var userBookIds = context.UserBooks
+                            .Where(ub => ub.UserAccountId == userId)
+                            .Select(ub => ub.BookId)
+                            .ToList();
+
+                            var libraries = context.Books
+                            .Where(b => userBookIds.Contains(b.Id))
+                            .Select(b => new Book
+                {
+                    Title = b.Title,
+                    Author = b.Author,
+                    Genre = b.Genre,
+                })
+                            .ToList();
+
+                            if (libraries.Any())
                             {
-                                <tr data-id="@lib.Id" class="table-row cursor-pointer">
-                                    <td class="px-4 py-2 text-transparent border">@lib.Id</td>
-                                    <td class="px-4 py-2 border">@lib.Name</td>
-                                    <td class="px-4 py-2 border">@lib.Author</td>
-                                    <td class="px-4 py-2 border">@lib.Category</td>
-                                    <td class="px-4 py-2 border">@lib.CompletedPages</td>
-                                    <td class="px-4 py-2 border">@lib.TotalOfPages</td>
-                                    <td class="px-4 py-2 border">@lib.Status</td>
-                                </tr>
+                                foreach (var library in libraries)
+                                {
+                                    <tr>
+                                        <td class="border-b border-gray-300 px-4 py-2"></td>
+                                        <td class="border-b border-gray-300 px-4 py-2">@library.Title</td>
+                                        <td class="border-b border-gray-300 px-4 py-2">@library.Author</td>
+                                        <td class="border-b border-gray-300 px-4 py-2">@library.Genre</td>
+                                    </tr>
+                                }
                             }
                         }
                     }
                 </tbody>
             </table>
         </div>
-        <div class="mt-6 gap-6 grid grid-cols-1 md:grid-cols-1">
-            <div class="p-4 bg-white rounded-lg shadow">
+        <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-1">
+            <div class="rounded-lg bg-white p-4 shadow">
                 <h3 class="mb-3 text-lg font-semibold">Kitap Ara</h3>
-                <input type="text" id="txtSearchByName" placeholder="Kitap İsmi" class="p-2 mb-2 w-full rounded border">
-                <input type="text" id="txtSearchByAuthor" placeholder="Yazar İsmi" class="p-2 mb-2 w-full rounded border">
-                <select type="text" id="txtSearchByCategory" placeholder="Kategori" class="p-2 mb-2 w-full rounded border">
+                <input type="text" id="txtSearchByName" placeholder="Kitap İsmi" class="mb-2 w-full rounded border p-2">
+                <input type="text" id="txtSearchByAuthor" placeholder="Yazar İsmi" class="mb-2 w-full rounded border p-2">
+                <select type="text" id="txtSearchByCategory" placeholder="Kategori" class="mb-2 w-full rounded border p-2">
                     <option value=""></option>
                     <option value="Tarih & Kültür">Tarih & Kültür</option>
                     <option value="Edebiyat & Roman">Edebiyat & Roman</option>
@@ -120,24 +135,24 @@
                     <option value="Sanat & Tasarım">Sanat & Tasarım</option>
                     <option value="Diğer">Diğer</option>
                 </select>
-                <button id="DeleteBook" class="bg-red-500 text-white p-2 mt-2 w-full rounded hover:bg-red-600">
+                <button id="DeleteBook" class="mt-2 w-full rounded bg-red-500 p-2 text-white hover:bg-red-600">
                     Seçili Kitabı Sil
                 </button>
 
-                <button id="AddToFavoritesButton" class="bg-yellow-500 text-white p-2 mt-2 w-full rounded hover:bg-yellow-600">
+                <button id="AddToFavoritesButton" class="mt-2 w-full rounded bg-yellow-500 p-2 text-white hover:bg-yellow-600">
                     Favorilere Ekle
                 </button>
 
             </div>
         </div>
         <!-- Add and Update Sections -->
-        <div class="mt-6 gap-6 grid grid-cols-1 md:grid-cols-2">
+        <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
             <!-- Existing Add for Readable Books -->
-            <div class="p-4 bg-white rounded-lg shadow">
+            <div class="rounded-lg bg-white p-4 shadow">
                 <h3 class="mb-3 text-lg font-semibold">Yeni Kitap Ekle</h3>
-                <input type="text" id="AddName" placeholder="İsim" class="p-2 mb-2 w-full rounded border">
-                <input type="text" id="AddAuthor" placeholder="Yazar" class="p-2 mb-2 w-full rounded border">
-                <select id="AddCategory" class="p-2 mb-2 w-full rounded border">
+                <input type="text" id="AddName" placeholder="İsim" class="mb-2 w-full rounded border p-2">
+                <input type="text" id="AddAuthor" placeholder="Yazar" class="mb-2 w-full rounded border p-2">
+                <select id="AddCategory" class="mb-2 w-full rounded border p-2">
                     <option value=""></option>
                     <option value="Tarih & Kültür">Tarih & Kültür</option>
                     <option value="Edebiyat & Roman">Edebiyat & Roman</option>
@@ -148,25 +163,25 @@
                     <option value="Sanat & Tasarım">Sanat & Tasarım</option>
                     <option value="Diğer">Diğer</option>
                 </select>
-                <input type="text" id="AddCompletedPages" placeholder="Tamamlanan Sayfalar" class="p-2 mb-2 w-full rounded border">
-                <input type="text" id="AddTotalPages" placeholder="Toplam Sayfa" class="p-2 mb-2 w-full rounded border">
-                <select id="AddStatus" class="p-2 mb-2 w-full rounded border">
+                <input type="text" id="AddCompletedPages" placeholder="Tamamlanan Sayfalar" class="mb-2 w-full rounded border p-2">
+                <input type="text" id="AddTotalPages" placeholder="Toplam Sayfa" class="mb-2 w-full rounded border p-2">
+                <select id="AddStatus" class="mb-2 w-full rounded border p-2">
                     <option value="Okuyor">Okuyor</option>
                     <option value="Okunacak">Okunacak</option>
                     <option value="Bitirdi">Bitirdi</option>
                     <option value="Bıraktı">Bıraktı</option>
                     <option value="Okunmuyor">Okunmuyor</option>
                 </select>
-                <button id="AddButton" class="bg-green-500 text-white p-2 mt-2 w-full rounded hover:bg-green-400">Ekle</button>
+                <button id="AddButton" class="mt-2 w-full rounded bg-green-500 p-2 text-white hover:bg-green-400">Ekle</button>
             </div>
 
             <!-- Existing Update for Readable Books -->
-            <div class="p-4 bg-white rounded-lg shadow">
+            <div class="rounded-lg bg-white p-4 shadow">
                 <h3 class="mb-3 text-lg font-semibold">Kitabı Güncelle</h3>
                 <input type="hidden" id="UpdateId">
-                <input type="text" id="UpdateName" placeholder="İsim" class="p-2 mb-2 w-full rounded border">
-                <input type="text" id="UpdateAuthor" placeholder="Yazar" class="p-2 mb-2 w-full rounded border">
-                <select id="UpdateCategory" class="p-2 mb-2 w-full rounded border">
+                <input type="text" id="UpdateName" placeholder="İsim" class="mb-2 w-full rounded border p-2">
+                <input type="text" id="UpdateAuthor" placeholder="Yazar" class="mb-2 w-full rounded border p-2">
+                <select id="UpdateCategory" class="mb-2 w-full rounded border p-2">
                     <option value=""></option>
                     <option value="Tarih & Kültür">Tarih & Kültür</option>
                     <option value="Edebiyat & Roman">Edebiyat & Roman</option>
@@ -177,64 +192,25 @@
                     <option value="Sanat & Tasarım">Sanat & Tasarım</option>
                     <option value="Diğer">Diğer</option>
                 </select>
-                <input type="text" id="UpdateCompletedPages" placeholder="Tamamlanan Sayfalar" class="p-2 mb-2 w-full rounded border">
-                <input type="text" id="UpdateTotalPages" placeholder="Toplam Sayfa" class="p-2 mb-2 w-full rounded border">
-                <select id="UpdateStatus" class="p-2 mb-2 w-full rounded border">
+                <input type="text" id="UpdateCompletedPages" placeholder="Tamamlanan Sayfalar" class="mb-2 w-full rounded border p-2">
+                <input type="text" id="UpdateTotalPages" placeholder="Toplam Sayfa" class="mb-2 w-full rounded border p-2">
+                <select id="UpdateStatus" class="mb-2 w-full rounded border p-2">
                     <option value="Okuyor">Okuyor</option>
                     <option value="Okunacak">Okunacak</option>
                     <option value="Bitirdi">Bitirdi</option>
                     <option value="Bıraktı">Bıraktı</option>
                     <option value="Okunmuyor">Okunmuyor</option>
                 </select>
-                <button id="UpdateButton" class="bg-blue-500 text-white p-2 mt-2 w-full rounded hover:bg-blue-400">Güncelle</button>
+                <button id="UpdateButton" class="mt-2 w-full rounded bg-blue-500 p-2 text-white hover:bg-blue-400">Güncelle</button>
             </div>
         </div>
 
-        <!-- Section for Audio Books Table -->
-        <h2 class="mb-6 mt-10 text-center text-2xl font-semibold">Sesli Kitaplık</h2>
-        <div class="bg-white mb-8 max-h-[350px] min-h-[350px] overflow-x-auto rounded-lg shadow-md">
-            <table class="border-gray-600 min-w-full border text-left text-sm">
-                <thead class="bg-gray-700 text-white top-0 sticky">
-                    <tr>
-                        <th class="px-4 py-2"></th>
-                        <th class="px-4 py-2">İsim</th>
-                        <th class="px-4 py-2">Yazar</th>
-                        <th class="px-4 py-2">Kategori</th>
-                        <th class="px-4 py-2">Dinlenen Süre</th>
-                        <th class="px-4 py-2">Toplam Süre</th>
-                        <th class="px-4 py-2">Durum</th>
-                    </tr>
-                </thead>
-                <tbody id="audioTableBody" class="border-gray-300 divide-y border">
-                    @{
-                        using (var context = new LibraryContext())
-                        {
-                            // Assuming a separate table for audiobooks, e.g., AudioLibraries
-                            var audioLibraries = context.AudioLibraries.Where(a => a.UserName == userName).ToList();
-                            foreach (var audio in audioLibraries)
-                            {
-                                <tr data-id="@audio.Id" class="table-row cursor-pointer">
-                                    <td class="px-4 py-2 text-transparent border">@audio.Id</td>
-                                    <td class="px-4 py-2 border">@audio.Name</td>
-                                    <td class="px-4 py-2 border">@audio.Author</td>
-                                    <td class="px-4 py-2 border">@audio.Category</td>
-                                    <td class="px-4 py-2 border">@audio.CompletedDuration</td>
-                                    <td class="px-4 py-2 border">@audio.TotalDuration</td>
-                                    <td class="px-4 py-2 border">@audio.Status</td>
-                                </tr>
-                            }
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        <div class="mt-6 gap-6 grid grid-cols-1 md:grid-cols-1">
-            <div class="p-4 bg-white rounded-lg shadow">
+        <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-1">
+            <div class="rounded-lg bg-white p-4 shadow">
                 <h3 class="mb-3 text-lg font-semibold">Sesli Kitap Ara</h3>
-                <input type="text" id="txtSearchAudioByName" placeholder="Sesli Kitap İsmi" class="p-2 mb-2 w-full rounded border">
-                <input type="text" id="txtSearchAudioByAuthor" placeholder="Anlatıcı / Yazar" class="p-2 mb-2 w-full rounded border">
-                <select id="txtSearchAudioByCategory" class="p-2 mb-2 w-full rounded border">
+                <input type="text" id="txtSearchAudioByName" placeholder="Sesli Kitap İsmi" class="mb-2 w-full rounded border p-2">
+                <input type="text" id="txtSearchAudioByAuthor" placeholder="Anlatıcı / Yazar" class="mb-2 w-full rounded border p-2">
+                <select id="txtSearchAudioByCategory" class="mb-2 w-full rounded border p-2">
                     <option value=""></option>
                     <option value="Tarih & Kültür">Tarih & Kültür</option>
                     <option value="Edebiyat & Roman">Edebiyat & Roman</option>
@@ -245,23 +221,23 @@
                     <option value="Sanat & Tasarım">Sanat & Tasarım</option>
                     <option value="Diğer">Diğer</option>
                 </select>
-                <button id="DeleteAudioBook" class="bg-red-500 text-white p-2 mt-2 w-full rounded hover:bg-red-600">
+                <button id="DeleteAudioBook" class="mt-2 w-full rounded bg-red-500 p-2 text-white hover:bg-red-600">
                     Seçili Sesli Kitabı Sil
                 </button>
-                <button id="AddAudioToFavorites" class="bg-yellow-500 text-white p-2 mt-2 w-full rounded hover:bg-yellow-600">
+                <button id="AddAudioToFavorites" class="mt-2 w-full rounded bg-yellow-500 p-2 text-white hover:bg-yellow-600">
                     Favorilere Ekle
                 </button>
             </div>
         </div>
 
         <!-- New Add and Update Sections for Audio Books -->
-        <div class="mt-6 gap-6 grid grid-cols-1 md:grid-cols-2">
+        <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
             <!-- New Add Section for Audio Books -->
-            <div class="p-4 bg-white rounded-lg shadow">
+            <div class="rounded-lg bg-white p-4 shadow">
                 <h3 class="mb-3 text-lg font-semibold">Yeni Sesli Kitap Ekle</h3>
-                <input type="text" id="AddAudioName" placeholder="İsim" class="p-2 mb-2 w-full rounded border">
-                <input type="text" id="AddAudioAuthor" placeholder="Yazar / Anlatıcı" class="p-2 mb-2 w-full rounded border">
-                <select id="AddAudioCategory" class="p-2 mb-2 w-full rounded border">
+                <input type="text" id="AddAudioName" placeholder="İsim" class="mb-2 w-full rounded border p-2">
+                <input type="text" id="AddAudioAuthor" placeholder="Yazar / Anlatıcı" class="mb-2 w-full rounded border p-2">
+                <select id="AddAudioCategory" class="mb-2 w-full rounded border p-2">
                     <option value=""></option>
                     <option value="Tarih & Kültür">Tarih & Kültür</option>
                     <option value="Edebiyat & Roman">Edebiyat & Roman</option>
@@ -272,25 +248,25 @@
                     <option value="Sanat & Tasarım">Sanat & Tasarım</option>
                     <option value="Diğer">Diğer</option>
                 </select>
-                <input type="text" id="AddCompletedDuration" placeholder="Dinlenen Süre (dk)" class="p-2 mb-2 w-full rounded border">
-                <input type="text" id="AddTotalDuration" placeholder="Toplam Süre (dk)" class="p-2 mb-2 w-full rounded border">
-                <select id="AddAudioStatus" class="p-2 mb-2 w-full rounded border">
+                <input type="text" id="AddCompletedDuration" placeholder="Dinlenen Süre (dk)" class="mb-2 w-full rounded border p-2">
+                <input type="text" id="AddTotalDuration" placeholder="Toplam Süre (dk)" class="mb-2 w-full rounded border p-2">
+                <select id="AddAudioStatus" class="mb-2 w-full rounded border p-2">
                     <option value="Dinliyor">Dinliyor</option>
                     <option value="Dinlenecek">Dinlenecek</option>
                     <option value="Bitirdi">Bitirdi</option>
                     <option value="Bıraktı">Bıraktı</option>
                 </select>
-                <input type="text" id="AddAudioUrl" placeholder="URL (opsiyonel)" class="p-2 mb-2 w-full rounded border">
-                <button id="AddAudioButton" class="bg-green-500 text-white p-2 mt-2 w-full rounded hover:bg-green-400">Ekle</button>
+                <input type="text" id="AddAudioUrl" placeholder="URL (opsiyonel)" class="mb-2 w-full rounded border p-2">
+                <button id="AddAudioButton" class="mt-2 w-full rounded bg-green-500 p-2 text-white hover:bg-green-400">Ekle</button>
             </div>
 
             <!-- New Update Section for Audio Books -->
-            <div class="p-4 bg-white rounded-lg shadow">
+            <div class="rounded-lg bg-white p-4 shadow">
                 <h3 class="mb-3 text-lg font-semibold">Sesli Kitap Güncelle</h3>
                 <input type="hidden" id="UpdateAudioId">
-                <input type="text" id="UpdateAudioName" placeholder="İsim" class="p-2 mb-2 w-full rounded border">
-                <input type="text" id="UpdateAudioAuthor" placeholder="Yazar / Anlatıcı" class="p-2 mb-2 w-full rounded border">
-                <select id="UpdateAudioCategory" class="p-2 mb-2 w-full rounded border">
+                <input type="text" id="UpdateAudioName" placeholder="İsim" class="mb-2 w-full rounded border p-2">
+                <input type="text" id="UpdateAudioAuthor" placeholder="Yazar / Anlatıcı" class="mb-2 w-full rounded border p-2">
+                <select id="UpdateAudioCategory" class="mb-2 w-full rounded border p-2">
                     <option value=""></option>
                     <option value="Tarih & Kültür">Tarih & Kültür</option>
                     <option value="Edebiyat & Roman">Edebiyat & Roman</option>
@@ -301,55 +277,16 @@
                     <option value="Sanat & Tasarım">Sanat & Tasarım</option>
                     <option value="Diğer">Diğer</option>
                 </select>
-                <input type="text" id="UpdateAudioCompletedDuration" placeholder="Dinlenen Süre (dk)" class="p-2 mb-2 w-full rounded border">
-                <input type="text" id="UpdateAudioTotalDuration" placeholder="Toplam Süre (dk)" class="p-2 mb-2 w-full rounded border">
-                <select id="UpdateAudioStatus" class="p-2 mb-2 w-full rounded border">
+                <input type="text" id="UpdateAudioCompletedDuration" placeholder="Dinlenen Süre (dk)" class="mb-2 w-full rounded border p-2">
+                <input type="text" id="UpdateAudioTotalDuration" placeholder="Toplam Süre (dk)" class="mb-2 w-full rounded border p-2">
+                <select id="UpdateAudioStatus" class="mb-2 w-full rounded border p-2">
                     <option value="Dinliyor">Dinliyor</option>
                     <option value="Dinlenecek">Dinlenecek</option>
                     <option value="Bitirdi">Bitirdi</option>
                     <option value="Bıraktı">Bıraktı</option>
                 </select>
-                <input type="text" id="UpdateAudioUrl" placeholder="URL (opsiyonel)" class="p-2 mb-2 w-full rounded border">
-                <button id="UpdateAudioButton" class="bg-blue-500 text-white p-2 mt-2 w-full rounded hover:bg-blue-400">Güncelle</button>
-            </div>
-        </div>
-
-        <!-- User Showcase and Other Sections Remain Unchanged -->
-        <div class="mt-6 p-4 bg-white rounded-lg shadow">
-            <h3 class="mb-3 text-lg font-semibold">Kullanıcı Vitrini</h3>
-            <div class="gap-3 grid grid-cols-2 md:grid-cols-5">
-                @{
-                    var showcaseList = await _libraryManager.ListBookShowcaseAsync(userName);
-                }
-                @foreach (var book in showcaseList)
-                {
-                    <div class="bg-gray-200 p-4 rounded-lg text-center">
-                        <span class="block text-sm font-semibold">@book.Name</span>
-                        <div class="h-32 bg-gray-300 mt-2 w-full rounded">
-                            @if (await _libraryManager.CheckImageStatusAsync(userName, book.Name) == false)
-                            {
-                                <form action="UploadImage" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="booktitle" value="@book.Name" />
-                                    <input type="file" id="imageInput" name="imageFile" accept="image/*">
-                                    <button type="submit" class="bg-blue-500 text-white p-2 mt-2 w-full rounded">Yükle</button>
-                                </form>
-                            }
-                            else
-                            {
-                                <img src="@await _libraryManager.BookImageAsync(userName, book.Name)" class="h-full w-full rounded object-cover" />
-                            }
-                        </div>
-                        <form action="RemoveBookShowcase" method="post">
-                            <input type="hidden" name="booktitle" value="@book.Name" />
-                            <button type="submit" class="bg-red-500 text-white p-2 mt-2 w-full rounded">Kaldır</button>
-                        </form>
-                    </div>
-                }
-                @for (int i = 0; i < 10 - showcaseList.Count; i++)
-                {
-                    <div class="bg-gray-200 p-4 h-32 flex flex-col rounded-lg text-center">
-                    </div>
-                }
+                <input type="text" id="UpdateAudioUrl" placeholder="URL (opsiyonel)" class="mb-2 w-full rounded border p-2">
+                <button id="UpdateAudioButton" class="mt-2 w-full rounded bg-blue-500 p-2 text-white hover:bg-blue-400">Güncelle</button>
             </div>
         </div>
     </div>

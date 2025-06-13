@@ -16,6 +16,10 @@ namespace LibraryManagement.Entities.Concrete
         public string? PasswordHash { get; set; }
         public string? ResidementPlaceCity { get; set; }
         public string? ResidementPlaceCountry { get; set; }
-        public byte[]? UserProfilePicture { get; set; } 
+        public byte[]? UserProfilePicture { get; set; }
+        public ICollection<UserBook> UserBooks { get; set; } = [];
+        public ICollection<UserFavoriteBook> UserFavoriteBooks { get; set; } = [];
+        public ICollection<UserFavoriteAuthor> UserFavoriteAuthors { get; set; } = [];
+        public ICollection<UserFavoriteGenre> UserFavoriteGenres { get; set; } = [];
     }
 }

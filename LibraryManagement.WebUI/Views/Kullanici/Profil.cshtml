@@ -6,6 +6,14 @@
 @using learningASP.NET_CORE.Controllers
 @using LibraryManagement.Business.Concrete
 <!DOCTYPE html>
+@using LibraryManagement.DataAccess.Concrete
+@using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
+@using LibraryManagement.Entities.Concrete
+@using Microsoft.Data.SqlClient
+@using System.Data
+@using learningASP.NET_CORE.Controllers
+@using LibraryManagement.Business.Concrete
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,19 +21,21 @@
     <title>User's Profile</title>
     <link rel="icon" href="/img/logo.png" type="jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-  <body class="bg-gray-200">
+  <body class="bg-gray-900 text-gray-200">
     @{
         LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
         UserManager _userManager = new UserManager(new EfUserRepository());
         string? userName = Convert.ToString(ViewData["UserName"]);
         string? userProfilePicture = Convert.ToString(ViewData["UserProfilePicture"]);
+        int userId = Convert.ToInt32(ViewData["UserId"]);
     }
-    <nav class="bg-gray-900 text-white px-6 py-3 top-0 sticky z-50">
+    <nav class="sticky top-0 z-50 bg-gray-800 px-6 py-3 text-white">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
             <!-- Logo -->
-            <div class="space-x-3 flex items-center">
-                <img src="/img/logo.png" class="w-12 h-12 rounded-full">
+            <div class="flex items-center space-x-3">
+                <img src="/img/logo.png" class="h-12 w-12 rounded-full">
                 <span class="text-lg font-semibold">BenimKitaplığım</span>
             </div>
 
@@ -36,165 +46,338 @@
             </button>
 
             <!-- Profile & Notification -->
-            <div class="space-x-4 flex items-center">
-                <div class="space-x-6 hidden items-center md:flex">
+            <div class="flex items-center space-x-4">
+                <div class="hidden items-center space-x-6 md:flex">
                     <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
                     <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
                     <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
                 </div>
                 <div class="relative">
-                    <span class="text-gray-400 cursor-pointer text-2xl hover:text-white">🔔</span>
-                    <span class="bg-red-500 text-white px-1 absolute -right-[5px] -top-[2px] flex h-[16px] min-w-[16px] items-center justify-center rounded-full font-bold text-[10px]">
+                    <span class="cursor-pointer text-2xl text-gray-400 hover:text-white">🔔</span>
+                    <span class="absolute -right-[5px] -top-[2px] flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-red-500 px-1 font-bold text-white text-[10px]">
                         3
                     </span>
                 </div>
-                <a href="/Kullanici/Profil"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
+                <a href="/Kullanici/Profil"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="h-12 w-12 rounded-full"></a>
             </div>
         </div>
 
         <!-- Mobile Dropdown Menu -->
-        <div id="mobile-menu" class="space-y-2 bg-gray-800 py-3 px-6 flex hidden flex-col md:hidden">
+        <div id="mobile-menu" class="flex hidden flex-col space-y-2 bg-gray-700 px-6 py-3 md:hidden">
             <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
             <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
         </div>
     </nav>
     
-    <div class="gap-6 m-5 mt-10 flex flex-col justify-between md:flex-row">
+    <div class="m-5 mt-10 flex flex-col justify-between gap-6 md:flex-row">
         <!-- Profile Section -->
-        <div class="bg-white p-6 w-full rounded-lg shadow-lg md:w-1/3">
-            <img class="w-32 h-32 mx-auto rounded-full" src="@((userProfilePicture != null) ? userProfilePicture : "/img/profilepicture.jpeg")" alt="Profile Picture">
-            <a href="/Kullanici/Ayarlar">
-                <button class="mt-4 bg-blue-500 text-white p-2 w-full rounded-full hover:bg-blue-400">Profil Ayarları</button>
-            </a>
+        <div class="w-full rounded-lg bg-gray-800 p-6 shadow-lg md:w-1/3">
+            <h3 class="my-6 text-center text-xl font-semibold text-gray-100">@userName</h3>
+            <img class="mx-auto h-48 w-48 rounded-full border-4 border-gray-700" src="@((userProfilePicture != null) ? userProfilePicture : "/img/profilepicture.jpeg")" alt="Profile Picture">
+
+            <!-- Buttons container -->
+            <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Add Friend Button -->
+                <button class="rounded-lg bg-blue-600 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-blue-500">
+                    <i class="fas fa-user-plus"></i>
+                </button>
+                <!-- Send Message Button -->
+                <button class="rounded-lg bg-green-600 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-green-500">
+                    <i class="fas fa-comment"></i>
+                </button>
+                <!-- Comment Button -->
+                <button class="rounded-lg bg-yellow-600 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-yellow-500">
+                    <i class="fas fa-comment-dots"></i>
+                </button>
+                <!-- Follow Button -->
+                <button class="rounded-lg bg-indigo-600 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-indigo-500">
+                    <i class="fas fa-user-friends"></i>
+                </button>
+                <!-- Favorite Library Button -->
+                <button class="rounded-lg bg-purple-600 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-purple-500">
+                    <i class="fas fa-bookmark"></i>
+                </button>
+            </div>
+
             <div class="mt-6">
-                <h3 class="font-semibold">@userName</h3>
-                <h3 class="font-semibold">Bulunduğu yer: @await _userManager.ResidementPlaceCityAsync(userName)/@await _userManager.ResidementPlaceCountryAsync(userName)</h3>
-                <h3 class="font-semibold">Toplam Kitap sayısı: @await _libraryManager.GetTotalOfBooksAsync(userName)</h3>
-            </div>
-            <div class="mt-4">
-                <h4 class="font-semibold">Kitap Türleri:</h4>
-                <div class="gap-4 mt-4 flex flex-wrap">
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-blue-500 w-4 h-4 rounded-full"></div>
-                        <span class="text-sm">Tarih & Kültür</span>
-                    </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-green-500 w-4 h-4 rounded-full"></div>
-                        <span class="text-sm">Edebiyat & Roman</span>
-                    </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-yellow-500 w-4 h-4 rounded-full"></div>
-                        <span class="text-sm">Ekonomi, İş ve Hukuk</span>
-                    </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-purple-500 w-4 h-4 rounded-full"></div>
-                        <span class="text-sm">Psikoloji & Kişisel Gelişim</span>
-                    </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-red-500 w-4 h-4 rounded-full"></div>
-                        <span class="text-sm">Toplum, Felsefe ve Din</span>
-                    </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-indigo-500 w-4 h-4 rounded-full"></div>
-                        <span class="text-sm">Bilim & Teknoloji</span>
-                    </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-pink-500 w-4 h-4 rounded-full"></div>
-                        <span class="text-sm">Sanat & Tasarım</span>
-                    </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-gray-500 w-4 h-4 rounded-full"></div>
-                        <span class="text-sm">Diğer</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Circular Progress Bar for Genre Readings -->
-            <div class="mt-6 flex justify-center">
-                <div class="w-32 h-32 relative">
-                    <svg class="inset-0 absolute" width="100%" height="100%" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Background Circle -->
-                        <circle class="text-gray-200" fill="none" stroke-width="3" stroke="currentColor" cx="18" cy="18" r="16"></circle>
-
-                        <!-- Red Segment (20%) -->
-                        <circle class="text-red-500" fill="none" stroke-width="3" stroke-linecap="round" stroke="currentColor" cx="18" cy="18" r="16" stroke-dasharray="20.104, 100" stroke-dashoffset="25"></circle>
-
-                        <!-- Blue Segment (20%) -->
-                        <circle class="text-blue-500" fill="none" stroke-width="3" stroke-linecap="round" stroke="currentColor" cx="18" cy="18" r="16" stroke-dasharray="20.104, 100" stroke-dashoffset="12.104"></circle>
-
-                        <!-- Purple Segment (60%) -->
-                        <circle class="text-purple-500" fill="none" stroke-width="3" stroke-linecap="round" stroke="currentColor" cx="18" cy="18" r="16" stroke-dasharray="60.312, 100" stroke-dashoffset="155.208"></circle>
-                    </svg>
-                    <div class="inset-0 absolute flex items-center justify-center text-xl font-semibold">75%</div>
-                </div>
+                <h3 class="font-medium text-gray-300">Bulunduğu yer: @await _userManager.ResidementPlaceCityAsync(userName)/@await _userManager.ResidementPlaceCountryAsync(userName)</h3>
+                <h3 class="font-medium text-gray-300">Toplam Kitap sayısı: @await _libraryManager.GetTotalOfBooksAsync(userId)</h3>
             </div>
         </div>
 
         <!-- Statistics Section -->
-        <div class="bg-white p-6 w-full rounded-lg shadow-lg md:w-2/3">
-            <h2 class="mb-6 text-center text-xl font-bold underline">İstatistikler</h2>
+        <div class="w-full rounded-lg bg-gray-800 p-6 shadow-lg md:w-2/3">
+            <h2 class="mb-6 text-center text-xl font-bold text-gray-100 underline">İstatistikler</h2>
 
             <!-- Symmetric Status List -->
-            <div class="gap-6 mb-6 grid grid-cols-2 text-lg">
+            <div class="mb-6 grid grid-cols-2 gap-6 text-lg">
                 <div class="flex flex-col items-center">
-                    <h3 class="font-semibold">Planlıyor</h3>
-                    <span class="text-blue-500 text-3xl">@await _libraryManager.BookStatusCounterAsync("Planlıyor", userName)</span>
+                    <h3 class="font-semibold text-gray-100">Planlıyor</h3>
+                    <span class="text-3xl text-blue-400">@await _libraryManager.BookStatusCounterAsync("Planlıyor", userId)</span>
                 </div>
                 <div class="flex flex-col items-center">
-                    <h3 class="font-semibold">Okuyor</h3>
-                    <span class="text-green-500 text-3xl">@await _libraryManager.BookStatusCounterAsync("Okuyor", userName)</span>
+                    <h3 class="font-semibold text-gray-100">Okuyor</h3>
+                    <span class="text-3xl text-green-400">@await _libraryManager.BookStatusCounterAsync("Okuyor", userId)</span>
                 </div>
-                
             </div>
-            <div class="gap-6 mb-6 grid grid-cols-2 text-lg">
+            <div class="mb-6 grid grid-cols-2 gap-6 text-lg">
                 <div class="flex flex-col items-center">
-                    <h3 class="font-semibold">Okumuyor</h3>
-                    <span class="text-yellow-500 text-3xl">@await _libraryManager.BookStatusCounterAsync("Okumuyor", userName)</span>
+                    <h3 class="font-semibold text-gray-100">Okumuyor</h3>
+                    <span class="text-3xl text-yellow-400">@await _libraryManager.BookStatusCounterAsync("Okumuyor", userId)</span>
                 </div>
                 <div class="flex flex-col items-center">
-                    <h3 class="font-semibold">Bıraktı</h3>
-                    <span class="text-red-500 text-3xl">@await _libraryManager.BookStatusCounterAsync("Bıraktı", userName)</span>
+                    <h3 class="font-semibold text-gray-100">Bıraktı</h3>
+                    <span class="text-3xl text-red-400">@await _libraryManager.BookStatusCounterAsync("Bıraktı", userId)</span>
                 </div>
             </div>
             <a href="/Kullanici/Kitaplik">
-                <button class="bg-blue-500 text-white p-2 w-full rounded-full hover:bg-blue-400">Kütüphaneye Git</button>
+                <button class="w-full rounded-full bg-blue-600 p-2 text-white hover:bg-blue-500">Kütüphaneye Git</button>
             </a>
-            <div class="mt-6 max-h-80 border-gray-300 overflow-y-auto border">
-                <table class="border-gray-300 min-w-full table-auto border">
-                    <thead class="bg-gray-200 top-[-2px] border-gray-300 sticky">
+            <div class="mt-6 max-h-80 overflow-y-auto border border-gray-700">
+                <table class="min-w-full table-auto border border-gray-700">
+                    <thead class="top-[-2px] sticky border-gray-700 bg-gray-700">
                         <tr>
-                            <th class="px-4 py-3 border-gray-300 border-b text-left"></th>
-                            <th class="px-4 py-3 border-gray-300 border-b text-left">İsim</th>
-                            <th class="px-4 py-3 border-gray-300 border-b text-left">Yazar</th>
-                            <th class="px-4 py-3 border-gray-300 border-b text-left">Kategori</th>
-                            <th class="px-4 py-3 border-gray-300 border-b text-left">Tamamlanan Sayfalar</th>
-                            <th class="px-4 py-3 border-gray-300 border-b text-left">Toplam Sayfa</th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left"></th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left">İsim</th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left">Yazar</th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left">Kategori</th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left">Tamamlanan Sayfalar</th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left">Toplam Sayfa</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="h-48 overflow-y-auto bg-gray-900">
                         @{
                             using (var context = new LibraryContext())
                             {
-                                var libraries = context.Libraries
-                                .Where(lib => lib.UserName == userName && lib.Status == "Okuyor")
-                                .Select(lib => new Library
-                {
-                    Name = lib.Name,
-                    Author = lib.Author,
-                    Category = lib.Category,
-                    CompletedPages = lib.CompletedPages,
-                    TotalOfPages = lib.TotalOfPages
-                })
-                                .ToList();
+                                var userBookIds = context.UserBooks
+                                    .Where(ub => ub.UserAccountId == userId)
+                                    .Select(ub => ub.BookId)
+                                    .ToList();
 
-                                foreach (var library in libraries)
+                                var libraries = context.Books
+                                    .Where(b => userBookIds.Contains(b.Id))
+                                    .Select(b => new Book
+                                    {
+                                        Title = b.Title,
+                                        Author = b.Author,
+                                        Genre = b.Genre,
+                                    })
+                                    .ToList();
+
+                                if (libraries.Any())
+                                {
+                                    foreach (var library in libraries)
+                                    {
+                                        <tr>
+                                            <td class="border-b border-gray-700 px-4 py-2"></td>
+                                            <td class="border-b border-gray-700 px-4 py-2 text-gray-200">@library.Title</td>
+                                            <td class="border-b border-gray-700 px-4 py-2 text-gray-200">@library.Author</td>
+                                            <td class="border-b border-gray-700 px-4 py-2 text-gray-200">@library.Genre</td>
+                                        </tr>
+                                    }
+                                }
+                                else
                                 {
                                     <tr>
-                                        <td class="px-4 py-2 border-gray-300 border-b"></td>
-                                        <td class="px-4 py-2 border-gray-300 border-b">@library.Name</td>
-                                        <td class="px-4 py-2 border-gray-300 border-b">@library.Author</td>
-                                        <td class="px-4 py-2 border-gray-300 border-b">@library.Category</td>
-                                        <td class="px-4 py-2 border-gray-300 border-b">@library.CompletedPages</td>
-                                        <td class="px-4 py-2 border-gray-300 border-b">@library.TotalOfPages</td>
+                                        <td colspan="6" class="bg-gray-900 px-4 py-2 text-center text-gray-500">Veri bulunamadı.</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-5 mt-8 rounded-lg bg-gray-800 p-6 shadow-lg">
+        <h2 class="mb-6 text-center text-2xl font-bold text-gray-100">Kullanıcı Vitrini</h2>
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            <!-- Filled slot -->
+            <div class="cursor-pointer overflow-hidden rounded-xl shadow-md transition hover:scale-105">
+                <img src="/img/bookcover.jpg" class="h-48 w-full object-cover" alt="Book Cover" />
+            </div>
+
+            <!-- Empty (gray) slots -->
+            <div class="flex cursor-pointer items-center justify-center rounded-xl bg-gray-700 shadow-inner transition hover:bg-gray-600 hover:scale-105">
+                <i class="fas fa-plus text-4xl text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+    <script src="/js/ProfileIndex.js"></script>
+</body>
+</html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User's Profile</title>
+    <link rel="icon" href="/img/logo.png" type="jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+  <body class="bg-gray-200">
+    @{
+        LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
+        UserManager _userManager = new UserManager(new EfUserRepository());
+        string? userName = Convert.ToString(ViewData["UserName"]);
+        string? userProfilePicture = Convert.ToString(ViewData["UserProfilePicture"]);
+        int userId = Convert.ToInt32(ViewData["UserId"]);
+    }
+    <nav class="sticky top-0 z-50 bg-gray-900 px-6 py-3 text-white">
+        <div class="mx-auto flex max-w-7xl items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <img src="/img/logo.png" class="h-12 w-12 rounded-full">
+                <span class="text-lg font-semibold">BenimKitaplığım</span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="text-white focus:outline-none md:hidden">
+                ☰ <!-- Hamburger Icon -->
+            </button>
+
+            <!-- Profile & Notification -->
+            <div class="flex items-center space-x-4">
+                <div class="hidden items-center space-x-6 md:flex">
+                    <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
+                    <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
+                    <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
+                </div>
+                <div class="relative">
+                    <span class="cursor-pointer text-2xl text-gray-400 hover:text-white">🔔</span>
+                    <span class="absolute -right-[5px] -top-[2px] flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-red-500 px-1 font-bold text-white text-[10px]">
+                        3
+                    </span>
+                </div>
+                <a href="/Kullanici/Profil"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="h-12 w-12 rounded-full"></a>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="flex hidden flex-col space-y-2 bg-gray-800 px-6 py-3 md:hidden">
+            <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
+            <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
+        </div>
+    </nav>
+    
+    <div class="m-5 mt-10 flex flex-col justify-between gap-6 md:flex-row">
+        <!-- Profile Section -->
+        <div class="w-full rounded-lg bg-white p-6 shadow-lg md:w-1/3">
+            <h3 class="my-6 text-center text-xl font-semibold text-gray-800">@userName</h3>
+            <img class="mx-auto h-48 w-48 rounded-full border-4 border-gray-300" src="@((userProfilePicture != null) ? userProfilePicture : "/img/profilepicture.jpeg")" alt="Profile Picture">
+
+            <!-- Buttons container -->
+            <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Add Friend Button -->
+                <button class="rounded-lg bg-blue-500 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-blue-400">
+                    <i class="fas fa-user-plus"></i> <!-- Font Awesome Add Friend Icon -->
+                </button>
+
+                <!-- Send Message Button -->
+                <button class="rounded-lg bg-green-500 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-green-400">
+                    <i class="fas fa-comment"></i> <!-- Font Awesome Message Icon -->
+                </button>
+
+                <!-- Comment Button -->
+                <button class="rounded-lg bg-yellow-500 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-yellow-400">
+                    <i class="fas fa-comment-dots"></i> <!-- Font Awesome Comment Icon -->
+                </button>
+
+                <!-- Follow Button -->
+                <button class="rounded-lg bg-indigo-500 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-indigo-400">
+                    <i class="fas fa-user-friends"></i> <!-- Font Awesome Follow Icon -->
+                </button>
+
+                <!-- Favorite Library Button -->
+                <button class="rounded-lg bg-purple-500 px-4 py-2 text-white shadow-md transition duration-300 hover:bg-purple-400">
+                    <i class="fas fa-bookmark"></i> <!-- Font Awesome Bookmark Icon -->
+                </button>
+            </div>
+
+            <div class="mt-6">
+                <h3 class="font-medium text-gray-600">Bulunduğu yer: @await _userManager.ResidementPlaceCityAsync(userName)/@await _userManager.ResidementPlaceCountryAsync(userName)</h3>
+                <h3 class="font-medium text-gray-600">Toplam Kitap sayısı: @await _libraryManager.GetTotalOfBooksAsync(userId)</h3>
+            </div>
+        </div>
+
+
+        <!-- Statistics Section -->
+        <div class="w-full rounded-lg bg-white p-6 shadow-lg md:w-2/3">
+            <h2 class="mb-6 text-center text-xl font-bold underline">İstatistikler</h2>
+
+            <!-- Symmetric Status List -->
+            <div class="mb-6 grid grid-cols-2 gap-6 text-lg">
+                <div class="flex flex-col items-center">
+                    <h3 class="font-semibold text-gray-800">Planlıyor</h3>
+                    <span class="text-3xl text-blue-500">@await _libraryManager.BookStatusCounterAsync("Planlıyor", userId)</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <h3 class="font-semibold text-gray-800">Okuyor</h3>
+                    <span class="text-3xl text-green-500">@await _libraryManager.BookStatusCounterAsync("Okuyor", userId)</span>
+                </div>
+            </div>
+            <div class="mb-6 grid grid-cols-2 gap-6 text-lg">
+                <div class="flex flex-col items-center">
+                    <h3 class="font-semibold text-gray-800">Okumuyor</h3>
+                    <span class="text-3xl text-yellow-500">@await _libraryManager.BookStatusCounterAsync("Okumuyor", userId)</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <h3 class="font-semibold text-gray-800">Bıraktı</h3>
+                    <span class="text-3xl text-red-500">@await _libraryManager.BookStatusCounterAsync("Bıraktı", userId)</span>
+                </div>
+            </div>
+            <a href="/Kullanici/Kitaplik">
+                <button class="w-full rounded-full bg-blue-500 p-2 text-white hover:bg-blue-400">Kütüphaneye Git</button>
+            </a>
+            <div class="mt-6 max-h-80 overflow-y-auto border border-gray-300">
+                <table class="min-w-full table-auto border border-gray-300">
+                    <thead class="top-[-2px] sticky border-gray-300 bg-gray-200">
+                        <tr>
+                            <th class="border-b border-gray-300 px-4 py-3 text-left"></th>
+                            <th class="border-b border-gray-300 px-4 py-3 text-left">İsim</th>
+                            <th class="border-b border-gray-300 px-4 py-3 text-left">Yazar</th>
+                            <th class="border-b border-gray-300 px-4 py-3 text-left">Kategori</th>
+                            <th class="border-b border-gray-300 px-4 py-3 text-left">Tamamlanan Sayfalar</th>
+                            <th class="border-b border-gray-300 px-4 py-3 text-left">Toplam Sayfa</th>
+                        </tr>
+                    </thead>
+                    <tbody class="h-48 overflow-y-auto bg-gray-100">
+                        @{
+                            using (var context = new LibraryContext())
+                            {
+                                var userBookIds = context.UserBooks
+                                                                   .Where(ub => ub.UserAccountId == userId)
+                                                                   .Select(ub => ub.BookId)
+                                                                   .ToList();
+
+                                                               var libraries = context.Books
+                                                                   .Where(b => userBookIds.Contains(b.Id))
+                                                                   .Select(b => new Book
+                                                                   {
+                                                                       Title = b.Title,
+                                                                       Author = b.Author,
+                                                                       Genre = b.Genre,
+                                                                   })
+                                                                   .ToList();
+
+                                if (libraries.Any())
+                                {
+                                    foreach (var library in libraries)
+                                    {
+                                        <tr>
+                                            <td class="border-b border-gray-300 px-4 py-2"></td>
+                                            <td class="border-b border-gray-300 px-4 py-2">@library.Title</td>
+                                            <td class="border-b border-gray-300 px-4 py-2">@library.Author</td>
+                                            <td class="border-b border-gray-300 px-4 py-2">@library.Genre</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6" class="bg-gray-100 px-4 py-2 text-center text-gray-500">Veri bulunamadı.</td>
                                     </tr>
                                 }
                             }
@@ -206,22 +389,23 @@
         </div>
     </div>
 
-    <div class="bg-white p-6 mt-8 m-5 rounded-lg shadow-lg">
-        <h2 class="text-gray-800 mb-6 text-center text-2xl font-bold">Kullanıcı Vitrini</h2>
-        <div class="gap-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-            <!-- Book Items -->
-             @{
-                        var listShowcase = await _libraryManager.ListBookShowcaseAsync(userName);
-                        foreach(var book in listShowcase)
-                        {
-            <div class="space-y-2 bg-gray-100 p-4 flex cursor-pointer flex-col items-center rounded-lg shadow-md transition-shadow hover:shadow-lg">
-                <img class="w-32 h-48 duration-400 transform rounded-md object-cover transition-transform hover:scale-110" src="~/img/" alt="Kitap 1">
-                <span class="text-gray-700 font-semibold">@book.Name</span>
+
+    <div class="m-5 mt-8 rounded-lg bg-white p-6 shadow-lg">
+        <h2 class="mb-6 text-center text-2xl font-bold text-gray-800">Kullanıcı Vitrini</h2>
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            <!-- Filled slot -->
+            <div class="cursor-pointer overflow-hidden rounded-xl shadow-md transition hover:scale-105">
+                <img src="/img/bookcover.jpg" class="h-48 w-full object-cover" alt="Book Cover" />
             </div>
-                }
-                }
+
+            <!-- Empty (gray) slots -->
+            <div class="flex cursor-pointer items-center justify-center rounded-xl bg-gray-300 shadow-inner transition hover:bg-gray-400 hover:scale-105">
+                <i class="fas fa-plus text-4xl text-gray-500"></i>
+            </div>
         </div>
+
     </div>
+
    
            
     <script src="/js/ProfileIndex.js"></script>

@@ -1,1 +1,52 @@
-﻿
+﻿/* 1. Override default font to Inter */
+body {
+    font-family: "Inter", sans-serif;
+}
+
+/* 2. Autofill Override for Dark Mode */
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #1f2937 inset !important;
+    box-shadow: 0 0 0 1000px #1f2937 inset !important;
+    -webkit-text-fill-color: #f3f4f6 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* src/styles/globals.css */
+@keyframes blob {
+    0%, 100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+
+    50% {
+        transform: translate(30px, -20px) scale(1.05);
+    }
+}
+
+/* If you need an animation-delay helper: */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-blob {
+    animation: blob 15s infinite ease-in-out;
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0;
+}

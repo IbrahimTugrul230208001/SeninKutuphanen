@@ -7,6 +7,7 @@
         private string _verificationCode;
         private string _email;
         private string _password;
+        private int _userId;
         public string ProfilePicture
         {
             get => _profilePicture;
@@ -33,6 +34,11 @@
         {
             get => _password;
             set => _password = value;
+        }
+        public int UserId
+        {
+            get => _userId;
+            set => _userId = value;
         }
     }
 

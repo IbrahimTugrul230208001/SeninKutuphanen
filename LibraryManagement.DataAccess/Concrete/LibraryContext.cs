@@ -14,8 +14,22 @@ namespace LibraryManagement.DataAccess.Concrete
         {
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=ibrahim06;Database=LibraryManagement;");
         }
-        public DbSet<Library> Libraries { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserBook>()
+                .HasIndex(ub => new { ub.UserAccountId, ub.BookId })
+                .IsUnique();
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public DbSet<Book> Books { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
-        public DbSet<AudioLibrary> AudioLibraries { get; set; }
+        public DbSet<UserBook> UserBooks { get; set; }
+        public DbSet<UserFavoriteAuthor> FavoriteAuthors { get; set; }
+        public DbSet<UserFavoriteGenre> FavoriteGenres { get; set; }
+        public DbSet<UserFavoriteBook> FavoriteBooks { get; set; }
     }
 }
+

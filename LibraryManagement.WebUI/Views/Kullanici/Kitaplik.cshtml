@@ -17,12 +17,13 @@
     @{
         string userName = ViewData["UserName"].ToString();
         string userProfilePicture = ViewData["UserProfilePicture"].ToString();
+        int userId = (int)ViewData["UserId"];
     }
-    <nav class="bg-gray-900 text-white px-6 py-3 top-0 sticky z-50">
+    <nav class="sticky top-0 z-50 bg-gray-900 px-6 py-3 text-white">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
             <!-- Logo -->
-            <div class="space-x-3 flex items-center">
-                <img src="/img/logo.png" class="w-12 h-12 rounded-full">
+            <div class="flex items-center space-x-3">
+                <img src="/img/logo.png" class="h-12 w-12 rounded-full">
                 <span class="text-lg font-semibold">BenimKitaplığım</span>
             </div>
 
@@ -33,78 +34,78 @@
             </button>
 
             <!-- Profile & Notification -->
-            <div class="space-x-4 flex items-center">
-                <div class="space-x-6 hidden items-center md:flex">
+            <div class="flex items-center space-x-4">
+                <div class="hidden items-center space-x-6 md:flex">
                     <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
                     <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
                     <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
                 </div>
                 <div class="relative">
-                    <span class="text-gray-400 cursor-pointer text-2xl hover:text-white">🔔</span>
-                    <span class="bg-red-500 text-white px-1 absolute -right-[5px] -top-[2px] flex h-[16px] min-w-[16px] items-center justify-center rounded-full font-bold text-[10px]">
+                    <span class="cursor-pointer text-2xl text-gray-400 hover:text-white">🔔</span>
+                    <span class="absolute -right-[5px] -top-[2px] flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-red-500 px-1 font-bold text-white text-[10px]">
                         3
                     </span>
                 </div>
-                <a href="/Kullanici/Profil"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
+                <a href="/Kullanici/Profil"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="h-12 w-12 rounded-full"></a>
             </div>
         </div>
 
         <!-- Mobile Dropdown Menu -->
-        <div id="mobile-menu" class="space-y-2 bg-gray-800 py-3 px-6 flex hidden flex-col md:hidden">
+        <div id="mobile-menu" class="flex hidden flex-col space-y-2 bg-gray-800 px-6 py-3 md:hidden">
             <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
             <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
         </div>
     </nav>
 
 
-    <div class="p-6 mx-auto max-w-6xl">
+    <div class="mx-auto max-w-6xl p-6">
         <h2 class="mb-6 text-center text-2xl font-semibold">Kitaplık</h2>
 
         <div class="mb-6 flex justify-center">
-            <div class="w-32 h-32 relative">
+            <div class="relative h-32 w-32">
                 <svg class="h-full w-full" viewBox="0 0 100 100">
                     <circle class="text-gray-300" stroke-width="10" cx="50" cy="50" r="40" fill="none" stroke="currentColor"></circle>
                     <circle id="progress-circle" class="text-blue-500" stroke-width="10" cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
                 </svg>
-                <span id="progressValue" class="inset-0 absolute flex items-center justify-center text-lg font-bold">0%</span>
+                <span id="progressValue" class="absolute inset-0 flex items-center justify-center text-lg font-bold">0%</span>
             </div>
-            <div class="mt-10 ml-10">
-                <div class="gap-4 mt-4 flex flex-wrap">
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-blue-500 w-4 h-4 rounded-full"></div>
+            <div class="ml-10 mt-10">
+                <div class="mt-4 flex flex-wrap gap-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="h-4 w-4 rounded-full bg-blue-500"></div>
                         <span class="text-sm">Okuyor</span>
                     </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-green-500 w-4 h-4 rounded-full"></div>
+                    <div class="flex items-center space-x-2">
+                        <div class="h-4 w-4 rounded-full bg-green-500"></div>
                         <span class="text-sm">Okumuyor</span>
                     </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-yellow-500 w-4 h-4 rounded-full"></div>
+                    <div class="flex items-center space-x-2">
+                        <div class="h-4 w-4 rounded-full bg-yellow-500"></div>
                         <span class="text-sm">Bitirdi</span>
                     </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-red-500 w-4 h-4 rounded-full"></div>
+                    <div class="flex items-center space-x-2">
+                        <div class="h-4 w-4 rounded-full bg-red-500"></div>
                         <span class="text-sm">Bıraktı</span>
                     </div>
-                    <div class="space-x-2 flex items-center">
-                        <div class="bg-purple-500 w-4 h-4 rounded-full"></div>
+                    <div class="flex items-center space-x-2">
+                        <div class="h-4 w-4 rounded-full bg-purple-500"></div>
                         <span class="text-sm">Planlıyor</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-6 gap-6 grid grid-cols-1 md:grid-cols-1">
-            <div class="p-4 bg-white rounded-lg shadow">
+        <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-1">
+            <div class="rounded-lg bg-white p-4 shadow">
                 <h3 class="mb-3 text-lg font-semibold">Kitap Ara 🔍</h3>
-                <input type="text" placeholder="Kitap İsmi" class="p-2 mb-2 w-full rounded border">
+                <input type="text" placeholder="Kitap İsmi" class="mb-2 w-full rounded border p-2">
             </div>
         </div>
-        <div class="bg-white mt-10 max-h-[450px] overflow-x-auto rounded-lg shadow-md">
-            <table class="border-gray-600 min-w-full border text-left text-sm">
+        <div class="mt-10 max-h-[450px] overflow-x-auto rounded-lg bg-white shadow-md">
+            <table class="min-w-full border border-gray-600 text-left text-sm">
                 <thead class="bg-gray-700 text-white">
                     <tr>
-                        <th class="px-4 py-2 border-gray-600 border">ID</th>
+                        <th class="border border-gray-600 px-4 py-2">ID</th>
                             <th class="px-4 py-2"></th>
                             <th class="px-4 py-2">İsim</th>
                             <th class="px-4 py-2">Yazar</th>
@@ -114,32 +115,41 @@
                             <th class="px-4 py-2">Durum</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody" class="border-gray-300 divide-y border">
+                <tbody id="tableBody" class="divide-y border border-gray-300">
                     @{
-                        LibraryManager _libraryManager = new(new EfLibraryRepository());
                         using (var context = new LibraryContext())
                         {
-                            var libraries = context.Libraries.Where(l => l.UserName == userName).
-                            Select(l => new Library
+                            var userBookIds = context.UserBooks
+                            .Where(ub => ub.UserAccountId == userId)
+                            .Select(ub => ub.BookId)
+                            .ToList();
+
+                            var libraries = context.Books
+                            .Where(b => userBookIds.Contains(b.Id))
+                            .Select(b => new Book
                 {
-                    Id = l.Id,
-                    Name = l.Name,
-                    Author = l.Author,
-                    Category = l.Category,
-                    CompletedPages = l.CompletedPages,
-                    TotalOfPages = l.TotalOfPages,
-                    Status = l.Status,
-                });
-                            foreach (var l in libraries)
+                    Title = b.Title,
+                    Author = b.Author,
+                    Genre = b.Genre,
+                })
+                            .ToList();
+
+                            if (libraries.Any())
+                            {
+                                foreach (var library in libraries)
+                                {
+                                    <tr>
+                                        <td class="border-b border-gray-300 px-4 py-2"></td>
+                                        <td class="border-b border-gray-300 px-4 py-2">@library.Title</td>
+                                        <td class="border-b border-gray-300 px-4 py-2">@library.Author</td>
+                                        <td class="border-b border-gray-300 px-4 py-2">@library.Genre</td>
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td>@l.Id</td>
-                                    <td>@l.Name</td>
-                                    <td>@l.Author</td>
-                                    <td>@l.Category</td>
-                                    <td>@l.CompletedPages</td>
-                                    <td>@l.TotalOfPages</td>
-                                    <td>@l.Status</td>
+                                    <td colspan="6" class="bg-gray-100 px-4 py-2 text-center text-gray-500">Veri bulunamadı.</td>
                                 </tr>
                             }
                         }

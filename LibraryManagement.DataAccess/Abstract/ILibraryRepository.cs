@@ -9,22 +9,16 @@ namespace LibraryManagement.DataAccess.Abstract
 {
     public interface ILibraryRepository
     {
-        Task AddToLibraryAsync(Library library);
-        Task UpdateLibraryAsync(int ID, string userName, string bookName, string author, string category, int completedPages, int totalOfPages, string status);
-        Task DeleteFromLibraryAsync(Library library);
-        Task AddToShowcaseAsync(string userName, int ID);
-        Task RemoveBookShowcaseAsync(string userName, string bookName);
-        Task<int> GetTotalOfReadPagesAsync(string userName);
-        Task<int> BookStatusCounterAsync(string status, string userName);
-        Task<int> CountCompletedBooksAsync(string userName);
-        Task<int> CountGenresOfBooksAsync(string genre, string userName);
-        Task<int> GetTotalOfBooksAsync(string userName);
-        Task<int> CountFavoritesAsync(string userName);
-        Task<string> MostExistingCategoryInLibraryAsync(string userName);
-        Task<bool> CheckImageStatusAsync(string userName, string bookName);
-        Task<string> BookImageAsync(string userName, string bookName);
-        Task<List<Library>> ListBookShowcaseAsync(string userName);
-        Task<int> BookIDAsync(string userName, string bookName);
-        Task<string> BookNameAsync(int id);
+        Task AddToLibraryAsync(int userId, int bookId, string status);
+        Task DeleteFromLibraryAsync(int bookId);
+        Task AddToShowcaseAsync(int userId);
+        Task RemoveBookShowcaseAsync(int bookId, int userId);
+        Task<int> GetTotalOfReadPagesAsync(int id);
+        Task<int> BookStatusCounterAsync(string status, int userId);
+        Task<int> CountCompletedBooksAsync(int userId);
+        Task<int> GetTotalOfBooksAsync(int userId);
+        Task<int> CountFavoritesAsync(int userId);
+        Task<List<Book>> ListBookShowcaseAsync(int userId);
+        Task<Book> ReturnBook (int bookId);
     }
 }

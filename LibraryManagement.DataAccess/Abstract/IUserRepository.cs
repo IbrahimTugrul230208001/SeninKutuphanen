@@ -23,6 +23,7 @@ namespace LibraryManagement.DataAccess.Abstract
             Task<string> UserNameAsync(string email);
             Task<bool> ValidateUserNameAsync(string userName);
             Task<bool> ValidateEmailAsync(string email);
+
     }
 }
 

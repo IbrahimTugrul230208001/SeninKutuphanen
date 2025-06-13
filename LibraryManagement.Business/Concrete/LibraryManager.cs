@@ -15,91 +15,60 @@ namespace LibraryManagement.Business.Concrete
         {
             _libraryRepository = libraryDal;
         }
-     
-        public async Task AddToShowcaseAsync(string userName, int ID)
+
+        public async Task AddToLibraryAsync(int userId, int bookId, string status)
         {
-            await _libraryRepository.AddToShowcaseAsync(userName, ID);
+            await _libraryRepository.AddToLibraryAsync(userId, bookId, status);
         }
 
-        public async Task AddToLibraryAsync(Library library)
+        public async Task AddToShowcaseAsync(int userId)
         {
-            await _libraryRepository.AddToLibraryAsync(library);
+             await _libraryRepository.AddToShowcaseAsync(userId);
         }
 
-        public async Task<int> BookStatusCounterAsync(string status,string userName)
+        public async Task<int> BookStatusCounterAsync(string status, int userId)
         {
-            return await _libraryRepository.BookStatusCounterAsync(status,userName);
-        }
-        public async Task<int> CountCompletedBooksAsync(string userName)
-        {
-            return await _libraryRepository.CountCompletedBooksAsync(userName);
+            return await _libraryRepository.BookStatusCounterAsync(status, userId);
         }
 
-        public async Task<int> CountGenresOfBooksAsync(string genre, string userName)
+        public async Task<int> CountCompletedBooksAsync(int userId)
         {
-            return await _libraryRepository.CountGenresOfBooksAsync(genre, userName);
+            return await _libraryRepository.CountCompletedBooksAsync(userId);
         }
 
-        public async Task DeleteFromLibraryAsync(Library library)
+        public async Task<int> CountFavoritesAsync(int userId)
         {
-            await _libraryRepository.DeleteFromLibraryAsync(library);
+            return await _libraryRepository.CountFavoritesAsync(userId);
         }
 
-        public async Task<int> GetTotalOfBooksAsync(string userName)
+        public async Task DeleteFromLibraryAsync(int bookId)
         {
-            return await _libraryRepository.GetTotalOfBooksAsync(userName);
+            await _libraryRepository.DeleteFromLibraryAsync(bookId);
         }
 
-        public async Task<int> GetTotalOfReadPagesAsync(string userName)
+        public async Task<int> GetTotalOfBooksAsync(int userId)
         {
-            return await _libraryRepository.GetTotalOfReadPagesAsync(userName);
+            return await _libraryRepository.GetTotalOfBooksAsync(userId);
         }
 
-
-        public async Task<string> MostExistingCategoryInLibraryAsync(string userName)
+        public async Task<int> GetTotalOfReadPagesAsync(int id)
         {
-            return await _libraryRepository.MostExistingCategoryInLibraryAsync(userName);
-        }
-        
-        public async Task<int> CountFavoritesAsync(string userName)
-        {
-            return await _libraryRepository.CountFavoritesAsync(userName);
+            return await _libraryRepository.GetTotalOfReadPagesAsync(id);
         }
 
-
-        public async Task<List<Library>> ListBookShowcaseAsync(string userName)
+        public async Task<List<Book>> ListBookShowcaseAsync(int userId)
         {
-            return await _libraryRepository.ListBookShowcaseAsync(userName);
+            return await _libraryRepository.ListBookShowcaseAsync(userId);
         }
 
-        public async Task<bool> CheckImageStatusAsync(string userName, string bookName)
+        public async Task RemoveBookShowcaseAsync(int bookId, int userId)
         {
-            return await _libraryRepository.CheckImageStatusAsync(userName, bookName);
+            await _libraryRepository.RemoveBookShowcaseAsync(bookId, userId);
         }
 
-        public async Task<string> BookImageAsync(string userName, string bookName)
+        public async Task<Book> ReturnBook(int bookId)
         {
-            return await _libraryRepository.BookImageAsync(userName, bookName);
+            return await _libraryRepository.ReturnBook(bookId);
         }
-
-        public async Task UpdateLibraryAsync(int ID, string userName, string bookName, string author, string category, int completedPages, int totalOfPages, string status)
-        {
-            await _libraryRepository.UpdateLibraryAsync(ID, userName, bookName, author, category, completedPages, totalOfPages, status);
-        }
-
-        public async Task RemoveBookShowcaseAsync(string userName, string bookName)
-        {
-           await _libraryRepository .RemoveBookShowcaseAsync(userName, bookName);
-        }
-
-        public async Task<int> BookIDAsync(string userName, string bookName)
-        {
-            return await _libraryRepository.BookIDAsync(userName,bookName);
-        }
-        public async Task<string> BookNameAsync(int id)
-        {
-            return await _libraryRepository.BookNameAsync(id);
-        }
-     
     }
 }
