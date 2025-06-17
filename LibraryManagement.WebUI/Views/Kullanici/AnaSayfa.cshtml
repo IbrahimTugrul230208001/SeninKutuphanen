@@ -1,1 +1,63 @@
-﻿
+﻿@using LibraryManagement.Business.Concrete
+@using LibraryManagement.DataAccess.Concrete
+@using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
+@using LibraryManagement.Entities.Concrete
+@using Microsoft.Data.SqlClient
+@using System.Data
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeninKütüphanen</title>
+    <link rel="icon" href="/img/logo.png" type="jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-800">
+@{
+    LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
+    string userName = ViewData["UserName"].ToString();
+    string userProfilePicture = ViewData["UserProfilePicture"].ToString();
+    int userId = (int)ViewData["UserId"];
+}
+    <nav class="sticky top-0 z-50 bg-gray-900 px-6 py-3 text-white">
+        <div class="mx-auto flex max-w-7xl items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <img src="/img/logo.png" class="h-12 w-12 rounded-full">
+                <span class="text-lg font-semibold">BenimKitaplığım</span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="text-white focus:outline-none md:hidden">
+                ☰ <!-- Hamburger Icon -->
+            </button>
+
+            <!-- Profile & Notification -->
+            <div class="flex items-center space-x-4">
+                <div class="hidden items-center space-x-6 md:flex">
+                    <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
+                    <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
+                    <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
+                </div>
+                <div class="relative">
+                    <span class="cursor-pointer text-2xl text-gray-400 hover:text-white">🔔</span>
+                    <span class="absolute -right-[5px] -top-[2px] flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-red-500 px-1 font-bold text-white text-[10px]">
+                        3
+                    </span>
+                </div>
+                <a href="/Kullanici/Profil"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="h-12 w-12 rounded-full"></a>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="flex hidden flex-col space-y-2 bg-gray-800 px-6 py-3 md:hidden">
+            <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
+            <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
+        </div>
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/MainPage.js"></script>
+</body>
+</html>
