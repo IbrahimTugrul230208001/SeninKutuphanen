@@ -14,13 +14,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/css/ChatBot.css">
 </head>
-<body class="bg-gray-200">
+<body class="bg-gray-800">
     @{
         LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
         string userName = ViewData["UserName"].ToString();
         string userProfilePicture = ViewData["UserProfilePicture"].ToString();
     }
-    <nav class="bg-gray-900 text-white px-6 py-3 top-0 sticky z-50">
+    <nav class="bg-gray-900 text-white px-6 py-3 top-0 sticky z-50 shadow-lg ring-1 ring-white/5 backdrop-blur-md">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
             <!-- Logo -->
             <div class="space-x-3 flex items-center">
@@ -69,7 +69,7 @@
     <!-- Chat UI Section (Place below the navbar) -->
     <div class="p-6 mx-auto max-w-7xl">
         <!-- Conversation Container -->
-        <div id="chat-box" class="bg-white p-4 space-y-4 h-[calc(100vh-200px)] overflow-y-auto rounded-lg shadow" style="max-height: calc(100vh - 200px);">
+        <div id="chat-box" class="bg-gray-700 p-4 space-y-4 h-[calc(100vh-200px)] overflow-y-auto rounded-lg shadow-lg ring-1 ring-white/5 backdrop-blur-md" style="max-height: calc(100vh - 200px);">
             <!-- Bot Message -->
             <div id="connection-id" class="text-gray-500 mt-4 text-sm">
                 <p>Connection ID: <span id="connectionId"></span></p>
@@ -78,11 +78,11 @@
 
         <div class="mt-4 relative">
             <input id="user-input" type="text" placeholder="Mesajını yaz..."
-                   class="border-gray-300 p-3 pr-12 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
+                   class="border-gray-300 bg-gray-700 p-3 pr-12 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
                    onkeydown="checkEnter(event)">
-            <button onclick="sendPrompt()" class="right-2 -translate-y-1/2 bg-blue-600 text-white w-10 h-10 absolute top-1/2 flex transform items-center justify-center rounded-full hover:bg-blue-700 focus:outline-none">
+            <button onclick="sendPrompt()" class="right-2 -translate-y-1/2 bg-gray-100 text-white w-10 h-10 absolute top-1/2 flex transform items-center justify-center rounded-full hover:bg-gray-300 focus:outline-none">
                 <!-- Up arrow icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="black" viewBox="0 0 24 24" stroke="black">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
                 </svg>
             </button>

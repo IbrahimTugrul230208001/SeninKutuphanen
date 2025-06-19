@@ -219,7 +219,7 @@ namespace learningASP.NET_CORE.Controllers
             {
                 if (await _userManager.ValidateUserAsync(email, password) == true)
                 {
-
+                    _userService.UserId = await _userManager.UserIDAsync(email);
                     _userService.UserName = await _userManager.UserNameAsync(email);
                     _userService.ProfilePicture = await _userManager.ProfilePictureImageAsync(_userService.UserName);
                     return Json(new { success = true, redirectUrl = Url.Action("AnaSayfa", "Kullanici") });

@@ -14,7 +14,7 @@ var configuration = builder.Configuration;
 
 // Retrieve the API key from appsettings.json
 var key = configuration["SMTP:key"];
-var apiKey = configuration["Gemini-2.5:Apikey"];
+var apiKey = configuration["gemini-2.0:Apikey"];
 var modelId = configuration["Gemini-2.5:ModelId"];
 
 var apiKey_1 = configuration["Qwen:ApiKey"];

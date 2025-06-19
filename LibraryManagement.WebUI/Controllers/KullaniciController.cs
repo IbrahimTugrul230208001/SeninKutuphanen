@@ -50,6 +50,13 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
+        public IActionResult AnaSayfa()
+        {
+            ViewData["UserId"] = _userService.UserId;
+            ViewData["UserName"] = _userService.UserName;
+            ViewData["UserProfilePicture"] = _userService.ProfilePicture;
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] BookData b)
         {

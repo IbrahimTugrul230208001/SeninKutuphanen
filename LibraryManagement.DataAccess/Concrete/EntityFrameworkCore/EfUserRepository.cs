@@ -116,11 +116,11 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
-        public async Task<int> UserIDAsync(string userName)
+        public async Task<int> UserIDAsync(string email)
         {
             using (var context = new LibraryContext())
             {
-                var user = await context.UserAccounts.FirstOrDefaultAsync(u => u.UserName == userName) ?? throw new ArgumentException("Null here");
+                var user = await context.UserAccounts.FirstOrDefaultAsync(u => u.Email == email) ?? throw new ArgumentException("Null here");
                 return user.Id;
             }
         }
