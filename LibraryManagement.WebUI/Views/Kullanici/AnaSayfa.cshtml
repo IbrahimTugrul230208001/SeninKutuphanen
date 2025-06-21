@@ -1,6 +1,28 @@
+@using LibraryManagement.Business.Concrete
 @using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 @using LibraryManagement.DataAccess.Concrete
 @using LibraryManagement.Entities.Concrete
+@{
+    LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
+    using var context = new LibraryContext();
+    int pageSize = 30;
+    int page = 1;
+    var urlSegments = Context.Request.Path.Value.Split('/', StringSplitOptions.RemoveEmptyEntries);
+    if (urlSegments.Length > 2 && int.TryParse(urlSegments[2], out int parsedPage))
+    {
+        page = parsedPage;
+    }
+    var totalBooks = context.Books.Count();
+    var totalPages = (int)Math.Ceiling((double)totalBooks / pageSize);
+    var books = context.Books
+        .OrderBy(b => b.Id)
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToList();
+    string userName = ViewData["UserName"].ToString();
+    string userProfilePicture = ViewData["UserProfilePicture"].ToString();
+    int userId = (int)ViewData["UserId"];
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,14 +33,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-gray-100">
-@{
-    LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
-    using var context = new LibraryContext();
-    var books = context.Books.ToList();
-    string userName = ViewData["UserName"].ToString();
-    string userProfilePicture = ViewData["UserProfilePicture"].ToString();
-    int userId = (int)ViewData["UserId"];
-}
     <nav class="sticky top-0 z-50 bg-gray-800 px-6 py-3 text-white shadow-lg ring-1 ring-white/5 backdrop-blur-md">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -44,26 +58,56 @@
             <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
         </div>
     </nav>
-
-    <div class="mx-auto mt-8 max-w-3xl px-4">
-        <div class="flex w-full overflow-hidden rounded-lg bg-gray-800">
-            <input id="searchInput" type="text" class="w-full bg-gray-800 p-3 text-sm text-gray-200 focus:outline-none" placeholder="Ara...">
-            <select id="searchFilter" class="bg-gray-800 p-3 text-sm text-gray-200 border-l border-gray-700">
-                <option value="title">Kitap</option>
-                <option value="author">Yazar</option>
-            </select>
-        </div>
+<div class="mx-auto mt-8 max-w-5xl px-4">
+    <div class="flex w-full overflow-hidden rounded-2xl bg-gray-800 shadow-lg">
+        <input id="searchInput" type="text" class="w-full bg-gray-800 p-5 text-lg text-gray-200 focus:outline-none rounded-l-2xl placeholder-gray-400" placeholder="Ara...">
+            <div class="relative group w-max">
+                <select id="searchFilter"
+                        class="appearance-none bg-gray-800 p-5 pr-12 text-lg text-gray-200 border-l border-gray-700 rounded-r-2xl
+           focus:outline-none hover:bg-gray-700 hover:text-white transition-colors duration-200">
+                    <option value="title">Kitap</option>
+                    <option value="author">Yazar</option>
+                </select>
+                <!-- Chevron Icon (SVG) -->
+                <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
+                    <svg class="text-gray-400 group-hover:text-gray-500 transition-colors duration-200"
+                         width="20"
+                         height="20"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         viewBox="0 0 24 24">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </span>
+            </div>
     </div>
+</div>
 
-    <div id="bookList" class="mx-auto mt-6 grid max-w-3xl gap-4 px-4">
+    <div id="bookList" class="mx-auto mt-6 max-w-5xl w-full grid gap-4 px-4">
     @foreach (var book in books)
     {
         <div class="flex items-center space-x-4 rounded-lg bg-gray-800 p-3" data-id="@book.Id" data-title="@book.Title" data-author="@book.Author">
             <img src="@(book.ImageLink ?? "/img/bookcover.jpg")" class="h-16 w-12 object-cover rounded" />
-            <span class="flex-grow">@book.Title</span>
-            <button class="add-btn h-8 w-8 rounded-full bg-blue-600 text-white">+</button>
+            <div class="flex flex-col flex-grow truncate">
+                <span class="truncate">@book.Title</span>
+                <span class="text-xs text-gray-400 mt-1 truncate">@book.Author</span>
+            </div>
+            <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full bg-blue-600 text-white text-2xl hover:bg-blue-700">+</button>
         </div>
     }
+    </div>
+
+    <div class="mx-auto max-w-5xl w-full flex justify-center mt-8">
+        <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+            @for (int i = 1; i <= totalPages && i <= 20; i++)
+            {
+                <a href="/Kullanici/AnaSayfa/@i"
+                   class="px-4 py-2 border border-gray-700 bg-gray-800 text-gray-300 hover:bg-blue-600 hover:text-white @(i == page ? "font-bold bg-blue-700 text-white" : "")">
+                    @i
+                </a>
+            }
+        </nav>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
