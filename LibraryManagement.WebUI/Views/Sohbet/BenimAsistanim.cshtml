@@ -14,7 +14,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/css/ChatBot.css">
 </head>
-<body class="bg-gray-800">
+<body class="bg-gray-900 text-gray-100">
     @{
         LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
         string userName = ViewData["UserName"].ToString();
@@ -80,7 +80,7 @@
             <input id="user-input" type="text" placeholder="Mesajını yaz..."
                    class="border-gray-300 bg-gray-700 p-3 pr-12 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
                    onkeydown="checkEnter(event)">
-            <button onclick="sendPrompt()" class="right-2 -translate-y-1/2 bg-gray-100 text-white w-10 h-10 absolute top-1/2 flex transform items-center justify-center rounded-full hover:bg-gray-300 focus:outline-none">
+            <button onclick="sendPrompt()" class="right-2 -translate-y-1/2 bg-gray-800 text-white w-10 h-10 absolute top-1/2 flex transform items-center justify-center rounded-full hover:bg-gray-700 focus:outline-none">
                 <!-- Up arrow icon -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="black" viewBox="0 0 24 24" stroke="black">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />

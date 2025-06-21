@@ -216,7 +216,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-  <body class="bg-gray-200">
+  <body class="bg-gray-900 text-gray-100">
     @{
         LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
         UserManager _userManager = new UserManager(new EfUserRepository());
@@ -264,9 +264,9 @@
     
     <div class="m-5 mt-10 flex flex-col justify-between gap-6 md:flex-row">
         <!-- Profile Section -->
-        <div class="w-full rounded-lg bg-white p-6 shadow-lg md:w-1/3">
-            <h3 class="my-6 text-center text-xl font-semibold text-gray-800">@userName</h3>
-            <img class="mx-auto h-48 w-48 rounded-full border-4 border-gray-300" src="@((userProfilePicture != null) ? userProfilePicture : "/img/profilepicture.jpeg")" alt="Profile Picture">
+        <div class="w-full rounded-lg bg-gray-800 p-6 shadow-lg md:w-1/3 text-gray-100">
+            <h3 class="my-6 text-center text-xl font-semibold text-gray-100">@userName</h3>
+            <img class="mx-auto h-48 w-48 rounded-full border-4 border-gray-700" src="@((userProfilePicture != null) ? userProfilePicture : "/img/profilepicture.jpeg")" alt="Profile Picture">
 
             <!-- Buttons container -->
             <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -297,53 +297,53 @@
             </div>
 
             <div class="mt-6">
-                <h3 class="font-medium text-gray-600">Bulunduğu yer: @await _userManager.ResidementPlaceCityAsync(userName)/@await _userManager.ResidementPlaceCountryAsync(userName)</h3>
-                <h3 class="font-medium text-gray-600">Toplam Kitap sayısı: @await _libraryManager.GetTotalOfBooksAsync(userId)</h3>
+                <h3 class="font-medium text-gray-300">Bulunduğu yer: @await _userManager.ResidementPlaceCityAsync(userName)/@await _userManager.ResidementPlaceCountryAsync(userName)</h3>
+                <h3 class="font-medium text-gray-300">Toplam Kitap sayısı: @await _libraryManager.GetTotalOfBooksAsync(userId)</h3>
             </div>
         </div>
 
 
         <!-- Statistics Section -->
-        <div class="w-full rounded-lg bg-white p-6 shadow-lg md:w-2/3">
+        <div class="w-full rounded-lg bg-gray-800 p-6 shadow-lg md:w-2/3 text-gray-100">
             <h2 class="mb-6 text-center text-xl font-bold underline">İstatistikler</h2>
 
             <!-- Symmetric Status List -->
             <div class="mb-6 grid grid-cols-2 gap-6 text-lg">
                 <div class="flex flex-col items-center">
-                    <h3 class="font-semibold text-gray-800">Planlıyor</h3>
+                    <h3 class="font-semibold text-gray-100">Planlıyor</h3>
                     <span class="text-3xl text-blue-500">@await _libraryManager.BookStatusCounterAsync("Planlıyor", userId)</span>
                 </div>
                 <div class="flex flex-col items-center">
-                    <h3 class="font-semibold text-gray-800">Okuyor</h3>
+                    <h3 class="font-semibold text-gray-100">Okuyor</h3>
                     <span class="text-3xl text-green-500">@await _libraryManager.BookStatusCounterAsync("Okuyor", userId)</span>
                 </div>
             </div>
             <div class="mb-6 grid grid-cols-2 gap-6 text-lg">
                 <div class="flex flex-col items-center">
-                    <h3 class="font-semibold text-gray-800">Okumuyor</h3>
+                    <h3 class="font-semibold text-gray-100">Okumuyor</h3>
                     <span class="text-3xl text-yellow-500">@await _libraryManager.BookStatusCounterAsync("Okumuyor", userId)</span>
                 </div>
                 <div class="flex flex-col items-center">
-                    <h3 class="font-semibold text-gray-800">Bıraktı</h3>
+                    <h3 class="font-semibold text-gray-100">Bıraktı</h3>
                     <span class="text-3xl text-red-500">@await _libraryManager.BookStatusCounterAsync("Bıraktı", userId)</span>
                 </div>
             </div>
             <a href="/Kullanici/Kitaplik">
                 <button class="w-full rounded-full bg-blue-500 p-2 text-white hover:bg-blue-400">Kütüphaneye Git</button>
             </a>
-            <div class="mt-6 max-h-80 overflow-y-auto border border-gray-300">
-                <table class="min-w-full table-auto border border-gray-300">
-                    <thead class="top-[-2px] sticky border-gray-300 bg-gray-200">
+            <div class="mt-6 max-h-80 overflow-y-auto border border-gray-700">
+                <table class="min-w-full table-auto border border-gray-700">
+                    <thead class="top-[-2px] sticky border-gray-700 bg-gray-700">
                         <tr>
-                            <th class="border-b border-gray-300 px-4 py-3 text-left"></th>
-                            <th class="border-b border-gray-300 px-4 py-3 text-left">İsim</th>
-                            <th class="border-b border-gray-300 px-4 py-3 text-left">Yazar</th>
-                            <th class="border-b border-gray-300 px-4 py-3 text-left">Kategori</th>
-                            <th class="border-b border-gray-300 px-4 py-3 text-left">Tamamlanan Sayfalar</th>
-                            <th class="border-b border-gray-300 px-4 py-3 text-left">Toplam Sayfa</th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left"></th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left">İsim</th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left">Yazar</th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left">Kategori</th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left">Tamamlanan Sayfalar</th>
+                            <th class="border-b border-gray-700 px-4 py-3 text-left">Toplam Sayfa</th>
                         </tr>
                     </thead>
-                    <tbody class="h-48 overflow-y-auto bg-gray-100">
+                    <tbody class="h-48 overflow-y-auto bg-gray-900">
                         @{
                             using (var context = new LibraryContext())
                             {
@@ -367,17 +367,17 @@
                                     foreach (var library in libraries)
                                     {
                                         <tr>
-                                            <td class="border-b border-gray-300 px-4 py-2"></td>
-                                            <td class="border-b border-gray-300 px-4 py-2">@library.Title</td>
-                                            <td class="border-b border-gray-300 px-4 py-2">@library.Author</td>
-                                            <td class="border-b border-gray-300 px-4 py-2">@library.Genre</td>
+                                            <td class="border-b border-gray-700 px-4 py-2"></td>
+                                            <td class="border-b border-gray-700 px-4 py-2">@library.Title</td>
+                                            <td class="border-b border-gray-700 px-4 py-2">@library.Author</td>
+                                            <td class="border-b border-gray-700 px-4 py-2">@library.Genre</td>
                                         </tr>
                                     }
                                 }
                                 else
                                 {
                                     <tr>
-                                        <td colspan="6" class="bg-gray-100 px-4 py-2 text-center text-gray-500">Veri bulunamadı.</td>
+                                        <td colspan="6" class="bg-gray-800 px-4 py-2 text-center text-gray-500">Veri bulunamadı.</td>
                                     </tr>
                                 }
                             }
@@ -390,8 +390,8 @@
     </div>
 
 
-    <div class="m-5 mt-8 rounded-lg bg-white p-6 shadow-lg">
-        <h2 class="mb-6 text-center text-2xl font-bold text-gray-800">Kullanıcı Vitrini</h2>
+    <div class="m-5 mt-8 rounded-lg bg-gray-800 p-6 shadow-lg">
+        <h2 class="mb-6 text-center text-2xl font-bold text-gray-100">Kullanıcı Vitrini</h2>
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             <!-- Filled slot -->
             <div class="cursor-pointer overflow-hidden rounded-xl shadow-md transition hover:scale-105">

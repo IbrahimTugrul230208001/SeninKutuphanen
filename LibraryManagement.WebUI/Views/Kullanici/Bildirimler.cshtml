@@ -13,7 +13,7 @@
     <link rel="icon" href="/img/logo.png" type="jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-200">
+<body class="bg-gray-900 text-gray-100">
     @{
         LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
         string userName = ViewData["UserName"].ToString();
@@ -65,20 +65,20 @@
             mobileMenu.classList.toggle('hidden');
         });
     </script>
-    <div class="p-6 mt-6 bg-white mx-auto max-w-4xl rounded-lg shadow">
+    <div class="p-6 mt-6 bg-gray-800 mx-auto max-w-4xl rounded-lg shadow">
         <h2 class="mb-4 text-2xl font-semibold">Bildirimler</h2>
         <div class="space-y-4">
-            <div class="p-4 bg-gray-100 rounded shadow">
-                <p class="text-gray-700 font-medium">📚 Yeni bir kitap önerisi var: "Sapiens"</p>
-                <span class="text-gray-500 text-sm">2 saat önce</span>
+            <div class="p-4 bg-gray-800 rounded shadow">
+                <p class="text-gray-200 font-medium">📚 Yeni bir kitap önerisi var: "Sapiens"</p>
+                <span class="text-gray-400 text-sm">2 saat önce</span>
             </div>
-            <div class="p-4 bg-gray-100 rounded shadow">
-                <p class="text-gray-700 font-medium">🎯 Okuma hedefinizin %50’sine ulaştınız!</p>
-                <span class="text-gray-500 text-sm">1 gün önce</span>
+            <div class="p-4 bg-gray-800 rounded shadow">
+                <p class="text-gray-200 font-medium">🎯 Okuma hedefinizin %50’sine ulaştınız!</p>
+                <span class="text-gray-400 text-sm">1 gün önce</span>
             </div>
-            <div class="p-4 bg-gray-100 rounded shadow">
-                <p class="text-gray-700 font-medium">👤 Bir arkadaşınız yeni bir kitap ekledi!</p>
-                <span class="text-gray-500 text-sm">3 gün önce</span>
+            <div class="p-4 bg-gray-800 rounded shadow">
+                <p class="text-gray-200 font-medium">👤 Bir arkadaşınız yeni bir kitap ekledi!</p>
+                <span class="text-gray-400 text-sm">3 gün önce</span>
             </div>
         </div>
     </div>
