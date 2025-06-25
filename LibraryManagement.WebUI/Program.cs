@@ -19,8 +19,12 @@ var key = configuration["SMTP:key"];
 var apiKey = configuration["OpenRouter:key"];
 var modelId = configuration["OpenRouter:modelId"];
 
+// Register the new AI abstractions
+builder.Services.AddAI();
+
 builder.Services
     .AddKernel()
+    // Configure OpenRouter as an OpenAI-compatible chat completion provider
     .AddOpenAIChatCompletion(
         modelId: modelId,
         openAIClient: new OpenAIClient(
