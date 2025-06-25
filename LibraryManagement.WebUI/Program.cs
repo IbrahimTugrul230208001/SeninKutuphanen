@@ -15,14 +15,24 @@ var configuration = builder.Configuration;
 
 // Retrieve the API key from appsettings.json
 var key = configuration["SMTP:key"];
-var apiKey = configuration["Mistral:key"];
-var modelId = configuration["Mistral:name"];
+
+var apiKey = configuration["OpenRouter:key"];
+var modelId = configuration["OpenRouter:modelId"];
+
+builder.Services
+    .AddKernel()
+    .AddOpenAIChatCompletion(
+        modelId: modelId,
+        openAIClient: new OpenAIClient(
+            credential: new ApiKeyCredential(apiKey),
+            options: new OpenAIClientOptions
+            {
+                Endpoint = new Uri("https://openrouter.ai/api/v1")
+            }
+        )
+    );
 
 
-builder.Services.AddChatClient(new OllamaChatClient(
-    new Uri("http://localhost:11434"), "deepseek-r1:7b") // Replace with your preferred model if needed
-);
-   
 
 builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy => policy.AllowAnyMethod()
