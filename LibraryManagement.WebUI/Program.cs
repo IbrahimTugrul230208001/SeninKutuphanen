@@ -7,6 +7,7 @@ using OpenAI;
 using System.ClientModel;
 using learningASP.NET_CORE.Hubs;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.AI;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,25 +15,14 @@ var configuration = builder.Configuration;
 
 // Retrieve the API key from appsettings.json
 var key = configuration["SMTP:key"];
-var apiKey = configuration["gemini-2.0:Apikey"];
-var modelId = configuration["Gemini-2.5:ModelId"];
+var apiKey = configuration["Mistral:key"];
+var modelId = configuration["Mistral:name"];
 
-var apiKey_1 = configuration["Qwen:ApiKey"];
-var modelId_1 = configuration["Qwen:ModelId"];   
 
-builder.Services
-    .AddKernel()
-    .AddOpenAIChatCompletion(
-        modelId: modelId,
-        openAIClient: new OpenAIClient(
-            credential: new ApiKeyCredential($"{apiKey}"),
-            options: new OpenAIClientOptions
-            {
-                Endpoint = new Uri("https://openrouter.ai/api/v1")
-            }
-        )
-    );
-
+builder.Services.AddChatClient(new OllamaChatClient(
+    new Uri("http://localhost:11434"), "deepseek-r1:7b") // Replace with your preferred model if needed
+);
+   
 
 builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy => policy.AllowAnyMethod()
