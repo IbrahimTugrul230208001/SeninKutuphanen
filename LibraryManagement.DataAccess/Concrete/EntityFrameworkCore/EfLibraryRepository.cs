@@ -30,7 +30,14 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 await context.SaveChangesAsync();
             }
         }
-
+        public async Task<bool> CheckBookAsync(int userId, int bookId)
+        {
+            using (var context = new LibraryContext())
+            {
+                return await context.UserBooks
+                    .AnyAsync(ub => ub.UserAccountId == userId && ub.BookId == bookId);
+            }
+        }
         public async Task<int> BookStatusCounterAsync(string status, int userId)
         {
             using (var context = new LibraryContext())
