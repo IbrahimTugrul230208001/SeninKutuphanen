@@ -24,12 +24,14 @@ namespace learningASP.NET_CORE.Controllers
         }
         public IActionResult Kitaplik()
         {
+            ViewData["UserId"] = _userService.UserId;
             ViewData["UserName"] = _userService.UserName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
         public IActionResult Duzenle()
         {
+            ViewData["UserId"] = _userService.UserId;
             ViewData["UserName"] = _userName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
@@ -40,12 +42,14 @@ namespace learningASP.NET_CORE.Controllers
         }
         public IActionResult Profil()
         {
+            ViewData["UserId"] = _userService.UserId;
             ViewData["UserName"] = _userService.UserName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
         public IActionResult Ayarlar()
         {
+            ViewData["UserId"] = _userService.UserId;
             ViewData["UserName"] = _userService.UserName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();

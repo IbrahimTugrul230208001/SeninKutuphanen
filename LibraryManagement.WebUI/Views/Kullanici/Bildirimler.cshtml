@@ -18,6 +18,7 @@
         LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
         string userName = ViewData["UserName"].ToString();
         string userProfilePicture = ViewData["UserProfilePicture"].ToString();
+        int userId = Convert.ToInt32(ViewData["UserId"]);
     }
     <nav class="bg-gray-800 text-white px-6 py-3 top-0 sticky z-50">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
@@ -46,7 +47,6 @@
                         3
                     </span>
                 </div>
-                <a href="/Kullanici/Profil"><img src="@((userProfilePicture != null) ? userProfilePicture : "~/img/profilepictureSmall.jpeg")" class="w-12 h-12 rounded-full"></a>
             </div>
         </div>
 
