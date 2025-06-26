@@ -5,6 +5,7 @@ using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore;
 using LibraryManagement.Entities.Concrete;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace learningASP.NET_CORE.Controllers
 {
@@ -54,8 +55,11 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
-        public IActionResult AnaSayfa()
+        public async Task<IActionResult> AnaSayfa()
         {
+            var booklist = await _libraryManager.ListBookShowcaseAsync(_userService.UserId);
+            var checkedIds = new HashSet<int>(booklist.Select(b => b.Id));
+            ViewData["CheckedIds"] = checkedIds;
             ViewData["UserId"] = _userService.UserId;
             ViewData["UserName"] = _userService.UserName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;

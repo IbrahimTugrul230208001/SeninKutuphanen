@@ -20,5 +20,6 @@ namespace LibraryManagement.DataAccess.Abstract
         Task<int> CountFavoritesAsync(int userId);
         Task<List<Book>> ListBookShowcaseAsync(int userId);
         Task<Book> ReturnBook (int bookId);
+        Task<bool> CheckBookAsync(int userId, int bookId);
     }
 }

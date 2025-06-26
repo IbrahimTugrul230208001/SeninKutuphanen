@@ -31,6 +31,11 @@ namespace LibraryManagement.Business.Concrete
             return await _libraryRepository.BookStatusCounterAsync(status, userId);
         }
 
+        public Task<bool> CheckBookAsync(int userId, int bookId)
+        {
+            return _libraryRepository.CheckBookAsync(userId, bookId);
+        }
+
         public async Task<int> CountCompletedBooksAsync(int userId)
         {
             return await _libraryRepository.CountCompletedBooksAsync(userId);
@@ -70,5 +75,6 @@ namespace LibraryManagement.Business.Concrete
         {
             return await _libraryRepository.ReturnBook(bookId);
         }
+        
     }
 }

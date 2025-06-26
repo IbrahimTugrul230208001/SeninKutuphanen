@@ -8,6 +8,7 @@ using System.ClientModel;
 using learningASP.NET_CORE.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.AI;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,9 +19,6 @@ var key = configuration["SMTP:key"];
 
 var apiKey = configuration["OpenRouter:key"];
 var modelId = configuration["OpenRouter:modelId"];
-
-// Register the new AI abstractions
-builder.Services.AddAI();
 
 builder.Services
     .AddKernel()

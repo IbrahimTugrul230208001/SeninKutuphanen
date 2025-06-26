@@ -80,22 +80,42 @@
 </div>
 
     <div id="bookList" class="mx-auto mt-6 max-w-5xl w-full grid gap-4 px-4">
-    @foreach (var book in books)
-    {
-        <div class="flex items-center space-x-4 rounded-lg bg-gray-800 p-3" data-id="@book.Id" data-title="@book.Title" data-author="@book.Author">
-            <img src="@(book.ImageLink ?? "/img/bookcover.jpg")" class="h-16 w-12 object-cover rounded" />
-            <div class="flex flex-col flex-grow truncate">
-                <span class="truncate">@book.Title</span>
-                <span class="text-xs text-gray-400 mt-1 truncate">@book.Author</span>
+        @{
+            var checkedIds = (HashSet<int>)ViewData["CheckedIds"];
+        }
+        @foreach (var book in books)
+        {
+            bool isChecked = checkedIds.Contains(book.Id);
+            <div class="flex items-center space-x-4 rounded-lg bg-gray-800 p-3" data-id="@book.Id" data-title="@book.Title" data-author="@book.Author">
+                <img src="@(book.ImageLink ?? "/img/bookcover.jpg")" class="h-16 w-12 object-cover rounded" />
+                <div class="flex flex-col flex-grow truncate">
+                    <span class="truncate">@book.Title</span>
+                    <span class="text-xs text-gray-400 mt-1 truncate">@book.Author</span>
+                </div>
+
+                @if (isChecked)
+                {
+                    <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full bg-blue-600 text-white text-2xl hover:bg-blue-700" data-state="plus">
+                        <span class="check-icon">
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                        </span>
+                    </button>
+                }
+                else
+                {
+                    <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full bg-blue-600 text-white text-2xl hover:bg-blue-700" data-state="plus">
+                        <span class="plus-icon">+</span>
+                        <span class="check-icon hidden">
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                        </span>
+                    </button>
+                }
             </div>
-            <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full bg-blue-600 text-white text-2xl hover:bg-blue-700" data-state="plus">
-                <span class="plus-icon">+</span>
-                <span class="check-icon hidden">
-                    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 6L9 17l-5-5" />
-                    </svg>
-                </span>
-            </button>
+        }
         </div>
     }
     </div>
