@@ -16,23 +16,18 @@ var configuration = builder.Configuration;
 
 // Retrieve the API key from appsettings.json
 var key = configuration["SMTP:key"];
-
-var apiKey = configuration["OpenRouter:key"];
-var modelId = configuration["OpenRouter:modelId"];
-
+string apiKey = configuration["Gemini:key"];
+// Removes all whitespace characters (spaces, tabs, newlines, etc.)
+string cleanedKey = new string(apiKey.Where(c => !char.IsWhiteSpace(c)).ToArray());
+var skBuilder = Kernel.CreateBuilder();
+#pragma warning disable SKEXP0070
 builder.Services
     .AddKernel()
-    // Configure OpenRouter as an OpenAI-compatible chat completion provider
-    .AddOpenAIChatCompletion(
-        modelId: modelId,
-        openAIClient: new OpenAIClient(
-            credential: new ApiKeyCredential(apiKey),
-            options: new OpenAIClientOptions
-            {
-                Endpoint = new Uri("https://openrouter.ai/api/v1")
-            }
-        )
+    .AddGoogleAIGeminiChatCompletion(
+        modelId: "gemini-2.0-flash",
+        apiKey: apiKey
     );
+
 
 
 

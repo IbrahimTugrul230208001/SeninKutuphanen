@@ -73,7 +73,7 @@ namespace learningASP.NET_CORE.Controllers
                 await _libraryManager.AddToLibraryAsync(
                     _userService.UserId,
                     b.Id,
-                    b.Status);
+                    "");
                 return Json(new { success = true, message = "Book updated successfully", redirectUrl = Url.Action("EditLibrary") });
             }
 
