@@ -19,6 +19,7 @@ hubConnection.on("ReceiveMessage", (message) => {
     console.log("Received AI Response:", message);
 
     const chatBox = document.getElementById("chat-box");
+    chatbox.classList.add("mt-5");
     // Parse and format the message (if you're using a markdown library)
     const modifiedMessage = marked.parse(message);
 
@@ -38,10 +39,9 @@ hubConnection.on("ReceiveMessage", (message) => {
     imgElement.classList.add("w-10", "h-10", "rounded-full", "mr-3");
 
     const messageContainer = document.createElement('div');
-    messageContainer.classList.add("bg-gray-100", "p-3", "rounded-lg", "max-w-xl");
 
     const messageText = document.createElement('p');
-    messageText.classList.add("text-gray-800");
+    messageText.classList.add("text-gray-100");
     messageText.innerHTML = ""; // Start with an empty string
 
     messageContainer.appendChild(messageText);

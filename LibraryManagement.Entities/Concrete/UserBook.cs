@@ -18,7 +18,6 @@ namespace LibraryManagement.Entities.Concrete
         public Book Book { get; set; }
 
         public string? Status { get; set; } 
-        public int? Rating { get; set; }
     }
 
 }

@@ -22,8 +22,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 {
                     UserAccountId = userId,
                     BookId = bookId,
-                    Status = status,  // optional
-                    Rating = null        // optional
+                    Status = status, 
                 };
 
                 await context.UserBooks.AddAsync(userBook);
