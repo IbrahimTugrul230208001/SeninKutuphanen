@@ -28,9 +28,9 @@
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-6">
-                <a href="/Kullanici/Duzenle" class="hover:text-teal-400 transition">Kitaplık</a>
-                <a href="/Kullanici/Ayarlar" class="hover:text-teal-400 transition">Ayarlar</a>
-                <a href="/Sohbet/BenimAsistanim" class="hover:text-teal-400 transition">BenimAsistanım</a>
+                <a href="/Kullanici/Duzenle" class="hover:text-gray-400 transition">Kitaplık</a>
+                <a href="/Kullanici/Ayarlar" class="hover:text-gray-400 transition">Ayarlar</a>
+                <a href="/Sohbet/BenimAsistanim" class="hover:text-gray-400 transition">BenimAsistanım</a>
             </div>
 
             <!-- Mobile Menu Button -->
@@ -58,9 +58,9 @@
 
         <div class="mt-4 relative">
             <input id="user-input" type="text" placeholder="Mesajını yaz..."
-                   class="w-full rounded-full bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent px-4 py-3 pr-14 transition"
+                   class="w-full rounded-full bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent px-4 py-3 pr-14 transition"
                    onkeydown="checkEnter(event)" />
-            <button onclick="sendPrompt()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-teal-500 hover:bg-teal-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-md transition">
+            <button onclick="sendPrompt()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-100 hover:bg-gray-200 text-black w-10 h-10 flex items-center justify-center rounded-full shadow-md transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
                 </svg>
@@ -78,9 +78,9 @@
     </script>
 
     <!-- External scripts unchanged -->
-    <script src="~/lib/markdown/lib/markdown.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typewriter-effect@2.18.0/dist/core.js"></script>
     <script src="~/lib/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
     <script src="/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
     <script src="/js/ChatBot.js"></script>
 </body>
