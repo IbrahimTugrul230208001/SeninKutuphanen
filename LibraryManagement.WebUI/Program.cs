@@ -58,9 +58,10 @@ app.UseAuthorization();
 app.UseRouting();
 app.UseCors();
 
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}"
+    pattern: "{controller=Home}/{action=Index}/{id?}"
 );
 
 app.MapGet("/", context =>

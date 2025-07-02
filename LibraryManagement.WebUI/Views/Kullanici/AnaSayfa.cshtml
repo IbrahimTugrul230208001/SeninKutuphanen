@@ -7,11 +7,6 @@
     using var context = new LibraryContext();
     int pageSize = 30;
     int page = 1;
-    var urlSegments = Context.Request.Path.Value.Split('/', StringSplitOptions.RemoveEmptyEntries);
-    if (urlSegments.Length > 2 && int.TryParse(urlSegments[2], out int parsedPage))
-    {
-        page = parsedPage;
-    }
     var totalBooks = context.Books.Count();
     var totalPages = (int)Math.Ceiling((double)totalBooks / pageSize);
     var books = context.Books
@@ -97,22 +92,51 @@
                 {
                     <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full bg-green-600 text-white text-2xl" data-state="plus">
                         <span class="check-icon">
-                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20 6L9 17l-5-5" />
-                            </svg>
+                                <svg class="h-6 w-6 text-white"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="3"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg>
                         </span>
                     </button>
                 }
                 else
                 {
-                    <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full bg-blue-600 text-white text-2xl hover:bg-blue-700" data-state="plus">
-                        <span class="plus-icon">+</span>
+                    <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full bg-gray-200 text-white hover:bg-gray-300 transition-colors"
+                            data-state="plus">
+                        <!-- Plus icon SVG -->
+                        <span class="plus-icon">
+                            <svg class="h-6 w-6 text-black"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="3"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                        </span>
+
+                        <!-- Check icon SVG -->
                         <span class="check-icon hidden">
-                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="h-6 w-6 text-white"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="3"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
                                 <path d="M20 6L9 17l-5-5" />
                             </svg>
                         </span>
                     </button>
+
+
                 }
             </div>
         }

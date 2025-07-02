@@ -1,6 +1,7 @@
 ﻿using learningASP.NET_CORE.Models;
 using learningASP.NET_CORE.Services;
 using LibraryManagement.Business.Concrete;
+using LibraryManagement.DataAccess.Concrete;
 using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore;
 using LibraryManagement.Entities.Concrete;
 using Microsoft.AspNetCore.Identity;
@@ -30,11 +31,13 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
-        public IActionResult Duzenle()
+        public async Task<IActionResult> Duzenle()
         {
             ViewData["UserId"] = _userService.UserId;
             ViewData["UserName"] = _userName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
+            var booklist = await _libraryManager.ListBookShowcaseAsync(_userService.UserId);
+            var checkedIds = new HashSet<int>(booklist.Select(b => b.Id));
             return View();
         }
         public IActionResult Bildirimler()
@@ -55,12 +58,15 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
-        public async Task<IActionResult> AnaSayfa()
+        [Route("[controller]/[action]/{id?}")]
+        public async Task<IActionResult> AnaSayfa(int? id)
         {
-            var booklist = await _libraryManager.ListBookShowcaseAsync(_userService.UserId);
+            int userId = _userService.UserId;
+            var booklist = await _libraryManager.ListBookShowcaseAsync(userId);
             var checkedIds = new HashSet<int>(booklist.Select(b => b.Id));
+
             ViewData["CheckedIds"] = checkedIds;
-            ViewData["UserId"] = _userService.UserId;
+            ViewData["UserId"] = userId;
             ViewData["UserName"] = _userService.UserName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();

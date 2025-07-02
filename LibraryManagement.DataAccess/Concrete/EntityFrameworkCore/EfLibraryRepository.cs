@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.Reflection.Metadata.Ecma335;
 
 namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 {
-    public class EfLibraryRepository:ILibraryRepository
+    public class EfLibraryRepository : ILibraryRepository
     {
 
         public async Task AddToLibraryAsync(int userId, int bookId, string status)
@@ -22,7 +23,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 {
                     UserAccountId = userId,
                     BookId = bookId,
-                    Status = status, 
+                    Status = status,
                 };
 
                 await context.UserBooks.AddAsync(userBook);
@@ -52,7 +53,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 return await context.UserBooks.CountAsync(l => l.UserAccountId == userId && l.Status == "tamamlandı");
             }
         }
-        
+
         public async Task DeleteFromLibraryAsync(int bookId)
         {
             using (var context = new LibraryContext())
@@ -94,7 +95,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                     .Where(l => l.UserAccountId == id)
                     .Select(ub => ub.Book)
                     .ToListAsync();
-            } 
+            }
         }
 
         public async Task RemoveBookShowcaseAsync(int bookId, int userId)
@@ -132,6 +133,20 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 return book;
             }
         }
-                    
+        public async Task<List<Book>> ReturnBookListPerPage(int pageNumber)
+        {
+            using (var context = new LibraryContext())
+            {
+                int pageSize = 30;
+                int page = pageNumber;
+                var totalBooks = await context.Books.CountAsync();
+                var books = context.Books
+                    .OrderBy(b => b.Id)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+                return books;
+            }
+        }
     }
 }

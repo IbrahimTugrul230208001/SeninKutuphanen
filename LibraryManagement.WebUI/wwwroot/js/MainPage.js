@@ -28,23 +28,14 @@ $(document).ready(function () {
     });
 });
 
-// Add an event listener to capture the "data-id" attribute when a button is clicked
-$(document).on('click', '.add-btn', function () {
-    const bookId = $(this).closest('div').data('id'); // Get the "data-id" attribute
-    const action = $(this).data('state'); // Get the current state (e.g., "plus")
-
-    // Send the data to the backend using AJAX
+$('.add-btn').on('click', function () {
+    const bookId = $(this).closest('div').data('id');
+    if (!bookId) return;
     $.ajax({
-        url: '/Kullanici/Add', // Backend endpoint
         type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({ bookId: bookId, action: action }),
-        success: function (response) {
-            console.log('Success:', response);
-            // Optionally update the UI based on the response
-        },
-        error: function (error) {
-            console.error('Error:', error);
-        }
+        url: '/Kullanici/Add',
+        data: JSON.stringify({ Id: bookId, Status: 'Okunacak', CompletedPages: 0, TotalOfPages: 0 }),
+        dataType: 'json',
+        contentType: 'application/json'
     });
-});              
+});        
