@@ -133,7 +133,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 return book;
             }
         }
-        public async Task<List<Book>> ReturnBookListPerPage(int pageNumber)
+        public async Task<List<Book>> ReturnBookListPerPageAsync(int pageNumber)
         {
             using (var context = new LibraryContext())
             {

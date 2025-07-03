@@ -75,6 +75,10 @@ namespace LibraryManagement.Business.Concrete
         {
             return await _libraryRepository.ReturnBook(bookId);
         }
-        
+
+        public async Task<List<Book>> ReturnBookListPerPageAsync(int pageNumber)
+        {
+            return await _libraryRepository.ReturnBookListPerPageAsync(pageNumber);
+        }
     }
 }

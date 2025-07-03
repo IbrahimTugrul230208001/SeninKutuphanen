@@ -58,13 +58,14 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
-        [Route("[controller]/[action]/{id?}")]
-        public async Task<IActionResult> AnaSayfa(int? id)
+        [Route("[controller]/[action]/{id}")]
+        public async Task<IActionResult> AnaSayfa(int id)
         {
             int userId = _userService.UserId;
             var booklist = await _libraryManager.ListBookShowcaseAsync(userId);
             var checkedIds = new HashSet<int>(booklist.Select(b => b.Id));
-
+            var listedBooksPerPage = await _libraryManager.ReturnBookListPerPageAsync(id);
+            ViewData["PageNumber"] = id;
             ViewData["CheckedIds"] = checkedIds;
             ViewData["UserId"] = userId;
             ViewData["UserName"] = _userService.UserName;

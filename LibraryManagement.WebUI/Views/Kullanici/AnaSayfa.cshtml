@@ -6,7 +6,7 @@
     LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
     using var context = new LibraryContext();
     int pageSize = 30;
-    int page = 1;
+    int page = (int)ViewData["PageNumber"];
     var totalBooks = context.Books.Count();
     var totalPages = (int)Math.Ceiling((double)totalBooks / pageSize);
     var books = context.Books
@@ -31,14 +31,16 @@
     <nav class="sticky top-0 z-50 bg-gray-800 px-6 py-3 text-white shadow-lg ring-1 ring-white/5 backdrop-blur-md">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
             <div class="flex items-center space-x-3">
-                <img src="/img/logo.png" class="h-12 w-12 rounded-full">
-                <span class="text-lg font-semibold">BenimKitaplığım</span>
+                <a href="/Kullanici/Anasayfa/1">
+                    <img src="/img/logo.png" class="h-12 w-12 rounded-full">
+                    <span class="text-lg font-semibold">BenimKitaplığım</span>
+                </a>
             </div>
             <button id="menu-btn" class="text-white focus:outline-none md:hidden">☰</button>
             <div class="flex items-center space-x-4">
                 <div class="hidden items-center space-x-6 md:flex">
+                    <a href="/Kullanici/Anasayfa/1" class="text-gray-300 hover:text-white">Ana Sayfa</a>
                     <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
-                    <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
                     <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
                 </div>
             </div>
@@ -141,10 +143,9 @@
             </div>
         }
         </div>
-    }
  
 
-    <div class="mx-auto max-w-5xl w-full flex justify-center mt-8">
+    <div class="mx-auto max-w-5xl w-full flex justify-center mt-8 mb-8">
         <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
             @for (int i = 1; i <= totalPages && i <= 20; i++)
             {
