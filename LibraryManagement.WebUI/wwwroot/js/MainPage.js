@@ -38,4 +38,21 @@ $('.add-btn').on('click', function () {
         dataType: 'json',
         contentType: 'application/json'
     });
-});        
+});
+
+
+$('.page').on('click', function () {
+    const pageId = $(this).val();
+    if (!pageId) return;
+
+    $('.page').on('click', function () {
+        const pageId = $(this).val();
+        if (!pageId) return;
+        $.ajax({
+            type: 'POST',
+            url: `/Kullanici/Anasayfa/${pageId}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        });
+    });
+});

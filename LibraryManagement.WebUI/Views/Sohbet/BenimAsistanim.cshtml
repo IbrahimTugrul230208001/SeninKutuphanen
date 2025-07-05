@@ -15,38 +15,27 @@
     <link rel="stylesheet" href="/css/ChatBot.css">
 </head>
 <body class="bg-gray-900 text-gray-100">
-    @{
-        /* Backend context unchanged */
-    }
-    <nav class="bg-gray-800 text-gray-100 px-6 py-3 top-0 sticky z-50 shadow-lg ring-1 ring-white/5 backdrop-blur-md">
+    <nav class="sticky top-0 z-50 bg-gray-800 px-6 py-3 text-white shadow-lg ring-1 ring-white/5 backdrop-blur-md">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
-            <!-- Logo -->
-            <div class="flex items-center space-x-3">
-                <img src="/img/logo.png" alt="Logo" class="w-12 h-12 rounded-full" />
-                <span class="text-lg font-semibold">BenimKitaplığım</span>
-            </div>
+            <a href="/Kullanici/Anasayfa/1">
 
-            <!-- Desktop Menu -->
-            <div class="hidden items-center space-x-6 md:flex">
-                <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
-                <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
-                <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
+                <div class="flex items-center space-x-3">
+                    <img src="/img/logo.png" class="h-12 w-12 rounded-full">
+                    <span class="text-lg font-semibold">BenimKitaplığım</span>
+                </div>
+            </a>
+            <button id="menu-btn" class="text-white focus:outline-none md:hidden">☰</button>
+            <div class="flex items-center space-x-4">
+                <div class="hidden items-center space-x-6 md:flex">
+                    <a href="/Kullanici/Anasayfa/1" class="text-gray-300 hover:text-white">Ana Sayfa</a>
+                    <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
+                    <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
+                </div>
             </div>
-
-            <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="md:hidden focus:outline-none p-2 hover:bg-gray-700 rounded-md transition">
-                <!-- Lucide hamburger icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
         </div>
-
-        <!-- Mobile Dropdown Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-gray-800 space-y-2 px-6 py-4 transition-transform duration-300 origin-top">
-            <a href="/Kullanici/Duzenle" class="block hover:text-teal-400">Kitaplık</a>
-            <a href="/Kullanici/Ayarlar" class="block hover:text-teal-400">Ayarlar</a>
-            <a href="/Sohbet/BenimAsistanim" class="block hover:text-teal-400">BenimAsistanım</a>
+        <div id="mobile-menu" class="flex hidden flex-col space-y-2 bg-gray-800 px-6 py-3 md:hidden">
+            <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
+            <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
         </div>
     </nav>
 
@@ -75,6 +64,12 @@
           mobileMenu.classList.toggle('hidden');
           mobileMenu.classList.toggle('scale-y-0');
         });
+
+        function checkEnter(event) {
+            if (event.key === 'Enter') {
+                sendPrompt();
+            }
+        }
     </script>
 
     <!-- External scripts unchanged -->

@@ -70,6 +70,7 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserId"] = userId;
             ViewData["UserName"] = _userService.UserName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
+            ViewData["Books"] = await _libraryManager.ReturnBookListPerPageAsync(id);
             return View();
         }
         [HttpPost]
