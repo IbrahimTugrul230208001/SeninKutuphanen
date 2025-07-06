@@ -22,5 +22,6 @@ namespace LibraryManagement.DataAccess.Abstract
         Task<Book> ReturnBook (int bookId);
         Task<bool> CheckBookAsync(int userId, int bookId);
         Task<List<Book>> ReturnBookListPerPageAsync(int pageNumber);
+        Task<List<Book>> BookSearchResultAsync(string searchTerm, string criteria);
     }
 }

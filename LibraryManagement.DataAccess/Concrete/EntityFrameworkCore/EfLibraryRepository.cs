@@ -148,5 +148,29 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 return books;
             }
         }
+
+        public Task<List<Book>> BookSearchResultAsync(string searchTerm, string criteria)
+        {
+            using(var context = new LibraryContext())
+            {
+                IQueryable<Book> query = context.Books;
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    switch (criteria.ToLower())
+                    {
+                        case "title":
+                            query = query.Where(b => b.Title.Contains(searchTerm));
+                            break;
+                        case "author":
+                            query = query.Where(b => b.Author.Contains(searchTerm));
+                            break;
+                        default:
+                            throw new ArgumentException("Invalid search criteria");
+                    }
+                }
+                return query.ToListAsync();
+            }
+        }
     }
 }
+                     

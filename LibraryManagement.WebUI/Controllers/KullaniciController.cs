@@ -37,7 +37,7 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserName"] = _userName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             var booklist = await _libraryManager.ListBookShowcaseAsync(_userService.UserId);
-            var checkedIds = new HashSet<int>(booklist.Select(b => b.Id));
+            ViewData["BookList"] = booklist;
             return View();
         }
         public IActionResult Bildirimler()
