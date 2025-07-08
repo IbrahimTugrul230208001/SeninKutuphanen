@@ -66,12 +66,13 @@ namespace learningASP.NET_CORE.Controllers
             var checkedIds = new HashSet<int>(booklist.Select(b => b.Id));
             var listedBooksPerPage = await _libraryManager.ReturnBookListPerPageAsync(id);
             ViewData["PageNumber"] = id;
+            ViewData["PageCount"] = 20;
             ViewData["CheckedIds"] = checkedIds;
             ViewData["UserId"] = userId;
             ViewData["UserName"] = _userService.UserName;
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
-            ViewData["Books"] = await _libraryManager.ReturnBookListPerPageAsync(id);
-            return View();
+            var books = await _libraryManager.ReturnBookListPerPageAsync(id);
+            return View(books);
         }
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] BookData b)
@@ -95,8 +96,9 @@ namespace learningASP.NET_CORE.Controllers
         public async Task<IActionResult> SearchBooks([FromBody] Search searchData)
         {
             var books = await _libraryManager.BookSearchResultAsync(searchData.SearchInput, searchData.SearchCriteria);
-            ViewData["Books"] = books;
-            return View("Anasayfa"); // or a dedicated Search view
+            int pageCount = (int)Math.Ceiling((double)books.Count / 30);
+            ViewData["PageCount"] = pageCount;
+            return View("Anasayfa",books); // or a dedicated Search view
 
         }
 

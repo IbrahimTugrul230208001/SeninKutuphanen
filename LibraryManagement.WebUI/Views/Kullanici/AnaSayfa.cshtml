@@ -2,14 +2,16 @@
 @using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 @using LibraryManagement.DataAccess.Concrete
 @using LibraryManagement.Entities.Concrete
+@model List<Book>
 @{
     LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
     int pageSize = 30;
-    var books = ViewData["Books"] as List<Book>;
     string userName = ViewData["UserName"].ToString();
     int userId = (int)ViewData["UserId"];
     int page = (int)ViewData["PageNumber"];
+    int pageCount = (int)ViewData["PageCount"];
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,7 +106,7 @@
         @{
             var checkedIds = (HashSet<int>)ViewData["CheckedIds"];
         }
-        @foreach (var book in books)
+        @foreach (var book in Model)
         {
             bool isChecked = checkedIds.Contains(book.Id);
             <div class="flex items-center space-x-4 rounded-lg bg-gray-800 p-3" data-id="@book.Id" data-title="@book.Title" data-author="@book.Author">
@@ -171,7 +173,7 @@
 
     <div class="mx-auto max-w-5xl w-full flex justify-center mt-8 mb-8">
         <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
-            @for (int i = 1; i <= 20; i++)
+            @for (int i = 1; i <= pageCount; i++)
             {
                 <a href="/Kullanici/AnaSayfa/@i"
                    class="page px-4 py-2 border border-gray-700 bg-gray-800 text-gray-300 hover:bg-blue-600 hover:text-white @(i == page ? "font-bold bg-blue-700 text-white" : "")">

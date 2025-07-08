@@ -140,11 +140,11 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 int pageSize = 30;
                 int page = pageNumber;
                 var totalBooks = await context.Books.CountAsync();
-                var books = context.Books
+                var books = await context.Books
                     .OrderBy(b => b.Id)
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
-                    .ToList();
+                    .ToListAsync();
                 return books;
             }
         }
