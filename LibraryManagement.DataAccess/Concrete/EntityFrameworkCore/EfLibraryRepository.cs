@@ -149,7 +149,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
-        public Task<List<Book>> BookSearchResultAsync(string searchTerm, string criteria)
+        public async Task<List<Book>> BookSearchResultAsync(string searchTerm, string criteria)
         {
             using(var context = new LibraryContext())
             {
@@ -168,7 +168,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                             throw new ArgumentException("Invalid search criteria");
                     }
                 }
-                return query.ToListAsync();
+                return await query.ToListAsync();
             }
         }
     }

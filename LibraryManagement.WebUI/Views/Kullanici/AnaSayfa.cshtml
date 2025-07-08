@@ -7,7 +7,6 @@
     int pageSize = 30;
     var books = ViewData["Books"] as List<Book>;
     string userName = ViewData["UserName"].ToString();
-    string userProfilePicture = ViewData["UserProfilePicture"].ToString();
     int userId = (int)ViewData["UserId"];
     int page = (int)ViewData["PageNumber"];
 }
@@ -56,15 +55,15 @@
             transition focus-within:ring-1 focus-within:ring-blue-500">
 
             <!-- search input -->
-            <input id="searchInput"
+            <input id="search-input"
                    type="text"
                    placeholder="Ara..."
                    class="flex-grow h-full bg-gray-800 px-5 text-lg text-gray-200
-   placeholder-gray-400 focus:outline-none" />
+   placeholder-gray-400 focus:outline-none" onkeydown="checkEnter(event)"/>
 
             <!-- filter -->
             <div class="relative h-full flex-shrink-0 border-l border-gray-700">
-                <select … class="h-full appearance-none bg-gray-800 pl-5 pr-12 …">
+                <select class="h-full appearance-none bg-gray-800 pl-5 pr-12" id="search-criteria">
                     <option value="title">Kitap</option>
                     <option value="author">Yazar</option>
                 </select>
@@ -81,7 +80,7 @@
                     class="flex h-full w-16 -ml-px flex-shrink-0 items-center justify-center
                    bg-blue-500 hover:bg-blue-600 transition-colors
                     focus:outline-none"
-                    aria-label="Ara">
+                    aria-label="Ara" onclick="searchBooks()">
                 <!-- solid magnifying-glass icon -->
                 <svg xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 24 24"

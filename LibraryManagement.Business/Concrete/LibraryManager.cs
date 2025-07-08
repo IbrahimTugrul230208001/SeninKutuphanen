@@ -26,9 +26,9 @@ namespace LibraryManagement.Business.Concrete
              await _libraryRepository.AddToShowcaseAsync(userId);
         }
 
-        public Task<List<Book>> BookSearchResultAsync(string searchTerm, string criteria)
+        public async Task<List<Book>> BookSearchResultAsync(string searchTerm, string criteria)
         {
-            throw new NotImplementedException();
+            return await _libraryRepository.BookSearchResultAsync(searchTerm, criteria);
         }
 
         public async Task<int> BookStatusCounterAsync(string status, int userId)

@@ -49,10 +49,47 @@ $('.page').on('click', function () {
         const pageId = $(this).val();
         if (!pageId) return;
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: `/Kullanici/Anasayfa/${pageId}`,
             dataType: 'json',
             contentType: 'application/json'
         });
     });
 });
+
+function checkEnter(event) {
+    if (event.key === 'Enter') {
+        sendPrompt();
+    }
+}
+
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    mobileMenu.classList.toggle('scale-y-0');
+});
+
+function searchBooks() {
+    var searchData = {
+        SearchInput: document.getElementById('search-input').value,
+        SearchCriteria: document.getElementById('search-criteria').value
+    };
+
+    fetch("/Kullanici/SearchBooks", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(searchData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.response) {
+                console.error("Invalid API response:", data);
+                return;
+            }
+            // Handle data.response here
+        })
+        .catch(error => console.error("Error:", error));
+}

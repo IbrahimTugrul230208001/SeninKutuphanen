@@ -91,6 +91,14 @@ namespace learningASP.NET_CORE.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SearchBooks([FromBody] Search searchData)
+        {
+            var books = await _libraryManager.BookSearchResultAsync(searchData.SearchInput, searchData.SearchCriteria);
+            ViewData["Books"] = books;
+            return View("Anasayfa"); // or a dedicated Search view
+
+        }
 
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] int bookId)
@@ -150,19 +158,6 @@ namespace learningASP.NET_CORE.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> SetNewResidementPlaces([FromBody] User user)
-        {
-            if (user.City != null && user.Country != null)
-            {
-                await _userManager.SetNewResidementPlacesAsync(user.City, user.Country, _userService.UserName);
-                return Json(new { success = true, redirectUrl = Url.Action("Settings") });
-            }
-            else
-            {
-                return Json(new { success = false, redirectUrl = Url.Action("Settings") });
-            }
-        }
 
         [HttpPut]
         public async Task<IActionResult> SetNewPassword([FromBody] User user)
