@@ -151,18 +151,19 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
 
         public async Task<List<Book>> BookSearchResultAsync(string searchTerm, string criteria)
         {
-            using(var context = new LibraryContext())
+            using (var context = new LibraryContext())
             {
                 IQueryable<Book> query = context.Books;
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
+                    searchTerm = searchTerm.ToLower();
                     switch (criteria.ToLower())
                     {
                         case "title":
-                            query = query.Where(b => b.Title.Contains(searchTerm));
+                            query = query.Where(b => b.Title.ToLower().Contains(searchTerm));
                             break;
                         case "author":
-                            query = query.Where(b => b.Author.Contains(searchTerm));
+                            query = query.Where(b => b.Author.ToLower().Contains(searchTerm));
                             break;
                         default:
                             throw new ArgumentException("Invalid search criteria");

@@ -78,10 +78,7 @@ namespace learningASP.NET_CORE.Controllers
         }
         [Route("[controller]/[action]/{page:int?}")]
         [HttpGet]
-        public async Task<IActionResult> AnaSayfa(
-                int? page,
-                string? searchInput,
-                string? searchCriteria)
+        public async Task<IActionResult> AnaSayfa(int? page, string? searchInput, string? searchCriteria)
         {
             const int pageSize = 30;
             int pageNumber = page ?? 1;
@@ -111,6 +108,10 @@ namespace learningASP.NET_CORE.Controllers
             {
                 totalCount = workingSet.Count;
                 pageCount = (int)Math.Ceiling(totalCount / (double)pageSize);
+                if(pageCount > 20)
+                {
+                    pageCount = 20; // limit to 20 pages
+                }
             }
 
             /* -- 3.  slice the page you actually need --------------------------- */

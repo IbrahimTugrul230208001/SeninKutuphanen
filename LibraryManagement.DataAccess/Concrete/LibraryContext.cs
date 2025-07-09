@@ -17,12 +17,27 @@ namespace LibraryManagement.DataAccess.Concrete
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            const string trCollation = "Turkish_CI_AI";   // case- & accent-insensitive
+
+            // ── Book entity ──────────────────────────────────────────────────────────
+            modelBuilder.Entity<Book>(entity =>
+            {
+                entity.Property(b => b.Title)
+                      .UseCollation(trCollation);
+
+                entity.Property(b => b.Author)
+                      .UseCollation(trCollation);
+            });
+
+            // ── Existing composite index ────────────────────────────────────────────
             modelBuilder.Entity<UserBook>()
                 .HasIndex(ub => new { ub.UserAccountId, ub.BookId })
                 .IsUnique();
 
             base.OnModelCreating(modelBuilder);
         }
+
+
 
         public DbSet<Book> Books { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
