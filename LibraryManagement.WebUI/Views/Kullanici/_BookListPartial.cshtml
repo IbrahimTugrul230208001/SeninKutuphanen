@@ -1,0 +1,55 @@
+﻿@model learningASP.NET_CORE.Models.AnaSayfaViewModel
+@{
+    var checkedIds = Model.CheckedIds;   // hash-set of books already in the user’s showcase
+}
+
+@foreach (var book in Model.Books)
+{
+    bool isChecked = checkedIds.Contains(book.Id);
+
+    <div class="flex items-center space-x-4 rounded-lg bg-gray-800 p-3"
+         data-id="@book.Id"
+         data-title="@book.Title"
+         data-author="@book.Author">
+
+        <!-- cover -->
+        <img src="@(book.ImageLink ?? "/img/bookcover.jpg")"
+             class="h-16 w-12 object-cover rounded" />
+
+        <!-- title + author -->
+        <div class="flex flex-col flex-grow truncate">
+            <span class="truncate">@book.Title</span>
+            <span class="text-xs text-gray-400 mt-1 truncate">@book.Author</span>
+        </div>
+
+        <!-- add / already-added button -->
+        @if (isChecked)
+        {
+            <!-- already in library -->
+            <button class="h-14 w-14 flex items-center justify-center rounded-full
+                                   bg-green-600 text-white text-2xl" disabled>
+                <svg class="h-6 w-6"
+                     viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="3"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6L9 17l-5-5" />
+                </svg>
+            </button>
+        }
+        else
+        {
+            <!-- add-to-library -->
+            <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full
+                                   bg-gray-200 text-white hover:bg-gray-300 transition-colors"
+                    data-state="plus" data-bookid="@book.Id">
+                <svg class="h-6 w-6 text-black"
+                     viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="3"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+            </button>
+        }
+    </div>
+}

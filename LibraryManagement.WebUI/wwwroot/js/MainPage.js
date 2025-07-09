@@ -70,26 +70,14 @@ menuBtn.addEventListener('click', () => {
     mobileMenu.classList.toggle('scale-y-0');
 });
 
-function searchBooks() {
-    var searchData = {
-        SearchInput: document.getElementById('search-input').value,
-        SearchCriteria: document.getElementById('search-criteria').value
-    };
+function searchBooks(page = 1) {
+    const q = encodeURIComponent($('#search-input').val());
+    const crit = $('#search-criteria').val();
+    const url = `/Kullanici/AnaSayfa?page=${page}&searchInput=${q}&searchCriteria=${crit}`;
 
-    fetch("/Kullanici/SearchBooks", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(searchData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (!data.response) {
-                console.error("Invalid API response:", data);
-                return;
-            }
-            // Handle data.response here
-        })
-        .catch(error => console.error("Error:", error));
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+        .then(r => r.text())
+        .then(html => $('#bookList').html(html))
+        .catch(console.error);
 }
+

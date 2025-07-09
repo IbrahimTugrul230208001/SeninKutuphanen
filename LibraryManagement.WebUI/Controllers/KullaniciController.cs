@@ -58,22 +58,7 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
-        [Route("[controller]/[action]/{id}")]
-        public async Task<IActionResult> AnaSayfa(int id)
-        {
-            int userId = _userService.UserId;
-            var booklist = await _libraryManager.ListBookShowcaseAsync(userId);
-            var checkedIds = new HashSet<int>(booklist.Select(b => b.Id));
-            var listedBooksPerPage = await _libraryManager.ReturnBookListPerPageAsync(id);
-            ViewData["PageNumber"] = id;
-            ViewData["PageCount"] = 20;
-            ViewData["CheckedIds"] = checkedIds;
-            ViewData["UserId"] = userId;
-            ViewData["UserName"] = _userService.UserName;
-            ViewData["UserProfilePicture"] = _userService.ProfilePicture;
-            var books = await _libraryManager.ReturnBookListPerPageAsync(id);
-            return View(books);
-        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] BookData b)
         {
@@ -91,16 +76,74 @@ namespace learningASP.NET_CORE.Controllers
                 return Json(new { success = false, message = "Book could not be added", redirectUrl = Url.Action("EditLibrary") });
             }
         }
-
-        [HttpPost]
-        public async Task<IActionResult> SearchBooks([FromBody] Search searchData)
+        [Route("[controller]/[action]/{page:int?}")]
+        [HttpGet]
+        public async Task<IActionResult> AnaSayfa(
+                int? page,
+                string? searchInput,
+                string? searchCriteria)
         {
-            var books = await _libraryManager.BookSearchResultAsync(searchData.SearchInput, searchData.SearchCriteria);
-            int pageCount = (int)Math.Ceiling((double)books.Count / 30);
-            ViewData["PageCount"] = pageCount;
-            return View("Anasayfa",books); // or a dedicated Search view
+            const int pageSize = 30;
+            int pageNumber = page ?? 1;
 
+            /* -- 1.  get the working set ---------------------------------------- */
+            List<Book> workingSet;
+
+            if (string.IsNullOrWhiteSpace(searchInput))
+            {   // initial landing – use whatever source you already have
+                workingSet = await _libraryManager.ReturnBookListPerPageAsync(pageNumber); // page-sized chunk
+            }
+            else
+            {   // search scenario – full filtered set
+                workingSet = await _libraryManager.BookSearchResultAsync(searchInput, searchCriteria);
+            }
+
+            /* -- 2.  paging totals ---------------------------------------------- */
+            int totalCount;
+            int pageCount;
+
+            if (string.IsNullOrWhiteSpace(searchInput))
+            {   // initial view: force exactly 20 page links
+                pageCount = 20;
+                totalCount = pageCount * pageSize;           // only for completeness
+            }
+            else
+            {
+                totalCount = workingSet.Count;
+                pageCount = (int)Math.Ceiling(totalCount / (double)pageSize);
+            }
+
+            /* -- 3.  slice the page you actually need --------------------------- */
+            var booksForPage = string.IsNullOrWhiteSpace(searchInput)
+                ? workingSet                           // already sized in initial branch
+                : workingSet.Skip((pageNumber - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList();
+
+            /* -- 4.  user-specific info ----------------------------------------- */
+            int userId = _userService.UserId;
+            var checkedIds = new HashSet<int>(
+                              (await _libraryManager.ListBookShowcaseAsync(userId))
+                              .Select(b => b.Id));
+
+            var vm = new AnaSayfaViewModel
+            {
+                Books = booksForPage,
+                PageNumber = pageNumber,
+                PageCount = pageCount,
+                UserId = userId,
+                UserName = _userService.UserName,
+                CheckedIds = checkedIds
+            };
+
+            /* -- 5.  full page vs AJAX partial ---------------------------------- */
+            bool isAjax = Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+            return isAjax
+                ? PartialView("_BookListPartial", vm)   // or Json(vm) if you prefer
+                : View(vm);
         }
+
+
 
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] int bookId)
