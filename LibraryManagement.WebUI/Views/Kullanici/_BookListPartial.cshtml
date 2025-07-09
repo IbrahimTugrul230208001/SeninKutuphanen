@@ -52,4 +52,22 @@
             </button>
         }
     </div>
-}
+
+ 
+}     <!-- exactly the loop you already have -->
+
+<!-- pager -->
+<div class="mx-auto max-w-5xl w-full flex justify-center mt-8 mb-8">
+    <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <a href="#"                       
+               onclick="searchBooks(@i);return false;"
+               class="page px-4 py-2 border border-gray-700 bg-gray-800 text-gray-300
+                      hover:bg-blue-600 hover:text-white
+                      @(i == Model.PageNumber ? "font-bold bg-blue-700 text-white" : "")">
+                @i
+            </a>
+        }
+    </nav>
+</div>

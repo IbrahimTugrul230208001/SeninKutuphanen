@@ -1,4 +1,4 @@
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $('.add-btn').on('click', function () {
         var $btn = $(this);
         if ($btn.data('state') === 'plus') {
@@ -59,7 +59,7 @@ $('.page').on('click', function () {
 
 function checkEnter(event) {
     if (event.key === 'Enter') {
-        sendPrompt();
+        searchBooks();
     }
 }
 
@@ -71,13 +71,19 @@ menuBtn.addEventListener('click', () => {
 });
 
 function searchBooks(page = 1) {
-    const q = encodeURIComponent($('#search-input').val());
-    const crit = $('#search-criteria').val();
-    const url = `/Kullanici/AnaSayfa?page=${page}&searchInput=${q}&searchCriteria=${crit}`;
+    const params = new URLSearchParams({
+        id: 1,                                     // keep existing user id
+        page,
+        searchInput: $('#search-input').val().trim(),
+        searchCriteria: $('#search-criteria').val()
+    });
+    const url = `/Kullanici/AnaSayfa?${params}`;
 
-    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+    // 1️⃣ update address bar (no reload)
+    history.replaceState(null, '', url);          // or pushState if you want back-button support 🧭
+
+    // 2️⃣ fetch list
+    return fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
         .then(r => r.text())
-        .then(html => $('#bookList').html(html))
-        .catch(console.error);
+        .then(html => { $('#bookList').html(html); });
 }
-
