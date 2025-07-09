@@ -40,16 +40,30 @@
         {
             <!-- add-to-library -->
             <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full
-                                   bg-gray-200 text-white hover:bg-gray-300 transition-colors"
+                       bg-gray-200 text-white hover:bg-gray-300 transition-colors"
                     data-state="plus" data-bookid="@book.Id">
-                <svg class="h-6 w-6 text-black"
-                     viewBox="0 0 24 24"
-                     fill="none" stroke="currentColor" stroke-width="3"
-                     stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19" />
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
+                <!-- Plus icon -->
+                <span class="plus-icon">
+                    <svg class="h-6 w-6 text-black"
+                         viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="3"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                </span>
+                <!-- Check icon, hidden by default -->
+                <span class="check-icon hidden">
+                    <svg class="h-6 w-6 text-white"
+                         viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="3"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                </span>
             </button>
+
+
         }
     </div>
 
