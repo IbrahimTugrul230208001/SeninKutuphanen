@@ -29,20 +29,30 @@ menuBtn.addEventListener('click', () => {
 });
 
 function searchBooks(page = 1) {
-    const params = new URLSearchParams({
-        searchInput: $('#search-input').val().trim(),
-        searchCriteria: $('#search-criteria').val()
-    });
-    const url = `/Kullanici/AnaSayfa/${page}?${params}`; // Use route, not query param for page
+    const input = $('#search-input').val().trim();
+    const crit = $('#search-criteria').val();
+    const $list = $('#bookList');
 
-    // Update address bar without reload
+    // 1 . block short queries (<3 chars)
+    if (input.length < 3) {
+        $list.html(`
+            <div class="text-center text-gray-400 mt-4">
+                3 karakter veya daha fazla karakter girerek arama yapınız.
+            </div>`);
+        history.replaceState(null, '', `/Kullanici/AnaSayfa/${page}`);
+        return;
+    }
+
+    // 2 . valid query → fetch results partial
+    const params = new URLSearchParams({ searchInput: input, searchCriteria: crit });
+    const url = `/Kullanici/AnaSayfa/${page}?${params}`;
     history.replaceState(null, '', url);
 
-    // Fetch new content and inject it
-    return fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+    fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
         .then(r => r.text())
-        .then(html => { $('#bookList').html(html); });
+        .then(html => { $list.html(html); });
 }
+
 
 $('#bookList').on('click', '.add-btn', function () {
     var $btn = $(this);
