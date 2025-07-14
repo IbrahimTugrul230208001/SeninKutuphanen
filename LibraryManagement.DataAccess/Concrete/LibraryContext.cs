@@ -17,9 +17,8 @@ namespace LibraryManagement.DataAccess.Concrete
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            const string trCollation = "Turkish_CI_AI";   // case- & accent-insensitive
+            const string trCollation = "tr_icu_det";   // PostgreSQL deterministic ICU collation
 
-            // ── Book entity ──────────────────────────────────────────────────────────
             modelBuilder.Entity<Book>(entity =>
             {
                 entity.Property(b => b.Title)

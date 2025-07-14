@@ -34,7 +34,7 @@ function searchBooks(page = 1) {
     const $list = $('#bookList');
 
     // 1 . block short queries (<3 chars)
-    if (input.length < 3) {
+    if (input.length < 3 && input.length > 0) {
         $list.html(`
             <div class="text-center text-gray-400 mt-4">
                 3 karakter veya daha fazla karakter girerek arama yapınız.

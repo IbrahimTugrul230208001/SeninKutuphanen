@@ -20,13 +20,11 @@
         string userProfilePicture = ViewData["UserProfilePicture"].ToString();
         int userId = (int)ViewData["UserId"];
     }
-    <nav class="sticky top-0 z-50 bg-gray-800 px-6 py-3 text-white">
+    <nav class="sticky top-0 z-50 bg-gray-800 px-6 py-3 text-white shadow-[0_2px_16px_0_rgba(0,0,0,0.24)] border-b border-white/10 backdrop-blur-md">
         <div class="mx-auto flex max-w-7xl items-center justify-between">
-            <!-- Logo -->
             <a href="/Kullanici/Anasayfa/1">
-
                 <div class="flex items-center space-x-3">
-                    <img src="/img/logo.png" class="h-16 w-16 rounded-full">
+                    <img src="/img/logo.png" class="h-[56px] w-[56px] rounded-full">
                     <span class="text-lg font-semibold">BenimKitaplığım</span>
                 </div>
             </a>
@@ -39,14 +37,11 @@
                 </div>
             </div>
         </div>
-
-        <!-- Mobile Dropdown Menu -->
         <div id="mobile-menu" class="flex hidden flex-col space-y-2 bg-gray-800 px-6 py-3 md:hidden">
             <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
             <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
         </div>
     </nav>
-
     <div class="mx-auto max-w-6xl p-6">
         <div class="flex justify-center">
             <h1 class="text-4xl font-bold leading-[1.3] bg-gradient-to-r from-blue-500 via-violet-500 to-pink-500 bg-clip-text text-transparent">
