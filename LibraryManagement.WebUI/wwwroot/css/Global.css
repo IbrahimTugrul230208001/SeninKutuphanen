@@ -1,0 +1,35 @@
+﻿.active-underline::after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    width: 100%; /* underline width, tweak as needed */
+    border-bottom: 5px solid #fff; /* bold, white underline */
+    border-radius: 2px;
+    transition: width 0.2s;
+    position: relative;
+    top: 25px;
+}
+
+.active-underline:hover::after {
+    width: 100%;
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+.nav-link::after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    width: 0;
+    border-bottom: 5px solid #fff;
+    border-radius: 2px;
+    position: relative;
+    top: 25px;
+    transition: width 0.2s;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}

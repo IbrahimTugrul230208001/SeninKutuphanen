@@ -1,0 +1,20 @@
+{
+  "name": "librarymanagement.webui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tailwind.config.js",
+"scripts": {
+  "tw:build": "tailwindcss -i ./input.css -o ./wwwroot/css/output.css --minify",
+
+  "tw:watch": "tailwindcss -i ./input.css -o ./wwwroot/css/output.css --watch"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.11"
+  }
+}

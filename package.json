@@ -1,16 +1,12 @@
 {
-  "dependencies": {
-    "@tailwindcss/postcss": "^4.1.1",
-    "@tailwindcss/vite": "^4.1.1",
-    "autoprefixer": "^10.4.21",
-    "marked": "^15.0.7",
-    "postcss": "^8.5.3"
-  },
   "name": "seninkutuphanen",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./tailwind/input.css -o ./wwwroot/css/output.css --watch"
   },
   "repository": {
     "type": "git",
@@ -23,9 +19,11 @@
     "url": "https://github.com/IbrahimTugrul230208001/SeninKutuphanen/issues"
   },
   "homepage": "https://github.com/IbrahimTugrul230208001/SeninKutuphanen#readme",
-  "description": "",
-  "devDependencies": {
-    "tailwindcss": "^4.1.1"
+  "dependencies": {
+    "marked": "^15.0.7",
+    "postcss": "^8.5.3"
   },
-  "type": "commonjs"
+  "devDependencies": {
+    "tailwindcss": "^4.1.11"
+  }
 }

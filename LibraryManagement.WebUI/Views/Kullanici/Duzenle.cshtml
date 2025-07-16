@@ -12,36 +12,69 @@
     <title>SeninKütüphanen</title>
     <link rel="icon" href="/img/logo.png" type="jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/Global.css">
+
 </head>
-<body class="bg-gray-900 text-gray-100">
-    @{
-        LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
-        string userName = ViewData["UserName"].ToString();
-        string userProfilePicture = ViewData["UserProfilePicture"].ToString();
-        int userId = (int)ViewData["UserId"];
+  @{
+            LibraryManager _libraryManager = new LibraryManager(new EfLibraryRepository());
+            string userName = ViewData["UserName"].ToString();
+            string userProfilePicture = ViewData["UserProfilePicture"].ToString();
+            int userId = (int)ViewData["UserId"];
     }
-    <nav class="sticky top-0 z-50 bg-gray-800 px-6 py-3 text-white shadow-[0_2px_16px_0_rgba(0,0,0,0.24)] border-b border-white/10 backdrop-blur-md">
-        <div class="mx-auto flex max-w-7xl items-center justify-between">
-            <a href="/Kullanici/Anasayfa/1">
-                <div class="flex items-center space-x-3">
-                    <img src="/img/logo.png" class="h-[56px] w-[56px] rounded-full">
-                    <span class="text-lg font-semibold">BenimKitaplığım</span>
-                </div>
+<body class="bg-gray-800 text-gray-100">
+    <nav class="sticky top-0 z-50 bg-gray-900 px-6 py-3 text-white backdrop-blur-md shadow-xl">
+    <div class="max-w-7xl mx-auto flex items-center justify-between h-16 px-4">
+        <div class="hidden md:flex items-center space-x-10">
+
+            <a href="/Kullanici/AnaSayfa">
+                <img src="/img/logo.png" alt="Logo" class="h-16 w-16 rounded-full">
             </a>
-            <button id="menu-btn" class="text-white focus:outline-none md:hidden">☰</button>
-            <div class="flex items-center space-x-4">
-                <div class="hidden items-center space-x-6 md:flex">
-                    <a href="/Kullanici/Anasayfa/1" class="text-gray-300 hover:text-white">Ana Sayfa</a>
-                    <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
-                    <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
-                </div>
-            </div>
+            <!-- Left: Logo + Title -->
+            <a href="/Kullanici/AnaSayfa">
+                <span class="font-semibold text-gray-300 nav-link">Ana Sayfa</span>
+            </a>
+
+            <!-- Center: Navigation -->
+            <!-- Current page is Kitaplık -->
+            <a href="/Kullanici/Duzenle"
+               class="font-bold text-white font-semibold active-underline">
+                Kitaplık
+            </a>
+            <a href="/Sohbet/BenimAsistanim"
+               class="text-gray-300 font-semibold nav-link">
+                BenimAsistanım
+            </a>
+
         </div>
-        <div id="mobile-menu" class="flex hidden flex-col space-y-2 bg-gray-800 px-6 py-3 md:hidden">
-            <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
-            <a href="/Kullanici/Ayarlar" class="text-gray-300 hover:text-white">Ayarlar</a>
+        <!-- Right: Auth Buttons -->
+        <div class="hidden md:flex space-x-3">
+            <a href="/Dogrulama/Giris" class="px-4 py-2 text-gray-300 hover:text-white transition">Giriş Yap</a>
+            <a href="/Dogrulama/Kayit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition">Kayıt Ol</a>
         </div>
+        <!-- Mobile Menu Button -->
+        <button id="menu-btn" class="text-white md:hidden">☰</button>
+    </div>
+
+
+
+    <!-- Mobile links -->
+    <div id="mobile-menu" class="hidden flex-col space-y-2 bg-gray-800 px-6 py-3 md:hidden">
+        <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
+        <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
+    </div>
     </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+
+          // mobile toggle
+          const btn = document.getElementById('menu-btn');
+          const menu = document.getElementById('mobile-menu');
+          btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        });
+    </script>
+
     <div class="mx-auto max-w-6xl p-6">
         <div class="flex justify-center">
             <h1 class="text-4xl font-bold leading-[1.3] bg-gradient-to-r from-blue-500 via-violet-500 to-pink-500 bg-clip-text text-transparent">
