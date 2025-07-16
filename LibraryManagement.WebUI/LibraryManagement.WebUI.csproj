@@ -62,7 +62,6 @@
 
 	<ItemGroup>
 		<Folder Include="Plugins\" />
-		<Folder Include="Views\AnaSayfa\" />
 	</ItemGroup>
 
 </Project>
