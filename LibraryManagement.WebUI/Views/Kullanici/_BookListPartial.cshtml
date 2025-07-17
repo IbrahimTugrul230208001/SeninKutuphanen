@@ -22,7 +22,7 @@
             <span class="text-xs text-gray-200 mt-1 truncate">@book.Author</span>
         </div>
 
-        <!-- add / already-added button -->
+     
         <!-- add / already-added button -->
         @if (isChecked)
         {
@@ -41,33 +41,52 @@
         {
             <!-- add-to-library -->
             <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full
-                                       bg-gray-200 text-white hover:bg-gray-400 transition-colors cursor-pointer"
-                    data-state="plus" data-bookid="@book.Id">
+                 bg-gray-100 hover:bg-blue-600 transition-colors duration-150
+                 cursor-pointer shadow-xl hover:shadow-xl"
+                    data-state="plus"
+                    data-bookid="@book.Id">
                 <!-- Plus icon -->
                 <span class="plus-icon">
-                    <svg class="h-6 w-6 text-black"
-                         viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="3"
-                         stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="h-6 w-6 text-black group-hover:text-white transition-colors duration-150"
+                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="5" x2="12" y2="19" />
                         <line x1="5" y1="12" x2="19" y2="12" />
                     </svg>
                 </span>
+
                 <!-- Check icon, hidden by default -->
                 <span class="check-icon hidden">
-                    <svg class="h-6 w-6 text-white"
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="h-6 w-6 text-white"
+                         fill="none"
                          viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="3"
-                         stroke-linecap="round" stroke-linejoin="round">
+                         stroke="currentColor"
+                         stroke-width="3"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
                         <path d="M20 6L9 17l-5-5" />
                     </svg>
                 </span>
             </button>
 
+           
+
 
         }
     </div>
+    <style>
+        /* default stroke = black */
+        .add-btn .plus-icon svg line {
+            stroke: #000;
+            transition: stroke 150ms ease-in-out;
+        }
 
+        /* turn stroke white when button is hovered */
+        .add-btn:hover .plus-icon svg line {
+            stroke: #fff;
+        }
+    </style>
 
  
 }     <!-- exactly the loop you already have -->
