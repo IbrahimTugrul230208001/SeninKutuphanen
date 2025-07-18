@@ -58,7 +58,7 @@ $('#bookList').on('click', '.add-btn', function () {
     var $btn = $(this);
     if ($btn.data('state') === 'plus') {
         // Animate checkmark drawing
-        $btn.removeClass('bg-gray-200 hover:bg-gray-300').addClass('bg-green-600 hover:bg-green-700');
+        $btn.removeClass('bg-gray-200 hover:bg-blue-600 cursor-pointer').addClass('bg-green-600');
         $btn.find('.plus-icon').addClass('hidden');
         var $checkIcon = $btn.find('.check-icon');
         $checkIcon.removeClass('hidden');

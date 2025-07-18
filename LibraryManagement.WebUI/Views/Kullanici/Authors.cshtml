@@ -7,7 +7,7 @@
 {
     bool isChecked = checkedIds.Contains(book.Id);
     <div class="flex items-center space-x-4 rounded-lg bg-gray-600  p-4 mb-2
-                shadow-xl"
+                    shadow-xl"
          data-id="@book.Id"
          data-title="@book.Title"
          data-author="@book.Author">
@@ -22,13 +22,13 @@
             <span class="text-xs text-gray-200 mt-1 truncate hover:underline cursor-pointer hover:text-white hover:font-semibold">@book.Author</span>
         </div>
 
-     
+
         <!-- add / already-added button -->
         @if (isChecked)
         {
             <!-- already in library -->
             <button class="h-14 w-14 flex items-center justify-center rounded-full
-                                           bg-green-600 text-white text-2xl" disabled>
+                                                   bg-green-600 text-white text-2xl" disabled>
                 <svg class="h-6 w-6"
                      viewBox="0 0 24 24"
                      fill="none" stroke="currentColor" stroke-width="3"
@@ -41,8 +41,8 @@
         {
             <!-- add-to-library -->
             <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full
-                 bg-gray-100 hover:bg-blue-600 transition-colors duration-150
-                 cursor-pointer shadow-xl hover:shadow-xl"
+                         bg-gray-100 hover:bg-blue-600 transition-colors duration-150
+                         cursor-pointer shadow-xl hover:shadow-xl"
                     data-state="plus"
                     data-bookid="@book.Id">
                 <!-- Plus icon -->
@@ -69,10 +69,6 @@
                     </svg>
                 </span>
             </button>
-
-           
-
-
         }
     </div>
     <style>
@@ -88,8 +84,9 @@
         }
     </style>
 
- 
-}     <!-- exactly the loop you already have -->
+
+}
+     <!-- exactly the loop you already have -->
 @if (Model.Books.Count == 0)
 {
     <div class="text-center text-gray-400 mt-4">
@@ -101,11 +98,11 @@
     <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
         @for (int i = 1; i <= Model.PageCount; i++)
         {
-            <a href="#"                       
+            <a href="#"
                onclick="searchBooks(@i);return false;"
                class="page px-4 py-2 border border-gray-700 bg-gray-800 text-gray-300
-                      hover:bg-blue-600 hover:text-white
-                      @(i == Model.PageNumber ? "font-bold bg-blue-700 text-white" : "")">
+                          hover:bg-blue-600 hover:text-white
+                          @(i == Model.PageNumber ? "font-bold bg-blue-700 text-white" : "")">
                 @i
             </a>
         }
