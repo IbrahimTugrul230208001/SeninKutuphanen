@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "type": "commonjs",
+
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "tailwindcss -i ./tailwind/input.css -o ./wwwroot/css/output.css --watch"
-  },
+    "tw:watch": "npm --prefix ./LibraryManagement.WebUI run tw:watch",
+    "tw:build": "npm --prefix ./LibraryManagement.WebUI run tw:build"
+  }
+
+,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/IbrahimTugrul230208001/SeninKutuphanen.git"
@@ -24,6 +27,7 @@
     "postcss": "^8.5.3"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
     "tailwindcss": "^4.1.11"
   }
 }

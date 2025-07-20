@@ -71,9 +71,10 @@
 
 
     <div class="flex justify-center mb-2 mt-5">
-        <h1 class="text-4xl font-bold leading-[1.3] bg-gradient-to-r from-blue-500 via-violet-500 to-pink-500 bg-clip-text text-transparent">
+        <h1 class="text-4xl font-bold leading-[1.3] bg-gradient-to-r from-[#4285F4] to-[#1a73e8] bg-clip-text text-transparent">
             Kitaplarını ekle veya ara
         </h1>
+
     </div>
     <div class="flex justify-center mb-5">
         <span class="text-xl text-gray-400">Kitap takibi, alışkanlık kazandırır.</span>
@@ -88,11 +89,11 @@
             <input id="search-input"
                    type="text"
                    placeholder="Ara..."
-                   class="flex-grow h-full bg-gray-600 px-5 text-lg text-white
+                   class="grow h-full bg-gray-600 px-5 text-lg text-white
    placeholder-gray-400 focus:outline-none" onkeydown="checkEnter(event)"/>
 
             <!-- filter -->
-            <div class="relative h-full flex-shrink-0 border-l border-white">
+            <div class="relative h-full shrink-0 border-l border-white">
                 <select class="h-full appearance-none pl-5 pr-12 cursor-pointer bg-gray-600" id="search-criteria">
                     <option value="title">Kitap</option>
                     <option value="author">Yazar</option>
@@ -107,7 +108,7 @@
 
             <!-- square YouTube-style search button -->
             <button type="button"
-                    class="flex h-full w-16 -ml-px flex-shrink-0 items-center justify-center
+                    class="flex h-full w-16 -ml-px shrink-0 items-center justify-center
                    bg-blue-500 hover:bg-blue-600 transition-colors
                     focus:outline-none cursor-pointer"
                     aria-label="Ara" onclick="searchBooks()">

@@ -1,4 +1,4 @@
-﻿.active-underline::after {
+.active-underline::after {
     content: "";
     display: block;
     margin: 0 auto;
