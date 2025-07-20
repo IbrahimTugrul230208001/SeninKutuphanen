@@ -1,110 +1,186 @@
-﻿@model learningASP.NET_CORE.Models.AnaSayfaViewModel
-@{
-    var checkedIds = Model.CheckedIds;   // hash-set of books already in the user’s showcase
-}
+﻿@using LibraryManagement.Business.Concrete
+@using LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
+@using LibraryManagement.DataAccess.Concrete
+@using LibraryManagement.Entities.Concrete
+@using learningASP.NET_CORE.Models
+@model NavigationViewModel
 
-@foreach (var book in Model.Books)
-{
-    bool isChecked = checkedIds.Contains(book.Id);
-    <div class="flex items-center space-x-4 rounded-lg bg-gray-600  p-4 mb-2
-                    shadow-xl"
-         data-id="@book.Id"
-         data-title="@book.Title"
-         data-author="@book.Author">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeninKütüphanen</title>
+    <link rel="icon" href="/img/logo.png" type="jpeg">
+    <link href="~/css/output.css" rel="stylesheet"/>
+    <link href="~/css/Global.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-800 text-gray-100">
+    <nav class="sticky top-0 z-50 bg-gray-900 px-6 py-3 text-white backdrop-blur-md shadow-xl">
+        <div class="max-w-7xl mx-auto flex items-center justify-between h-16 px-4">
+            <div class="hidden md:flex items-center space-x-10">
 
-        <!-- cover -->
-        <img src="@(book.ImageLink ?? "/img/bookcover.jpg")"
-             class="h-16 w-12 object-cover rounded shadow-sm cursor-pointer" />
+                <a href="/Kullanici/AnaSayfa">
+                    <img src="/img/logo.png" alt="Logo" height="80" width="80" class="rounded-full">
+                </a>
+            <!-- Left: Logo + Title -->
+            <a href="/Kullanici/AnaSayfa">
+                <span class="font-semibold text-gray-100 active-underline">Ana Sayfa</span>
+            </a>
+          
+            <!-- Center: Navigation -->
+                <!-- Current page is Kitaplık -->
+                <a href="/Kullanici/Duzenle"
+                   class="font-bold text-gray-300 font-semibold nav-link">
+                    Kitaplık
+                </a>
+                <a href="/Sohbet/BenimAsistanim"
+                   class="text-gray-300 font-semibold nav-link">
+                    BenimAsistanım
+                </a>
 
-        <!-- title + author -->
-        <div class="flex flex-col flex-grow truncate">
-            <span class="truncate cursor-pointer font-semibold text-gray-50 text-lg">@book.Title</span>
-            <span class="text-xs text-gray-200 mt-1 truncate hover:underline cursor-pointer hover:text-white hover:font-semibold">@book.Author</span>
+            </div>
+            <!-- Right: Auth Buttons -->
+            <div class="hidden md:flex space-x-3">
+                <a href="/Dogrulama/Giris" class="px-4 py-2 text-gray-300 hover:text-white font-semibold transition">Giriş Yap</a>
+                <a href="/Dogrulama/Kayit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition">Kayıt Ol</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="text-white md:hidden">☰</button>
         </div>
 
 
-        <!-- add / already-added button -->
-        @if (isChecked)
-        {
-            <!-- already in library -->
-            <button class="h-14 w-14 flex items-center justify-center rounded-full
-                                                   bg-green-600 text-white text-2xl" disabled>
-                <svg class="h-6 w-6"
-                     viewBox="0 0 24 24"
-                     fill="none" stroke="currentColor" stroke-width="3"
-                     stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 6L9 17l-5-5" />
-                </svg>
-            </button>
-        }
-        else
-        {
-            <!-- add-to-library -->
-            <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full
-                         bg-gray-100 hover:bg-blue-600 transition-colors duration-150
-                         cursor-pointer shadow-xl hover:shadow-xl"
-                    data-state="plus"
-                    data-bookid="@book.Id">
-                <!-- Plus icon -->
-                <span class="plus-icon">
-                    <svg class="h-6 w-6 text-black group-hover:text-white transition-colors duration-150"
-                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                         stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                    </svg>
-                </span>
 
-                <!-- Check icon, hidden by default -->
-                <span class="check-icon hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="h-6 w-6 text-white"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor"
-                         stroke-width="3"
-                         stroke-linecap="round"
-                         stroke-linejoin="round">
-                        <path d="M20 6L9 17l-5-5" />
-                    </svg>
-                </span>
-            </button>
-        }
-    </div>
-    <style>
-        /* default stroke = black */
-        .add-btn .plus-icon svg line {
-            stroke: #000;
-            transition: stroke 150ms ease-in-out;
-        }
-
-        /* turn stroke white when button is hovered */
-        .add-btn:hover .plus-icon svg line {
-            stroke: #fff;
-        }
-    </style>
-
-
-}
-     <!-- exactly the loop you already have -->
-@if (Model.Books.Count == 0)
-{
-    <div class="text-center text-gray-400 mt-4">
-        Aradığınız sonuç bulunamadı. Lütfen arama kriterlerinizi değiştirin ve tekrar deneyin.
-    </div>
-}
-<!-- pager -->
-<div class="mx-auto max-w-5xl w-full flex justify-center mt-8 mb-8">
-    <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
-        @for (int i = 1; i <= Model.PageCount; i++)
-        {
-            <a href="#"
-               onclick="searchBooks(@i);return false;"
-               class="page px-4 py-2 border border-gray-700 bg-gray-800 text-gray-300
-                          hover:bg-blue-600 hover:text-white
-                          @(i == Model.PageNumber ? "font-bold bg-blue-700 text-white" : "")">
-                @i
-            </a>
-        }
+        <!-- Mobile links -->
+        <div id="mobile-menu" class="hidden flex-col space-y-2 bg-gray-800 px-6 py-3 md:hidden">
+            <a href="/Kullanici/Duzenle" class="text-gray-300 hover:text-white">Kitaplık</a>
+            <a href="/Sohbet/BenimAsistanim" class="text-gray-300 hover:text-white">BenimAsistanım</a>
+        </div>
     </nav>
-</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        
+
+          // mobile toggle
+          const btn = document.getElementById('menu-btn');
+          const menu = document.getElementById('mobile-menu');
+          btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        });
+    </script>
+
+
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-100 text-center mb-2">
+        Yazarın Kitapları
+    </h1>
+
+
+    <div id="bookList"
+        class="mx-auto mt-6 max-w-5xl w-full grid gap-4 px-4">
+        @foreach (var book in Model.Books)
+        {
+            var checkedIds = Model.CheckedIds;
+            bool isChecked = checkedIds.Contains(book.Id);
+            <div class="flex items-center space-x-4 rounded-lg bg-gray-600  p-4 mb-2
+                        shadow-xl"
+                 data-id="@book.Id"
+                 data-title="@book.Title"
+                 data-author="@book.Author">
+
+                <!-- cover -->
+                <img src="@(book.ImageLink ?? "/img/bookcover.jpg")"
+                     class="h-16 w-12 object-cover rounded shadow-sm cursor-pointer" />
+
+                <!-- title + author -->
+                <div class="flex flex-col flex-grow truncate">
+                    <span class="truncate cursor-pointer font-semibold text-gray-50 text-lg">@book.Title</span>
+                    <span class="text-xs text-gray-200 mt-1 truncate hover:underline cursor-pointer hover:text-white hover:font-semibold">@book.Author</span>
+                </div>
+
+
+                <!-- add / already-added button -->
+                @if (isChecked)
+                {
+                    <!-- already in library -->
+                    <button class="h-14 w-14 flex items-center justify-center rounded-full
+                                                           bg-green-600 text-white text-2xl" disabled>
+                        <svg class="h-6 w-6"
+                             viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="3"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6L9 17l-5-5" />
+                        </svg>
+                    </button>
+                }
+                else
+                {
+                    <!-- add-to-library -->
+                    <button class="add-btn h-14 w-14 flex items-center justify-center rounded-full
+                                 bg-gray-100 hover:bg-blue-600 transition-colors duration-150
+                                 cursor-pointer shadow-xl hover:shadow-xl"
+                            data-state="plus"
+                            data-bookid="@book.Id">
+                        <!-- Plus icon -->
+                        <span class="plus-icon">
+                            <svg class="h-6 w-6 text-black group-hover:text-white transition-colors duration-150"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                        </span>
+
+                        <!-- Check icon, hidden by default -->
+                        <span class="check-icon hidden">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 class="h-6 w-6 text-white"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke="currentColor"
+                                 stroke-width="3"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                        </span>
+                    </button>
+                }
+            </div>
+            <style>
+                /* default stroke = black */
+                .add-btn .plus-icon svg line {
+                    stroke: #000;
+                    transition: stroke 150ms ease-in-out;
+                }
+
+                /* turn stroke white when button is hovered */
+                .add-btn:hover .plus-icon svg line {
+                    stroke: #fff;
+                }
+            </style>
+
+
+        }
+    
+        <!-- pager -->
+        <div class="mx-auto max-w-5xl w-full flex justify-center mt-8 mb-8">
+            <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    <a href="#"
+                       onclick="searchBooks(@i);return false;"
+                       class="page px-4 py-2 border border-gray-700 bg-gray-800 text-gray-300
+                              hover:bg-blue-600 hover:text-white
+                              @(i == Model.PageNumber ? "font-bold bg-blue-700 text-white" : "")">
+                        @i
+                    </a>
+                }
+            </nav>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/MainPage.js"></script>
+</body>
+</html>
+

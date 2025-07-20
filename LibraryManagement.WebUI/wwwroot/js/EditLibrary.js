@@ -100,32 +100,6 @@ $(document).ready(function () {
 });
 
 
-
-$(document).ready(function () {
-    $("#DeleteBook").click(function () {
-        var bookId = $("#UpdateId").val(); // Ensure input exists for book ID
-
-        $.ajax({
-            type: "DELETE",
-            url: "/Kullanici/Delete",
-            data: JSON.stringify(bookId),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (response) {
-                if (response.success) {
-                    alert("Kitap kütüphaneden kaldırıldı.");
-                    $("#tableBody tr[data-id='" + bookId + "']").remove();
-                } else {
-                    alert("Kaldırma işlemi esnasında bir hata oluştu: " + response.error);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.log("Error details:", xhr, status, error);
-                alert("Sunucu ile iletişim kurulurken bir hata oluştu.");
-            }
-        });
-    });
-
     $("#AddToFavoritesButton").click(function () {
         var bookID = $("#UpdateId").val(); // Ensure input exists for book ID
 
@@ -356,3 +330,31 @@ document.addEventListener("DOMContentLoaded", function () {
         progressValue.textContent = percentage + "%";
     });
 });
+
+$('#bookList').on('click', '.delete-btn', function (e) {
+    e.preventDefault();
+    const $btn = $(this);
+    const $shelf = $btn.closest('.shelf');
+    console.log('this=', this, '.shelf count=', $shelf.length);
+    const id = $shelf.data('id');
+    console.log('Deleting shelf with ID:', id);
+    $.ajax({
+        type: 'DELETE',
+        url: '/Kullanici/Delete',
+        data: JSON.stringify(id),
+        contentType: 'application/json',
+        dataType: 'json'
+    })
+        .done(function (res) {
+            if (res.success) {
+                // animate, then remove
+                $shelf.slideUp(200, () => $shelf.remove());
+            } else {
+                console.error('Delete failed');
+            }
+        })
+        .fail(function (err) {
+            console.error('Server error', err);
+        });
+});
+

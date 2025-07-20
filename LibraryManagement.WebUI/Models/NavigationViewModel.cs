@@ -2,7 +2,7 @@
 
 namespace learningASP.NET_CORE.Models
 {
-    public class AnaSayfaViewModel
+    public class NavigationViewModel
     {
         public List<Book> Books { get; set; }
         public int PageNumber { get; set; }
@@ -11,5 +11,7 @@ namespace learningASP.NET_CORE.Models
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string UserProfilePicture { get; set; }
+    
+        public string AuthorName { get; set; }
     }
 }

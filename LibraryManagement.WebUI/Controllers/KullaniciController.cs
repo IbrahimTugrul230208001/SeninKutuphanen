@@ -127,7 +127,7 @@ namespace learningASP.NET_CORE.Controllers
                               (await _libraryManager.ListBookShowcaseAsync(userId))
                               .Select(b => b.Id));
 
-            var vm = new AnaSayfaViewModel
+            var vm = new NavigationViewModel
             {
                 Books = booksForPage,
                 PageNumber = pageNumber,
@@ -144,7 +144,11 @@ namespace learningASP.NET_CORE.Controllers
                 : View(vm);
         }
 
-
+        public Task<IActionResult> Authors()
+        {
+           
+            return Task.FromResult<IActionResult>(View());
+        }
 
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] int bookId)
@@ -152,11 +156,11 @@ namespace learningASP.NET_CORE.Controllers
             if (bookId != 0)
             {
                 await _libraryManager.DeleteFromLibraryAsync(bookId);
-                return Json(new { success = true, redirectUrl = Url.Action("EditLibrary") });
+                return Json(new { success = true, redirectUrl = Url.Action("Duzenle", "Kullanici") });
             }
             else
             {
-                return Json(new { success = false, redirectUrl = Url.Action("EditLibrary") });
+                return Json(new { success = false, redirectUrl = Url.Action("Duzenle", "Kullanici") });
             }
         }
 
