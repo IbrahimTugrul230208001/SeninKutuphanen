@@ -58,7 +58,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
         {
             using (var context = new LibraryContext())
             {
-                var book = await context.UserBooks.FindAsync(bookId);
+                var book = await context.UserBooks.FirstOrDefaultAsync(b=>b.BookId==bookId);
                 context.UserBooks.Remove(book);
                 await context.SaveChangesAsync();
             }
