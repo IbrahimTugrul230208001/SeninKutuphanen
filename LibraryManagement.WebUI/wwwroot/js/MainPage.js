@@ -95,3 +95,41 @@ $('#bookList').on('click', '.add-btn', function () {
     }
 });
 
+let autocompleteTimeout;
+
+$('#search-input').on('input', function () {
+    clearTimeout(autocompleteTimeout);
+    const query = this.value.trim();
+    const crit = $('#search-criteria').val();
+
+    if (query.length < 2) {
+        $('#search-predictions').hide();
+        return;
+    }
+
+    // Debounce: only request after 200ms pause
+    autocompleteTimeout = setTimeout(() => {
+        $.get(`/api/books/predict`, { query, crit }, function (predictions) {
+            // predictions = array of strings or objects from server
+            console.log(predictions); // <--- SEE WHAT'S RETURNED
+
+            if (!predictions.length) {
+                $('#search-predictions').hide();
+                return;
+            }
+            // Render dropdown
+            $('#search-predictions').html(
+                predictions.slice(0, 15).map(p =>
+                    `<div class="px-4 py-2 hover:bg-gray-500 cursor-pointer">${p}</div>`
+                ).join('')
+            ).show();
+        }, 'json');
+    }, 200);
+});
+
+// Optional: click prediction to fill input
+$('#search-predictions').on('click', 'div', function () {
+    $('#search-input').val($(this).text());
+    $('#search-predictions').hide();
+    // Optionally trigger full searchBooks()
+});

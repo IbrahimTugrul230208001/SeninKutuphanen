@@ -58,7 +58,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
         {
             using (var context = new LibraryContext())
             {
-                var book = await context.UserBooks.FirstOrDefaultAsync(b=>b.BookId==bookId);
+                var book = await context.UserBooks.FirstOrDefaultAsync(b => b.BookId == bookId);
                 context.UserBooks.Remove(book);
                 await context.SaveChangesAsync();
             }
@@ -172,6 +172,29 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 return await query.ToListAsync();
             }
         }
+
+        public async Task<List<string>> BookSearchQueryResultAsync(string searchTerm, string criteria)
+        {
+            using (var context = new LibraryContext())
+            {
+                IQueryable<Book> query = context.Books;
+                if (!string.IsNullOrEmpty(searchTerm))
+                {
+                    searchTerm = searchTerm.ToLower();
+                    switch (criteria.ToLower())
+                    {
+                        case "title":
+                            query = query.Where(b => b.Title.ToLower().Contains(searchTerm));
+                            break;
+                        case "author":
+                            query = query.Where(b => b.Author.ToLower().Contains(searchTerm));
+                            break;
+                        default:
+                            throw new ArgumentException("Invalid search criteria");
+                    }
+                }
+                return await query.Select(b => b.Title).ToListAsync();
+            }
+        }
     }
 }
-                     

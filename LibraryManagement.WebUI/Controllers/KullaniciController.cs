@@ -143,6 +143,19 @@ namespace learningASP.NET_CORE.Controllers
                 ? PartialView("_BookListPartial", vm)   // or Json(vm) if you prefer
                 : View(vm);
         }
+        [HttpGet("/api/books/predict")]
+        public async Task<IActionResult> Predict(string query, string crit)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                var results = await _libraryManager.BookSearchQueryResultAsync(query, crit);
+                return Json(results);
+            }
+            else
+            {
+                return Json(new List<Book>());
+            }
+        }
 
         public Task<IActionResult> Authors()
         {
@@ -256,6 +269,7 @@ namespace learningASP.NET_CORE.Controllers
                 return Json(new { success = true, redirectUrl = Url.Action("Settings") });
             }
         }
+       
 
         [HttpPost]
         public async Task<IActionResult> LogOut()

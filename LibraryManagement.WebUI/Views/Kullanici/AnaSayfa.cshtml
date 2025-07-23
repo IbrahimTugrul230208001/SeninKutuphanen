@@ -16,7 +16,12 @@
     <link href="~/css/Global.css" rel="stylesheet"/>
 </head>
 <body class="bg-gray-800 text-gray-100">
-    <nav class="sticky top-0 z-50 bg-gray-900 px-6 py-3 text-white backdrop-blur-md shadow-xl">
+    <div id="overlay"
+         class="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm
+            transition-opacity duration-300 opacity-0 pointer-events-none">
+    </div>
+
+    <nav class="sticky top-0 z-70 bg-gray-900 px-6 py-3 text-white backdrop-blur-md shadow-xl">
         <div class="max-w-7xl mx-auto flex items-center justify-between h-16 px-4">
             <div class="hidden md:flex items-center space-x-10">
 
@@ -58,16 +63,6 @@
         </div>
     </nav>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-        
-
-          // mobile toggle
-          const btn = document.getElementById('menu-btn');
-          const menu = document.getElementById('mobile-menu');
-          btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-        });
-    </script>
 
 
     <div class="flex justify-center mb-2 mt-5">
@@ -80,17 +75,20 @@
         <span class="text-xl text-gray-400">Kitap takibi, alışkanlık kazandırır.</span>
     </div>
 
-    <div class="mx-auto mt-8 max-w-5xl px-4">
+    <div class="mx-auto mt-8 max-w-5xl px-4 relative z-50">
+        <!-- Overlay: ADD THIS BLOCK -->
+       
+        <!-- END Overlay -->
 
-        <div class="flex h-16 w-full overflow-hidden rounded-3xl bg-[#242b38] shadow-xl
-            transition focus-within:ring-1 focus-within:ring-blue-500">
+        <div class="search-container flex h-16 w-full overflow-hidden rounded-3xl bg-[#242b38] shadow-xl
+         transition focus-within:ring-1 focus-within:ring-blue-500">
 
             <!-- search input -->
             <input id="search-input"
                    type="text"
                    placeholder="Ara..."
                    class="grow h-full bg-gray-600 px-5 text-lg text-white
-   placeholder-gray-400 focus:outline-none" onkeydown="checkEnter(event)"/>
+               placeholder-gray-400 focus:outline-none" onkeydown="checkEnter(event)" />
 
             <!-- filter -->
             <div class="relative h-full shrink-0 border-l border-white">
@@ -109,8 +107,8 @@
             <!-- square YouTube-style search button -->
             <button type="button"
                     class="flex h-full w-16 -ml-px shrink-0 items-center justify-center
-                   bg-blue-500 hover:bg-blue-600 transition-colors
-                    focus:outline-none cursor-pointer"
+               bg-blue-500 hover:bg-blue-600 transition-colors
+                focus:outline-none cursor-pointer"
                     aria-label="Ara" onclick="searchBooks()">
                 <!-- solid magnifying-glass icon -->
                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -122,14 +120,74 @@
                     <circle cx="11" cy="11" r="7" />
                     <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-linecap="round" />
                 </svg>
-
-
             </button>
         </div>
+    </div>
+    <div class="relative w-full flex justify-center">
+        <!-- Search bar here -->
+        <div id="search-predictions"
+             class="absolute top-full mt-2
+                w-5xl max-w-full max-h-64 overflow-y-auto
+                bg-gray-700 border border-blue-400 rounded-2xl shadow-xl
+                z-70 text-white"
+             style="display:none"></div>
     </div>
 
 
 
+
+    <script>
+             document.addEventListener("DOMContentLoaded", () => {
+            const input     = document.getElementById('search-input');
+            const overlay   = document.getElementById('overlay');
+            const container = document.querySelector('.search-container');
+            const preds     = document.getElementById('search-predictions');
+
+            // Show overlay and predictions on input focus (if there are predictions)
+            input.addEventListener('focus', () => {
+                overlay.classList.remove('opacity-0','pointer-events-none');
+                overlay.classList.add('opacity-100');
+                if (preds.children.length > 0) preds.style.display = '';
+            });
+
+            // Hide overlay and predictions on input blur (unless moving to prediction)
+            input.addEventListener('blur', () => {
+                setTimeout(() => {
+                    if (
+                        !container.contains(document.activeElement) ||
+                        (preds.style.display === 'none')
+                    ) {
+                        overlay.classList.add('opacity-0','pointer-events-none');
+                        overlay.classList.remove('opacity-100');
+                        preds.style.display = 'none';
+                    }
+                }, 50);
+            });
+
+            // Hide overlay/predictions if overlay is clicked
+            overlay.addEventListener('click', () => {
+                input.blur();
+                preds.style.display = 'none';
+            });
+
+            // Hide predictions when a prediction is clicked (optional: also run a select action)
+            preds.addEventListener('mousedown', e => {
+                // Use mousedown to prevent blur from hiding too early
+                preds.style.display = 'none';
+                overlay.classList.add('opacity-0','pointer-events-none');
+                overlay.classList.remove('opacity-100');
+            });
+
+            // When showing predictions in your AJAX:
+            // $('#search-predictions').show()   <-- For vanilla JS: preds.style.display = ''
+            // $('#search-predictions').hide()   <-- preds.style.display = 'none'
+            // (already handled above, but make sure to only show if there are results)
+
+            window.searchBooks = ()=>{};
+            window.checkEnter = e=> e.key==='Enter' && searchBooks();
+        });
+
+    </script>
 
     <div id="bookList"
         class="mx-auto mt-6 max-w-5xl w-full grid gap-4 px-4">

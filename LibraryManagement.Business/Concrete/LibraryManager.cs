@@ -26,6 +26,11 @@ namespace LibraryManagement.Business.Concrete
              await _libraryRepository.AddToShowcaseAsync(userId);
         }
 
+        public Task<List<string>> BookSearchQueryResultAsync(string searchTerm, string criteria)
+        {
+            return _libraryRepository.BookSearchQueryResultAsync(searchTerm, criteria);
+        }
+
         public async Task<List<Book>> BookSearchResultAsync(string searchTerm, string criteria)
         {
             return await _libraryRepository.BookSearchResultAsync(searchTerm, criteria);

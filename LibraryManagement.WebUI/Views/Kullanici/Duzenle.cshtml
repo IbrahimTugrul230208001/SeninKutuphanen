@@ -98,32 +98,22 @@
             }
             @foreach (var book in books)
             {
-                <div class="shelf flex items-center space-x-4 rounded-lg bg-gray-600 p-3 shadow-xl" data-id="@book.Id" data-title="@book.Title" data-author="@book.Author">
-                    <img src="@(book.ImageLink ?? "/img/bookcover.jpg")" class="h-16 w-12 object-cover rounded" />
-                    <div class="flex flex-col grow truncate">
-                        <span class="truncate cursor-pointer font-semibold text-gray-50 text-lg">@book.Title</span>
-                        <span class="text-xs text-gray-200 mt-1 truncate hover:underline cursor-pointer hover:text-white">@book.Author</span>
+                <div class="shelf flex relative items-start space-x-4 rounded-lg bg-gray-600 p-3 shadow-xl" data-id="@book.Id">
+                    <div class="flex items-center space-x-4 flex-1 justify-center">
+                        <img src="@(book.ImageLink ?? "/img/bookcover.jpg")" height="80" width="50" class="object-cover rounded" />
+                        <div class="flex flex-col grow truncate">
+                            <span class="truncate font-semibold cursor-pointer text-gray-50 text-lg">@book.Title</span>
+                            <span class="text-xs text-gray-200 mt-1 truncate cursor-pointer hover:underline hover:text-white">@book.Author</span>
+                        </div>
                     </div>
 
-
-                    <button title="Kitabı kaldır" class="delete-btn h-14 w-14 flex items-center cursor-pointer justify-center rounded-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-2xl" data-state="delete">
-                            <span class="delete-icon">
-                                <svg class="h-6 w-6 text-white"
-                                     viewBox="0 0 24 24"
-                                     fill="none"
-                                     stroke="currentColor"
-                                     stroke-width="2.5"
-                                     stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <polyline points="3 6 5 6 21 6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
-                                    <line x1="10" y1="11" x2="10" y2="17" />
-                                    <line x1="14" y1="11" x2="14" y2="17" />
-                                </svg>
-                            </span>
-                        </button>
-                    
+                    <button title="Kitabı kaldır"
+                            class="delete-btn cursor-pointer h-6 w-8 p-0 flex items-center justify-center bg-transparent border border-red-600 hover:bg-red-600 active:bg-red-700 rounded-md transition-colors duration-300 group"
+                            data-state="delete">
+                        <span class="font-bold text-lg text-red-600 group-hover:text-white transition-colors duration-300">−</span>
+                    </button>
                 </div>
+
             }
         </div>
 
