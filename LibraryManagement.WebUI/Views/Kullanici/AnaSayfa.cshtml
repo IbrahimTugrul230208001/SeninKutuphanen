@@ -136,61 +136,8 @@
 
 
 
-    <script>
-             document.addEventListener("DOMContentLoaded", () => {
-            const input     = document.getElementById('search-input');
-            const overlay   = document.getElementById('overlay');
-            const container = document.querySelector('.search-container');
-            const preds     = document.getElementById('search-predictions');
-
-            // Show overlay and predictions on input focus (if there are predictions)
-            input.addEventListener('focus', () => {
-                overlay.classList.remove('opacity-0','pointer-events-none');
-                overlay.classList.add('opacity-100');
-                if (preds.children.length > 0) preds.style.display = '';
-            });
-
-            // Hide overlay and predictions on input blur (unless moving to prediction)
-            input.addEventListener('blur', () => {
-                setTimeout(() => {
-                    if (
-                        !container.contains(document.activeElement) ||
-                        (preds.style.display === 'none')
-                    ) {
-                        overlay.classList.add('opacity-0','pointer-events-none');
-                        overlay.classList.remove('opacity-100');
-                        preds.style.display = 'none';
-                    }
-                }, 50);
-            });
-
-            // Hide overlay/predictions if overlay is clicked
-            overlay.addEventListener('click', () => {
-                input.blur();
-                preds.style.display = 'none';
-            });
-
-            // Hide predictions when a prediction is clicked (optional: also run a select action)
-            preds.addEventListener('mousedown', e => {
-                // Use mousedown to prevent blur from hiding too early
-                preds.style.display = 'none';
-                overlay.classList.add('opacity-0','pointer-events-none');
-                overlay.classList.remove('opacity-100');
-            });
-
-            // When showing predictions in your AJAX:
-            // $('#search-predictions').show()   <-- For vanilla JS: preds.style.display = ''
-            // $('#search-predictions').hide()   <-- preds.style.display = 'none'
-            // (already handled above, but make sure to only show if there are results)
-
-            window.searchBooks = ()=>{};
-            window.checkEnter = e=> e.key==='Enter' && searchBooks();
-        });
-
-    </script>
-
     <div id="bookList"
-        class="mx-auto mt-6 max-w-5xl w-full grid gap-4 px-4">
+        class="mx-auto mt-6 max-w-5xl w-full px-4">
         @await Html.PartialAsync("_BookListPartial", Model)
     </div>
 

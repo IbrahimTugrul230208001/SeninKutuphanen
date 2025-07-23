@@ -15,11 +15,7 @@ $('.page').on('click', function () {
     });
 });
 
-function checkEnter(event) {
-    if (event.key === 'Enter') {
-        searchBooks();
-    }
-}
+
 
 const menuBtn = document.getElementById('menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
@@ -27,12 +23,18 @@ menuBtn.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
     mobileMenu.classList.toggle('scale-y-0');
 });
-
+function checkEnter(event) {
+    if (event.key === 'Enter') {
+        searchBooks();
+    }
+}
 function searchBooks(page = 1) {
     const input = $('#search-input').val().trim();
     const crit = $('#search-criteria').val();
     const $list = $('#bookList');
-
+    $('#overlay').addClass('opacity-0 pointer-events-none').removeClass('opacity-100');
+    const preds = document.getElementById('search-predictions');
+    preds.style.display = 'none';
     // 1 . block short queries (<3 chars)
     if (input.length < 3 && input.length > 0) {
         $list.html(`
@@ -95,6 +97,56 @@ $('#bookList').on('click', '.add-btn', function () {
     }
 });
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById('search-input');
+    const overlay = document.getElementById('overlay');
+    const container = document.querySelector('.search-container');
+    const preds = document.getElementById('search-predictions');
+
+    // Show overlay and predictions on input focus (if there are predictions)
+    input.addEventListener('focus', () => {
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        overlay.classList.add('opacity-100');
+        if (preds.children.length > 0) preds.style.display = '';
+    });
+
+    // Hide overlay and predictions on input blur (unless moving to prediction)
+    input.addEventListener('blur', () => {
+        setTimeout(() => {
+            if (
+                !container.contains(document.activeElement) ||
+                (preds.style.display === 'none')
+            ) {
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                overlay.classList.remove('opacity-100');
+                preds.style.display = 'none';
+            }
+        }, 50);
+    });
+
+    // Hide overlay/predictions if overlay is clicked
+    overlay.addEventListener('click', () => {
+        input.blur();
+        preds.style.display = 'none';
+    });
+
+    // Hide predictions when a prediction is clicked (optional: also run a select action)
+    preds.addEventListener('mousedown', e => {
+        // Use mousedown to prevent blur from hiding too early
+        preds.style.display = 'none';
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        overlay.classList.remove('opacity-100');
+    });
+
+    // When showing predictions in your AJAX:
+    // $('#search-predictions').show()   <-- For vanilla JS: preds.style.display = ''
+    // $('#search-predictions').hide()   <-- preds.style.display = 'none'
+    // (already handled above, but make sure to only show if there are results)
+
+    window.checkEnter = e => e.key === 'Enter' && searchBooks();
+});
+
 let autocompleteTimeout;
 
 $('#search-input').on('input', function () {
@@ -133,3 +185,4 @@ $('#search-predictions').on('click', 'div', function () {
     $('#search-predictions').hide();
     // Optionally trigger full searchBooks()
 });
+
