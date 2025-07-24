@@ -6,7 +6,7 @@
 @foreach (var book in Model.Books)
 {
     bool isChecked = checkedIds.Contains(book.Id);
-    <div class="flex items-center space-x-4 rounded-lg bg-gray-600  p-4 mb-2
+    <div class="flex items-center space-x-4 rounded-lg bg-gray-600  p-4 mb-4
                 shadow-xl"
          data-id="@book.Id"
          data-title="@book.Title"
@@ -69,10 +69,6 @@
                     </svg>
                 </span>
             </button>
-
-           
-
-
         }
     </div>
     <style>

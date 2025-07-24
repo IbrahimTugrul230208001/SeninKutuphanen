@@ -28,13 +28,16 @@ function checkEnter(event) {
         searchBooks();
     }
 }
+let autocompleteTimeout;
+
 function searchBooks(page = 1) {
+    console.log("searching books...");
     const input = $('#search-input').val().trim();
     const crit = $('#search-criteria').val();
     const $list = $('#bookList');
+    $('#search-predictions').hide();
     $('#overlay').addClass('opacity-0 pointer-events-none').removeClass('opacity-100');
-    const preds = document.getElementById('search-predictions');
-    preds.style.display = 'none';
+
     // 1 . block short queries (<3 chars)
     if (input.length < 3 && input.length > 0) {
         $list.html(`
@@ -147,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.checkEnter = e => e.key === 'Enter' && searchBooks();
 });
 
-let autocompleteTimeout;
 
 $('#search-input').on('input', function () {
     clearTimeout(autocompleteTimeout);
@@ -164,7 +166,6 @@ $('#search-input').on('input', function () {
         $.get(`/api/books/predict`, { query, crit }, function (predictions) {
             // predictions = array of strings or objects from server
             console.log(predictions); // <--- SEE WHAT'S RETURNED
-
             if (!predictions.length) {
                 $('#search-predictions').hide();
                 return;
@@ -172,7 +173,9 @@ $('#search-input').on('input', function () {
             // Render dropdown
             $('#search-predictions').html(
                 predictions.slice(0, 15).map(p =>
-                    `<div class="px-4 py-2 hover:bg-gray-500 cursor-pointer">${p}</div>`
+                    `<div class="px-4 py-2 hover:bg-gray-500 cursor-pointer prediction-item" data-value="${p}">
+                         ${p}
+                    </div>`
                 ).join('')
             ).show();
         }, 'json');
@@ -180,9 +183,12 @@ $('#search-input').on('input', function () {
 });
 
 // Optional: click prediction to fill input
-$('#search-predictions').on('click', 'div', function () {
-    $('#search-input').val($(this).text());
+$('#search-predictions').on('mousedown', '.prediction-item', function () {
+    const val = $(this).data('value');
+    $('#search-input').val(val);
+    console.log(`Selected prediction: ${val}`);
     $('#search-predictions').hide();
-    // Optionally trigger full searchBooks()
+    $('#overlay').addClass('opacity-0 pointer-events-none').removeClass('opacity-100');
+    searchBooks();
 });
 
