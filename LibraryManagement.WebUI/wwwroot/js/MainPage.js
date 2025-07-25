@@ -28,7 +28,6 @@ function checkEnter(event) {
         searchBooks();
     }
 }
-let autocompleteTimeout;
 
 function searchBooks(page = 1) {
     console.log("searching books...");
@@ -106,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const overlay = document.getElementById('overlay');
     const container = document.querySelector('.search-container');
     const preds = document.getElementById('search-predictions');
-
+    const searchContainer = document.querySelector('.search-container');
     // Show overlay and predictions on input focus (if there are predictions)
     input.addEventListener('focus', () => {
         overlay.classList.remove('opacity-0', 'pointer-events-none');
@@ -121,8 +120,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 !container.contains(document.activeElement) ||
                 (preds.style.display === 'none')
             ) {
+                searchContainer.classList.add("rounded-b-3xl");
                 overlay.classList.add('opacity-0', 'pointer-events-none');
                 overlay.classList.remove('opacity-100');
+                searchContainer.classList.add("rounded-b-3xl");
                 preds.style.display = 'none';
             }
         }, 50);
@@ -151,6 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+let autocompleteTimeout;
+
 $('#search-input').on('input', function () {
     clearTimeout(autocompleteTimeout);
     const query = this.value.trim();
@@ -164,6 +167,10 @@ $('#search-input').on('input', function () {
     // Debounce: only request after 200ms pause
     autocompleteTimeout = setTimeout(() => {
         $.get(`/api/books/predict`, { query, crit }, function (predictions) {
+            const searchContainer = document.querySelector('.search-container');
+            searchContainer.classList.remove("rounded-b-3xl");
+
+
             // predictions = array of strings or objects from server
             console.log(predictions); // <--- SEE WHAT'S RETURNED
             if (!predictions.length) {
@@ -172,15 +179,31 @@ $('#search-input').on('input', function () {
             }
             // Render dropdown
             $('#search-predictions').html(
-                predictions.slice(0, 15).map(p =>
-                    `<div class="px-4 py-2 hover:bg-gray-500 cursor-pointer prediction-item" data-value="${p}">
-                         ${p}
-                    </div>`
+                predictions.slice(0, 8).map(p =>
+                    `
+                      <div class="flex items-center group prediction-item" data-value="${p}">
+    <div class="flex items-center justify-center w-10 h-10 bg-gray-600 group-hover:bg-gray-500">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 24 24"
+           class="h-6 w-6 text-white"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2">
+        <circle cx="11" cy="11" r="7" />
+        <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-linecap="round" />
+      </svg>
+    </div>
+    <div class="px-4 py-2 w-full group-hover:bg-gray-500">
+      ${p}
+    </div>
+  </div>
+                    `
                 ).join('')
             ).show();
         }, 'json');
     }, 200);
 });
+
 
 // Optional: click prediction to fill input
 $('#search-predictions').on('mousedown', '.prediction-item', function () {

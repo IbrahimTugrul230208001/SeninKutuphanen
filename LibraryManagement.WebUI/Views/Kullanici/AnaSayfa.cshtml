@@ -80,9 +80,20 @@
        
         <!-- END Overlay -->
 
-        <div class="search-container flex h-16 w-full overflow-hidden rounded-3xl bg-[#242b38] shadow-xl
-         transition focus-within:ring-1 focus-within:ring-blue-500">
+        <div class="search-container flex h-16 w-full overflow-hidden rounded-t-3xl rounded-b-3xl bg-[#242b38] shadow-xl transition">
 
+        <div class="flex items-center justify-center w-16 bg-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 class="h-8 w-8 text-white"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-linecap="round" />
+            </svg>
+        </div>
+           
             <!-- search input -->
             <input id="search-input"
                    type="text"
@@ -91,7 +102,7 @@
                placeholder-gray-400 focus:outline-none" onkeydown="checkEnter(event)" />
 
             <!-- filter -->
-            <div class="relative h-full shrink-0 border-l border-white">
+            <div class="relative h-full shrink-0">
                 <select class="h-full appearance-none pl-5 pr-12 cursor-pointer bg-gray-600" id="search-criteria">
                     <option value="title">Kitap</option>
                     <option value="author">Yazar</option>
@@ -103,34 +114,20 @@
                     </svg>
                 </span>
             </div>
-
-            <!-- square YouTube-style search button -->
-            <button type="button"
-                    class="flex h-full w-16 -ml-px shrink-0 items-center justify-center
-               bg-blue-500 hover:bg-blue-600 transition-colors
-                focus:outline-none cursor-pointer"
-                    aria-label="Ara" onclick="searchBooks()">
                 <!-- solid magnifying-glass icon -->
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 24 24"
-                     class="h-8 w-8 text-white"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2">
-                    <circle cx="11" cy="11" r="7" />
-                    <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-linecap="round" />
-                </svg>
-            </button>
+              
+           
         </div>
     </div>
     <div class="relative w-full flex justify-center">
         <!-- Search bar here -->
         <div id="search-predictions"
-             class="absolute top-full mt-2
-                w-5xl max-w-full max-h-64 overflow-y-auto
-                bg-gray-700 border border-blue-400 rounded-2xl shadow-xl
+             class="absolute top-full
+                w-[992px] max-w-full max-h-80 overflow-y-auto
+                bg-gray-600 rounded-b-2xl shadow-2xl
                 z-70 text-white"
-             style="display:none"></div>
+             style="display:none">
+         </div>
     </div>
 
 
@@ -145,3 +142,4 @@
     <script src="/js/MainPage.js"></script>
 </body>
 </html>
+
