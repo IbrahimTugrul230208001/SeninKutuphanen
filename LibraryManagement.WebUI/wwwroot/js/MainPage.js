@@ -151,58 +151,80 @@ document.addEventListener("DOMContentLoaded", () => {
     window.checkEnter = e => e.key === 'Enter' && searchBooks();
 });
 
-
 let autocompleteTimeout;
+
+function showPredictions(query, crit, searchContainer) {
+    $.get(`/api/books/predict`, { query, crit }, function (predictions) {
+        // Always reset UI
+        $('#search-predictions').hide();
+        searchContainer.classList.add("rounded-b-3xl");
+
+        if (predictions && predictions.length) {
+            // Merge UI for dropdown
+            searchContainer.classList.remove("rounded-b-3xl");
+            $('#search-predictions').html(
+                predictions.slice(0, 8).map(p =>
+                    `
+                    <div class="flex items-center group prediction-item" data-value="${p}">
+                        <div class="flex items-center justify-center w-10 h-10 bg-gray-600 group-hover:bg-gray-500">
+                          <svg xmlns="http://www.w3.org/2000/svg"
+                               viewBox="0 0 24 24"
+                               class="h-6 w-6 text-white"
+                               fill="none"
+                               stroke="currentColor"
+                               stroke-width="2">
+                            <circle cx="11" cy="11" r="7" />
+                            <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-linecap="round" />
+                          </svg>
+                        </div>
+                        <div class="px-4 py-2 w-full group-hover:bg-gray-500">
+                          ${p}
+                        </div>
+                    </div>
+                    `
+                ).join('')
+            ).show();
+        }
+        // No predictions: UI stays rounded.
+    }, 'json');
+}
 
 $('#search-input').on('input', function () {
     clearTimeout(autocompleteTimeout);
     const query = this.value.trim();
     const crit = $('#search-criteria').val();
+    const searchContainer = document.querySelector('.search-container');
 
     if (query.length < 2) {
-        $('#search-predictions').hide();
+        $('#search-predictions').hide().empty();
+        searchContainer.classList.add("rounded-b-3xl");
         return;
     }
 
-    // Debounce: only request after 200ms pause
     autocompleteTimeout = setTimeout(() => {
-        $.get(`/api/books/predict`, { query, crit }, function (predictions) {
-            const searchContainer = document.querySelector('.search-container');
-            searchContainer.classList.remove("rounded-b-3xl");
-
-
-            // predictions = array of strings or objects from server
-            console.log(predictions); // <--- SEE WHAT'S RETURNED
-            if (!predictions.length) {
-                $('#search-predictions').hide();
-                return;
-            }
-            // Render dropdown
-            $('#search-predictions').html(
-                predictions.slice(0, 8).map(p =>
-                    `
-                      <div class="flex items-center group prediction-item" data-value="${p}">
-    <div class="flex items-center justify-center w-10 h-10 bg-gray-600 group-hover:bg-gray-500">
-      <svg xmlns="http://www.w3.org/2000/svg"
-           viewBox="0 0 24 24"
-           class="h-6 w-6 text-white"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="2">
-        <circle cx="11" cy="11" r="7" />
-        <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-linecap="round" />
-      </svg>
-    </div>
-    <div class="px-4 py-2 w-full group-hover:bg-gray-500">
-      ${p}
-    </div>
-  </div>
-                    `
-                ).join('')
-            ).show();
-        }, 'json');
+        showPredictions(query, crit, searchContainer);
     }, 200);
 });
+
+$('#search-input').on('focus', function () {
+    const query = this.value.trim();
+    const crit = $('#search-criteria').val();
+    const searchContainer = document.querySelector('.search-container');
+
+    if (query.length >= 2) {
+        showPredictions(query, crit, searchContainer);
+    }
+});
+
+$('#search-input').on('blur', function () {
+    setTimeout(() => {
+        const searchContainer = document.querySelector('.search-container');
+        $('#search-predictions').hide();
+        searchContainer.classList.add("rounded-b-3xl");
+    }, 150);
+});
+
+
 
 
 // Optional: click prediction to fill input
@@ -213,5 +235,14 @@ $('#search-predictions').on('mousedown', '.prediction-item', function () {
     $('#search-predictions').hide();
     $('#overlay').addClass('opacity-0 pointer-events-none').removeClass('opacity-100');
     searchBooks();
+});
+
+// Author label click: fetch books by author
+$(document).on('click', '.Authors', function () {
+            const author = $(this).text().trim();
+            if (!author) return;
+
+            // Redirect to Kullanici/Yazarlar with author as query parameter
+            window.location.href = `/Kullanici/Yazarlar?author=${encodeURIComponent(author)}`;
 });
 

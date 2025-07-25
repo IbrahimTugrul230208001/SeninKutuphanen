@@ -156,11 +156,33 @@ namespace learningASP.NET_CORE.Controllers
                 return Json(new List<Book>());
             }
         }
+        
 
-        public Task<IActionResult> Authors()
+        public async Task<IActionResult> Yazarlar(string author)
         {
-           
-            return Task.FromResult<IActionResult>(View());
+            if (string.IsNullOrWhiteSpace(author))
+            {
+                // Optionally, handle missing author (e.g., redirect or show error)
+                return RedirectToAction("AnaSayfa");
+            }
+            var workingSet = new List<Book>();
+            workingSet = await _libraryManager.BookSearchResultAsync(author, "author");
+            int totalCount = workingSet.Count;
+            int pageCount = (int)(totalCount / 30);
+            var vm = new NavigationViewModel
+            {
+                Books = workingSet,
+                PageNumber = 1, // Default to first page
+                PageCount = pageCount, // Default to one page since we are showing all results
+                UserId = _userService.UserId,
+                UserName = _userService.UserName,
+                CheckedIds =  new HashSet<int>(
+                              (await _libraryManager.ListBookShowcaseAsync(_userService.UserId))
+                              .Select(b => b.Id))
+            };
+            ViewData["Author"] = author;
+            ViewData["UserId"] = _userService.UserId;
+            return View(vm);
         }
 
         [HttpDelete]

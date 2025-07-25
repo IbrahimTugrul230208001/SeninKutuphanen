@@ -69,7 +69,6 @@
         <h1 class="text-4xl font-bold leading-[1.3] bg-gradient-to-r from-[#4285F4] to-[#1a73e8] bg-clip-text text-transparent">
             Kitaplarını ekle veya ara
         </h1>
-
     </div>
     <div class="flex justify-center mb-5">
         <span class="text-xl text-gray-400">Kitap takibi, alışkanlık kazandırır.</span>
@@ -102,8 +101,8 @@
                placeholder-gray-400 focus:outline-none" onkeydown="checkEnter(event)" />
 
             <!-- filter -->
-            <div class="relative h-full shrink-0">
-                <select class="h-full appearance-none pl-5 pr-12 cursor-pointer bg-gray-600" id="search-criteria">
+            <div class="relative h-full shrink-0 focus:ring-0 focus:border-none">
+                <select class="h-full pl-5 pr-12 appearance-none cursor-pointer bg-gray-600 border-none focus:ring-0" id="search-criteria">
                     <option value="title">Kitap</option>
                     <option value="author">Yazar</option>
                 </select>

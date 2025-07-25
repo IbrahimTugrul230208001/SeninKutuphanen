@@ -25,3 +25,10 @@
         });
 });
 
+$(document).on('click', '.Authors', function () {
+    const author = $(this).text().trim();
+    if (!author) return;
+
+    // Redirect to Kullanici/Yazarlar with author as query parameter
+    window.location.href = `/Kullanici/Yazarlar?author=${encodeURIComponent(author)}`;
+});
