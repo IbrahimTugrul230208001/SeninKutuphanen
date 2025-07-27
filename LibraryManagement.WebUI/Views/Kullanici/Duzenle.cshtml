@@ -81,6 +81,13 @@
                 Kitaplık
             </h1>
         </div>
+        <div class="flex items-center w-full px-6 my-4">
+            <hr class="flex-1 border-t border-gray-300" />
+            <span class="ml-4 text-sm font-semibold text-gray-300 select-none">
+                Okunanlar
+            </span>
+        </div>
+
         <!--
         <div class="mb-6 flex justify-center">
             <div class="relative h-[192px] w-[192px]">
@@ -106,8 +113,29 @@
                             <span title="@book.Author" class="Authors text-xs text-gray-200 mt-1 truncate cursor-pointer hover:underline hover:text-white max-w-[25ch]">@book.Author</span>
                         </div>
                     </div>
+                   
+                    <button class="h-14 w-14 flex items-center justify-center rounded-full border-2 border-gray-400 text-gray-400
+                                     bg-transparent text-2xl self-center cursor-pointer transition duration-150 hover:bg-gray-400 hover:text-white"
+                            data-state="edit">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path d="M19 3.25001H6.75C6.10713 3.23114 5.483 3.4679 5.01439 3.9084C4.54577 4.3489 4.2709 4.9572 4.25 5.60001V18C4.27609 18.7542 4.60027 19.4673 5.15142 19.9829C5.70258 20.4984 6.43571 20.7743 7.19 20.75H19C19.1981 20.7474 19.3874 20.6676 19.5275 20.5275C19.6676 20.3874 19.7474 20.1981 19.75 20V4.00001C19.7474 3.8019 19.6676 3.61264 19.5275 3.47254C19.3874 3.33245 19.1981 3.2526 19 3.25001ZM18.25 19.25H7.19C6.83339 19.2748 6.48151 19.1571 6.21156 18.9227C5.94161 18.6884 5.77562 18.3566 5.75 18C5.77562 17.6435 5.94161 17.3116 6.21156 17.0773C6.48151 16.843 6.83339 16.7253 7.19 16.75H18.25V19.25ZM18.25 15.25H7.19C6.68656 15.2506 6.19135 15.3778 5.75 15.62V5.60001C5.7729 5.3559 5.89028 5.13039 6.0771 4.9716C6.26392 4.8128 6.50538 4.73329 6.75 4.75001H18.25V15.25Z"
+                                    fill="currentColor"></path>
+                                <path d="M8.75 8.75H15.25C15.4489 8.75 15.6397 8.67098 15.7803 8.53033C15.921 8.38968 16 8.19891 16 8C16 7.80109 15.921 7.61032 15.7803 7.46967C15.6397 7.32902 15.4489 7.25 15.25 7.25H8.75C8.55109 7.25 8.36032 7.32902 8.21967 7.46967C8.07902 7.61032 8 7.80109 8 8C8 8.19891 8.07902 8.38968 8.21967 8.53033C8.36032 8.67098 8.55109 8.75 8.75 8.75Z"
+                                    fill="currentColor"></path>
+                                <path d="M8.75 12.25H15.25C15.4489 12.25 15.6397 12.171 15.7803 12.0303C15.921 11.8897 16 11.6989 16 11.5C16 11.3011 15.921 11.1103 15.7803 10.9697C15.6397 10.829 15.4489 10.75 15.25 10.75H8.75C8.55109 10.75 8.36032 10.829 8.21967 10.9697C8.07902 11.1103 8 11.3011 8 11.5C8 11.6989 8.07902 11.8897 8.21967 12.0303C8.36032 12.171 8.55109 12.25 8.75 12.25Z"
+                                    fill="currentColor"></path>
+                            </g>
+                        </svg>
+                    </button>
+                    <button class="h-14 w-14 flex items-center justify-center rounded-full
+                           bg-blue-600 text-white text-2xl self-center" disabled>
+                        <svg width="30" height="30" fill="currentColor" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M29.753 0.049l-13.22 3.581c-0.336 0.090-1.066 0.089-1.4-0.005l-12.88-3.569c-1.149-0.317-2.263 0.512-2.263 1.696v24.316c0 1.003 0.76 1.962 1.728 2.232l12.88 3.57c0.345 0.096 0.788 0.149 1.248 0.149 0.315 0 0.781-0.024 1.21-0.142l13.22-3.581c0.971-0.262 1.734-1.22 1.734-2.227v-24.317c0.001-1.183-1.113-2.014-2.258-1.703zM15 29.904l-12.779-3.533c-0.096-0.026-0.232-0.203-0.232-0.303v-24.001l12.608 3.486c0.122 0.034 0.259 0.061 0.402 0.083v24.269zM30.010 26.068c0 0.099-0.162 0.27-0.258 0.297l-12.753 3.454v-24.247c0.018-0.005 0.038-0.007 0.056-0.012l12.954-3.504v24.012h0zM20.062 11.447c0.090 0 0.182-0.011 0.272-0.037l6.998-1.97c0.532-0.15 0.842-0.702 0.692-1.234s-0.705-0.84-1.234-0.692l-6.998 1.97c-0.532 0.15-0.842 0.702-0.692 1.234 0.124 0.441 0.525 0.729 0.962 0.729zM20.063 17.447c0.090 0 0.182-0.012 0.272-0.037l6.998-1.97c0.532-0.15 0.842-0.702 0.692-1.234s-0.705-0.84-1.234-0.693l-6.998 1.97c-0.532 0.15-0.842 0.702-0.692 1.233 0.124 0.442 0.525 0.73 0.962 0.73zM20.063 23.447c0.090 0 0.182-0.012 0.272-0.037l6.998-1.97c0.532-0.151 0.842-0.702 0.692-1.234s-0.705-0.84-1.234-0.692l-6.998 1.97c-0.532 0.151-0.842 0.702-0.692 1.234 0.124 0.441 0.525 0.73 0.962 0.73zM12.332 9.484l-6.998-1.97c-0.529-0.147-1.084 0.161-1.234 0.692s0.16 1.083 0.692 1.234l6.998 1.97c0.090 0.025 0.181 0.037 0.271 0.037 0.437 0 0.838-0.288 0.962-0.729 0.149-0.531-0.16-1.083-0.693-1.234zM12.332 15.484l-6.998-1.97c-0.529-0.148-1.084 0.161-1.234 0.693s0.16 1.083 0.692 1.234l6.998 1.97c0.090 0.026 0.181 0.037 0.271 0.037 0.437 0 0.838-0.288 0.962-0.73 0.149-0.531-0.16-1.083-0.693-1.234zM12.332 21.484l-6.998-1.97c-0.529-0.148-1.084 0.161-1.234 0.692s0.16 1.083 0.692 1.234l6.998 1.97c0.090 0.026 0.181 0.037 0.271 0.037 0.437 0 0.838-0.288 0.962-0.73 0.149-0.532-0.16-1.083-0.693-1.234z"></path> </g></svg>
+                    </button>
                     <button class="h-14 w-14 flex items-center justify-center rounded-full self-center
-                                         cursor-pointer  transition duration-150 font-bold bg-transparent border-2 border-green-600 text-green-600 text-2xl hover:bg-green-600 hover:text-white" disabled>
+                                             cursor-pointer  transition duration-150 font-bold bg-transparent border-2 border-green-600 text-green-600 text-2xl hover:bg-green-600 hover:text-white" disabled>
                         <svg class="h-6 w-6"
                              viewBox="0 0 24 24"
                              fill="none" stroke="currentColor" stroke-width="4"
@@ -115,13 +143,6 @@
                             <path d="M20 6L9 17l-5-5" />
                         </svg>
                     </button>
-                    <button class="h-14 w-14 flex items-center justify-center rounded-full
-                           bg-blue-600 text-white text-2xl self-center cursor-pointer transition duration-150 hover:bg-blue-800" disabled>
-                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40974 4.40973 4.7157 4.21799 5.09202C4 5.51985 4 6.0799 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.0799 20 7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V12.5M15.5 5.5L18.3284 8.32843M10.7627 10.2373L17.411 3.58902C18.192 2.80797 19.4584 2.80797 20.2394 3.58902C21.0205 4.37007 21.0205 5.6364 20.2394 6.41745L13.3774 13.2794C12.6158 14.0411 12.235 14.4219 11.8012 14.7247C11.4162 14.9936 11.0009 15.2162 10.564 15.3882C10.0717 15.582 9.54378 15.6885 8.48793 15.9016L8 16L8.04745 15.6678C8.21536 14.4925 8.29932 13.9048 8.49029 13.3561C8.65975 12.8692 8.89125 12.4063 9.17906 11.9786C9.50341 11.4966 9.92319 11.0768 10.7627 10.2373Z" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </button>
-
                     <button title="Kitabı kaldır"
                             class="delete-btn cursor-pointer h-6 w-8 p-0 flex justify-center bg-transparent border border-red-600 hover:bg-red-600 active:bg-red-700 rounded-md transition-colors duration-300 group self-start"
                             data-state="delete">

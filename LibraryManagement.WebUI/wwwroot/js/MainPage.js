@@ -36,7 +36,8 @@ function searchBooks(page = 1) {
     const $list = $('#bookList');
     $('#search-predictions').hide();
     $('#overlay').addClass('opacity-0 pointer-events-none').removeClass('opacity-100');
-
+    const searchContainer = document.querySelector('.search-container');
+    searchContainer.classList.add("rounded-b-3xl");
     // 1 . block short queries (<3 chars)
     if (input.length < 3 && input.length > 0) {
         $list.html(`
@@ -44,6 +45,8 @@ function searchBooks(page = 1) {
                 3 karakter veya daha fazla karakter girerek arama yapınız.
             </div>`);
         history.replaceState(null, '', `/Kullanici/AnaSayfa/${page}`);
+        // Remove focus from search input
+        $('#search-input').blur();
         return;
     }
 
@@ -54,7 +57,11 @@ function searchBooks(page = 1) {
 
     fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
         .then(r => r.text())
-        .then(html => { $list.html(html); });
+        .then(html => { 
+            $list.html(html); 
+            // Remove focus from search input after search completes
+            $('#search-input').blur();
+        });
 }
 
 
@@ -162,7 +169,52 @@ function showPredictions(query, crit, searchContainer) {
         if (predictions && predictions.length) {
             // Merge UI for dropdown
             searchContainer.classList.remove("rounded-b-3xl");
+
+            const firstItem = `
+    <div class="flex items-center group prediction-item font-semibold bg-gray-600 text-white hover:bg-gray-500" data-value="${query}">
+        <div class="flex items-center justify-center w-10 h-10 bg-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 class="h-6 w-6 text-white"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-linecap="round" />
+            </svg>
+        </div>
+        <div class="px-4 py-2 w-full">
+            ${query}
+        </div>
+    </div>
+`;
+
             $('#search-predictions').html(
+                firstItem +
+                predictions.slice(0, 8).map(p =>
+                    `
+        <div class="flex items-center group prediction-item" data-value="${p}">
+            <div class="flex items-center justify-center w-10 h-10 bg-gray-600 group-hover:bg-gray-500">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   viewBox="0 0 24 24"
+                   class="h-6 w-6 text-white"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="2">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="px-4 py-2 w-full group-hover:bg-gray-500">
+              ${p}
+            </div>
+        </div>
+        `
+                ).join('')
+            ).show();
+
+            $('#search-predictions').html(
+                firstItem +
                 predictions.slice(0, 8).map(p =>
                     `
                     <div class="flex items-center group prediction-item" data-value="${p}">
