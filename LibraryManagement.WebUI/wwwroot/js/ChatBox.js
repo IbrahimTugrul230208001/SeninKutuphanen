@@ -2,6 +2,15 @@
     .withUrl("/ai-hub")
     .build();
 
+// Toggle chat visibility
+const chatBoxContainer = document.getElementById('chatBox');
+document.getElementById('openChat').addEventListener('click', () => {
+    chatBoxContainer.classList.remove('scale-0', 'opacity-0');
+});
+document.getElementById('closeChat').addEventListener('click', () => {
+    chatBoxContainer.classList.add('scale-0', 'opacity-0');
+});
+
 async function startHubConnection() {
     try {
         await hubConnection.start();
