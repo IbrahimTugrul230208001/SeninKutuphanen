@@ -27,19 +27,6 @@ namespace learningASP.NET_CORE.Controllers
             ViewData["UserProfilePicture"] = _userService.ProfilePicture;
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> Konus([FromBody] ChatRequest chatRequest, CancellationToken cancellationToken)
-        {
-            if (chatRequest == null || string.IsNullOrEmpty(chatRequest.Prompt))
-            {
-                return BadRequest("Invalid request data.");
-            }
-
-            // Use the AIService to get a message stream
-            await _aiService.GetMessageStreamAsync(chatRequest.Prompt, chatRequest.ConnectionId, cancellationToken);
-
-            // You can choose how to return the response - here, returning as JSON
-            return Ok();
-        }
+     
     }
 }

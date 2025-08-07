@@ -39,10 +39,6 @@
                    class="font-bold text-gray-300 font-semibold nav-link">
                     Kitaplık
                 </a>
-                <a href="/Sohbet/BenimAsistanim"
-                   class="text-gray-300 font-semibold nav-link">
-                    BenimAsistanım
-                </a>
 
             </div>
             <!-- Right: Auth Buttons -->
@@ -136,9 +132,10 @@
         class="mx-auto mt-6 max-w-5xl w-full px-4">
         @await Html.PartialAsync("_BookListPartial", Model)
     </div>
-
+    @await Html.PartialAsync("_ChatBoxPartial")
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/MainPage.js"></script>
+    <script src="/js/ChatBox.js"></script>
 </body>
 </html>
 

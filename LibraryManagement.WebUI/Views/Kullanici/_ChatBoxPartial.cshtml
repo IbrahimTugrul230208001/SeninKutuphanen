@@ -1,0 +1,32 @@
+﻿<button class="fixed bottom-12 cursor-pointer right-6 z-50 bg-yellow-300 hover:bg-yellow-400 rounded-full p-4 shadow-lg flex items-center justify-center transition"
+        aria-label="Chat with AI">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="block"
+         xmlns="http://www.w3.org/2000/svg">
+        <path d="M17 3.33782C15.5291 2.48697 13.8214 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22C17.5228 22 22 17.5228 22 12C22 10.1786 21.513 8.47087 20.6622 7"
+              stroke="#000" stroke-width="2" stroke-linecap="round" />
+    </svg>
+</button>
+
+<div id="chatBox"
+     class="fixed right-6 bottom-30 w-96 max-w-[95vw] bg-white rounded-2xl shadow-2xl z-50 flex flex-col transition-all duration-300 scale-0 opacity-0
+                sm:w-96 sm:max-w-[95vw] w-[60vw] max-w-[95vw] text-base"
+     style="min-height: 480px; max-height: 480px;">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-3 border-b bg-gray-900 rounded-t-2xl">
+        <span class="font-semibold text-white text-lg">Readori AI</span>
+        <span id="connectionId" hidden></span>
+        <button id="closeChat" class="text-gray-300 hover:text-gray-500 text-2xl cursor-pointer">&times;</button>
+    </div>
+    <!-- Chat Area -->
+    <div id="chatContent" class="flex-1 p-3 overflow-y-auto text-gray-700">
+        <img class="opacity-50" src="~/img/geminipower.png" />
+    </div>
+
+    <!-- Input -->
+    <div class="p-3 border-t flex gap-2" id="chatForm">
+        <input id="chatInput" type="text" autocomplete="off" placeholder="Mesaj yaz..." class="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-300" />
+        <button onclick="sendPrompt()" type="button" class="bg-yellow-300 hover:bg-yellow-400 text-black rounded-full p-3 cursor-pointer font-semibold">
+            <svg height="20" width="20" viewBox="0 0 24 24" fill="black" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 5V19M12 5L6 11M12 5L18 11" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+        </button>
+    </div>
+</div>

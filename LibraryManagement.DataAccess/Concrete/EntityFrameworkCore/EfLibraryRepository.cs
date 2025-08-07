@@ -15,7 +15,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
     public class EfLibraryRepository : ILibraryRepository
     {
 
-        public async Task AddToLibraryAsync(int userId, int bookId, string status)
+        public async Task AddToLibraryAsync(int userId, int bookId)
         {
             using (var context = new LibraryContext())
             {
@@ -23,7 +23,7 @@ namespace LibraryManagement.DataAccess.Concrete.EntityFrameworkCore
                 {
                     UserAccountId = userId,
                     BookId = bookId,
-                    Status = status,
+                    Status = "beklemede",
                 };
 
                 await context.UserBooks.AddAsync(userBook);

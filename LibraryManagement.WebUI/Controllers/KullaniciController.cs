@@ -15,14 +15,17 @@ namespace learningASP.NET_CORE.Controllers
     {
         private readonly IUserService _userService;
         private readonly string _userName;
+        private readonly IAIServices _aiService;
+
         LibraryManager _libraryManager = new(new EfLibraryRepository());
         UserManager _userManager = new(new EfUserRepository());
 
 
-        public KullaniciController(IUserService userService)
+        public KullaniciController(IUserService userService, IAIServices AIService)
         {
             _userService = userService;
             _userName = _userService.UserName;
+            _aiService = AIService;
         }
         public IActionResult Kitaplik()
         {
@@ -66,8 +69,7 @@ namespace learningASP.NET_CORE.Controllers
             {
                 await _libraryManager.AddToLibraryAsync(
                     _userService.UserId,
-                    b.Id,
-                    "");
+                    b.Id);
                 return Json(new { success = true, message = "Book updated successfully", redirectUrl = Url.Action("EditLibrary") });
             }
 
@@ -297,6 +299,20 @@ namespace learningASP.NET_CORE.Controllers
         public async Task<IActionResult> LogOut()
         {
             return RedirectToAction("Giris", "Dogrulama");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Konus([FromBody] ChatRequest chatRequest, CancellationToken cancellationToken)
+        {
+            if (chatRequest == null || string.IsNullOrEmpty(chatRequest.Prompt))
+            {
+                return BadRequest("Invalid request data.");
+            }
+
+            // Use the AIService to get a message stream
+            await _aiService.GetMessageStreamAsync(chatRequest.Prompt, chatRequest.ConnectionId, cancellationToken);
+
+            // You can choose how to return the response - here, returning as JSON
+            return Ok();
         }
     }
 }

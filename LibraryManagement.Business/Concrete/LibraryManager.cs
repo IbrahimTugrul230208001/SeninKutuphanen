@@ -16,9 +16,9 @@ namespace LibraryManagement.Business.Concrete
             _libraryRepository = libraryDal;
         }
 
-        public async Task AddToLibraryAsync(int userId, int bookId, string status)
+        public async Task AddToLibraryAsync(int userId, int bookId)
         {
-            await _libraryRepository.AddToLibraryAsync(userId, bookId, status);
+            await _libraryRepository.AddToLibraryAsync(userId, bookId);
         }
 
         public async Task AddToShowcaseAsync(int userId)

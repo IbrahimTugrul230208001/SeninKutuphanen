@@ -9,7 +9,7 @@ namespace LibraryManagement.DataAccess.Abstract
 {
     public interface ILibraryRepository
     {
-        Task AddToLibraryAsync(int userId, int bookId, string status);
+        Task AddToLibraryAsync(int userId, int bookId);
         Task DeleteFromLibraryAsync(int bookId);
         Task AddToShowcaseAsync(int userId);
         Task RemoveBookShowcaseAsync(int bookId, int userId);
